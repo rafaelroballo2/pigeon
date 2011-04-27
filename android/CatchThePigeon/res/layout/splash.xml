@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  >
+    <ImageView android:layout_height="wrap_content" android:id="@+id/imageView2" android:src="@drawable/logo" android:layout_width="wrap_content" android:layout_x="89dip" android:layout_y="142dip"></ImageView>
+    <ProgressBar android:layout_height="wrap_content" android:id="@+id/progressBar1" android:layout_width="wrap_content" android:layout_x="141dip" android:layout_y="204dip"></ProgressBar>
+</AbsoluteLayout>
