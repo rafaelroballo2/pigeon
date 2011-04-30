@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import br.ufpe.cin.mosaic.pigeon.business.android.facebook.LoginFacebook;
 import br.ufpe.cin.mosaic.pigeon.client.android.R;
 import br.ufpe.cin.mosaic.pigeon.client.android.gameplay.GameActivity;
 
@@ -27,10 +28,22 @@ public class MainActivity extends Activity {
 				startGame(false);
 			}
 		});
+
+		findViewById(R.id.connect_facebook).setOnClickListener(
+				new OnClickListener() {
+					public void onClick(View v) {
+						loginFacebook();
+					}
+				});
 	}
 
 	private void startGame(boolean startWithHuman) {
 		Intent i = new Intent(this, GameActivity.class);
 		startActivity(i);
 	}
+    
+	private void loginFacebook() {
+        Intent i = new Intent(this, LoginFacebook.class);
+        startActivity(i);    	
+    }	
 }

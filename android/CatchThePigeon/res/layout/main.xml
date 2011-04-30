@@ -44,13 +44,7 @@
         android:layout_marginBottom="20dip"
         android:text="@string/explain1"
         />
-
-    <Button
-        android:id="@+id/start_player"
-        android:text="@string/start_player"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+    <Button android:layout_width="wrap_content" android:id="@+id/start_player" android:layout_height="wrap_content" android:text="@string/start_player"></Button>
     <Button
         android:id="@+id/start_comp"
         android:text="@string/start_comp"
@@ -65,5 +59,13 @@
         android:layout_height="wrap_content"
         android:src="@drawable/icon"
         />
+	
+	<Button
+        android:id="@+id/connect_facebook"
+        android:background="@drawable/facebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dip"
+        android:layout_gravity="left"/>
 
 </LinearLayout>

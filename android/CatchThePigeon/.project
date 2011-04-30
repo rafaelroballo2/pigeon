@@ -36,5 +36,10 @@
 			<type>2</type>
 			<locationURI>_android_CatchThePigeonGame_7108c23e/src</locationURI>
 		</link>
+		<link>
+			<name>com_android_facebook_src</name>
+			<type>2</type>
+			<locationURI>_android_com_android_facebook_deb05594/src</locationURI>
+		</link>
 	</linkedResources>
 </projectDescription>

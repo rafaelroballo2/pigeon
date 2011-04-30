@@ -19,9 +19,11 @@
         <!-- This is defined in TicTacToeLib. Right now we need to manually
              copy it here. Eventually it should get merged automatically. -->
         <activity android:name=".gameplay.GameActivity"/>
-
+        <activity android:name="br.ufpe.cin.mosaic.pigeon.business.android.facebook.LoginFacebook"></activity>
 
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-sdk android:minSdkVersion="8" />
 
 </manifest>
