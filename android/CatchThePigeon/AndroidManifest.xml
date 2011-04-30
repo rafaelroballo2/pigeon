@@ -6,21 +6,19 @@
     <application android:icon="@drawable/icon" android:label="@string/app_name">
         
         
-        <activity android:name=".SplashScreen"
-                  android:label="@string/app_name">
+        <activity android:label="@string/app_name" android:name=".menu.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         
-        <activity android:name=".MainActivity"
-                  android:label="@string/app_name">
+        <activity android:label="@string/app_name" android:name=".menu.MainActivity">
         </activity>
 
         <!-- This is defined in TicTacToeLib. Right now we need to manually
              copy it here. Eventually it should get merged automatically. -->
-        <activity android:name="client.android.menu.library.GameActivity" />
+        <activity android:name=".gameplay.GameActivity"/>
 
 
     </application>
