@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="br.ufpe.cin.mosaic.pigeon"
+      package="br.ufpe.cin.mosaic.pigeon.client.android"
       android:versionCode="1"
       android:versionName="1.0">
     <application android:icon="@drawable/icon" android:label="@string/app_name">
@@ -20,7 +20,7 @@
 
         <!-- This is defined in TicTacToeLib. Right now we need to manually
              copy it here. Eventually it should get merged automatically. -->
-        <activity android:name="br.ufpe.cin.mosaic.pigeon.library.GameActivity" />
+        <activity android:name="client.android.menu.library.GameActivity" />
 
 
     </application>
