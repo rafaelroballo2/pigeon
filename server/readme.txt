@@ -6,4 +6,4 @@
 	- tanto em resources ao clicar no botão direito no projeto
 	- como configurações de preferências do eclipse > workspace > text file enconding
 	
-3. 
+3. teste
