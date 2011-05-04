@@ -16,11 +16,11 @@
         <activity android:label="@string/app_name" android:name=".menu.MainActivity">
         </activity>
 
-        <!-- This is defined in TicTacToeLib. Right now we need to manually
+        <!-- This is defined in TicTacToeLib. Right now we need to manually       
              copy it here. Eventually it should get merged automatically. -->
-        <activity android:name=".gameplay.GameActivity"/>
-        
         <activity android:name="br.ufpe.cin.mosaic.pigeon.business.android.facebook.LoginFacebook"></activity>
+        <activity android:name="br.eng.mosaic.pigeon.andenginetest.Principal"></activity>
+
 
     </application>
     <uses-permission android:name="android.permission.INTERNET" />

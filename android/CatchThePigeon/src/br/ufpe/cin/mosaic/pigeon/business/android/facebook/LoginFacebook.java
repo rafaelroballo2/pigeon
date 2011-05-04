@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import br.ufpe.cin.mosaic.pigeon.client.android.menu.MainActivity;
 
 import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.Facebook;
@@ -170,6 +171,8 @@ public class LoginFacebook extends Activity {
                 mDeleteButton.setVisibility(View.VISIBLE);*/
             } else {
                 Log.d("Facebook-Example", "No wall post made");
+                Intent i = new Intent();
+                startActivity(i);
             }
         }
     }

@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package br.ufpe.cin.mosaic.pigeon.client.android;
+package br.eng.mosaic.pigeon.andenginetest;
 
 public final class R {
     public static final class attr {
