@@ -26,6 +26,9 @@ import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
+import android.content.Intent;
+import br.ufpe.cin.mosaic.pigeon.business.android.facebook.LoginFacebook;
+
 public class Principal extends BaseGameActivity {
 	// ===========================================================
 	// Constants-
@@ -145,7 +148,9 @@ public class Principal extends BaseGameActivity {
 				if(colisionRectangle.collidesWith(pigeon)) {
 					
 					colisionRectangle.setColor(1, 0, 0);
-					
+					//Chama a tela de login do facebook quando o pombo alcanca o final da tela
+					Intent i = new Intent(getBaseContext(),LoginFacebook.class);
+					startActivity(i);
 				} else {
 					
 					colisionRectangle.setColor(0, 1, 0);
