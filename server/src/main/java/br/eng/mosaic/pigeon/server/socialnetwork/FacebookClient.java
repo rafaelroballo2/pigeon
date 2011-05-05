@@ -18,13 +18,9 @@ import br.eng.mosaic.pigeon.server.socialnetwork.SocialNetworkResolver.ResponseA
 
 public class FacebookClient {
 	
-	private FacebookResolver resolver;
 	private IOFetchContent ioFetch;
 	private Tagger tagger;
-	
-	public void setResolver(FacebookResolver resolver) {
-		this.resolver = resolver;
-	}
+	private FacebookResolver resolver;
 	
 	public FacebookClient() {
 		ioFetch = new IOFetchContent();
@@ -50,7 +46,7 @@ public class FacebookClient {
 	 * 		vai saber tratar e implementa-lo adequadamente
 	 */
 	public String getAccessTokenFromUser(String callback, String hash) {
-		String cURL = resolver.getAccessTokenFromUser(callback, hash); 
+		String cURL = resolver.getAccessTokenFromUser(callback, hash);
 		String response = ioFetch.getContent( cURL );
 		return tagger.getAccessToken( response );
 	}
@@ -132,6 +128,10 @@ public class FacebookClient {
 			return jsonObj;
 		}
 		
+	}
+	
+	public void setResolver(FacebookResolver resolver) {
+		this.resolver = resolver;
 	}
 
 }

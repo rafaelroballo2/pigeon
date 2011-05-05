@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<!-- services -->
+	<bean id="userService" class="br.eng.mosaic.pigeon.server.service.UserService">
+		<property name="userRepository" ref="userRepository" />
+	</bean>
+		
+	<!-- repositories -->
+	<bean id="userRepository" class="br.eng.mosaic.pigeon.server.repository.mem.UserRepositoryMemory"/>
+	
+	<!-- others -->
+	<bean id="facebookClient" class="br.eng.mosaic.pigeon.server.socialnetwork.FacebookClient">
+		<property name="resolver" >
+			<bean class="br.eng.mosaic.pigeon.server.socialnetwork.FacebookResolver" />
+		</property>
+	</bean>
+	
+</beans>

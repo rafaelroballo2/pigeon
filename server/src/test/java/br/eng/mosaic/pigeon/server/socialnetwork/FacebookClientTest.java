@@ -11,23 +11,30 @@ import junit.framework.TestCase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import br.eng.mosaic.pigeon.common.dto.UserInfo;
 import br.eng.mosaic.pigeon.server.socialnetwork.FacebookServerFake.MimeType;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath:br/eng/mosaic/pigeon/cfg/spring/spring-test-beans.xml" })
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 public class FacebookClientTest extends TestCase {
 	
-	@Autowired private FacebookClient client;
-	
 	private FacebookServerFake fakeServer;
-	private Random random;
+	private static Random random;
 	
-	@Override protected void setUp() throws Exception {
+	@Autowired private FacebookClient facebookClient;
+	
+	@BeforeClass public static void beforeAll() {
 		random = new Random();
-		client = new FacebookClient();
-		client.setResolver( new FacebookResolver() );
 	}
 	
 	private synchronized void startServer(final MimeType mime, final String content) {
@@ -58,7 +65,7 @@ public class FacebookClientTest extends TestCase {
 		String token = String.valueOf( random.nextInt(1000001) );
 		startServer(text_plain, fb_access_token.key + token );
 		
-		String found = client.getAccessTokenFromApplication();
+		String found = facebookClient.getAccessTokenFromApplication();
 		assertNotNull( token );
 		assertNotSame("obviously that objects aren't same", token, found);
 		assertEquals( token , found);
@@ -77,7 +84,7 @@ public class FacebookClientTest extends TestCase {
 	@Test public void testGetCommandStartConnectionSuccessfully() {
 		String redirect = "redirect:";
 		String callback = "oauth/facebook/connect.do";
-		String cURL = client.getStartConnection( callback );
+		String cURL = facebookClient.getStartConnection( callback );
 		
 		assertNotNull( cURL );
 		assertTrue( cURL.contains( redirect ) );
@@ -90,7 +97,7 @@ public class FacebookClientTest extends TestCase {
 		
 		String callback = "oauth/facebook/connect.do";
 		String hash = String.valueOf( random.nextInt(100) );
-		String found = client.getAccessTokenFromUser( callback, hash );
+		String found = facebookClient.getAccessTokenFromUser( callback, hash );
 		
 		assertNotNull( token );
 		assertEquals( token , found);
@@ -107,7 +114,7 @@ public class FacebookClientTest extends TestCase {
 		String token = String.valueOf( random.nextInt(1000001) );
 		startServer(text_json, obj.toString() );
 		
-		UserInfo user = client.getBasicUserInfo(token);
+		UserInfo user = facebookClient.getBasicUserInfo(token);
 		
 		assertNotNull( user );
 		assertEquals( user.name, obj.getString("name"));
