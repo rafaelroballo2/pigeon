@@ -90,21 +90,22 @@ public class Stage extends BaseGameActivity {
 		System.out.println("onLoadEngine/");
 		this.mEngine.registerUpdateHandler(new FPSLogger());
 
-		/*Criando a Cena e inserindo o background*/
+		//--------------- Criando a Cena e inserindo o background ---------------
 		final Scene scene = new Scene(1);
 		final AutoParallaxBackground autoParallaxBackground = new AutoParallaxBackground(0, 0, 0, 5);
 		autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(0.0f, new Sprite(0, CAMERA_HEIGHT - this.mParallaxLayerBack.getHeight(), this.mParallaxLayerBack)));
 		autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(-5.0f, new Sprite(0, 80, this.mParallaxLayerMid)));
 		autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(-10.0f, new Sprite(0, CAMERA_HEIGHT - this.mParallaxLayerFront.getHeight(), this.mParallaxLayerFront)));
 		scene.setBackground(autoParallaxBackground);
+		//---------------------------------------------------------------------
 
-		/*Criando Retangulo para colisão*/
-		final int rectangleX = (CAMERA_WIDTH);
-		final int rectangleY = (CAMERA_HEIGHT - Stage.mPlayerTextureRegion.getTileHeight()) / 2;
-		final Rectangle colisionRectangle = new Rectangle(rectangleX, rectangleY, 32, 32);
-		colisionRectangle.registerEntityModifier(new LoopEntityModifier(new ParallelEntityModifier(new RotationModifier(6, 0, 360), new SequenceEntityModifier(new ScaleModifier(3, 1, 1.5f), new ScaleModifier(3, 1.5f, 1)))));
-		
+		// -------------- Criando Retangulo para colisão --------------------
+		final int rectangleX = (CAMERA_WIDTH) + 1;
+		final int rectangleY = (CAMERA_HEIGHT);		
+		final Rectangle colisionRectangle = new Rectangle(rectangleX, 0, rectangleX + 1, rectangleY);
+		//colisionRectangle.registerEntityModifier(new LoopEntityModifier(new ParallelEntityModifier(new RotationModifier(6, 0, 360), new SequenceEntityModifier(new ScaleModifier(3, 1, 1.5f), new ScaleModifier(3, 1.5f, 1)))));		
 		scene.getLastChild().attachChild(colisionRectangle);
+		//-------------------------------------------------------------------
 
 		/* Calculate the coordinates for the face, so its centered on the camera. */
 		final int playerX = (CAMERA_WIDTH - Stage.mPlayerTextureRegion.getTileWidth()) / 4;
@@ -125,24 +126,19 @@ public class Stage extends BaseGameActivity {
 		
 		/* The actual collision-checking. */
 		scene.registerUpdateHandler(new IUpdateHandler() {
-
 			@Override
 			public void reset() { }
 
 			@Override
-			public void onUpdate(final float pSecondsElapsed) {
-				
-				if(colisionRectangle.collidesWith(pigeon)) {
-					
+			public void onUpdate(final float pSecondsElapsed) {				
+				if(colisionRectangle.collidesWith(pigeon)) {					
 					colisionRectangle.setColor(1, 0, 0);
 					//Chama a tela de login do facebook quando o pombo alcanca o final da tela
 					Intent i = new Intent(getBaseContext(),LoginFacebook.class);
 					startActivity(i);
-				} else {
-					
+				} else {					
 					colisionRectangle.setColor(0, 1, 0);
-				}
-				
+				}				
 			}
 		});
 	
