@@ -36,8 +36,6 @@ public class Stage extends BaseGameActivity {
 	// Constants-
 	// ===========================================================
 
-	public static final float DEMO_VELOCITY = 10.0f;
-
 	public static final int CAMERA_WIDTH = 720;
 	public static final int CAMERA_HEIGHT = 480;
 
@@ -50,8 +48,6 @@ public class Stage extends BaseGameActivity {
 	private Texture mTexture;
 	public static TiledTextureRegion mPlayerTextureRegion;
 	public static TiledTextureRegion mEnemyTextureRegion1;
-	public static TiledTextureRegion mEnemyTextureRegion2;
-	public static TiledTextureRegion mEnemyTextureRegion3;
 
 	private Texture mAutoParallaxBackgroundTexture;
 
@@ -61,19 +57,15 @@ public class Stage extends BaseGameActivity {
 
 	@Override
 	public Engine onLoadEngine() {
-		System.out.println("onLoadEngine");
 		this.mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
 		return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE, new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), this.mCamera));		
 	}
 
 	@Override
 	public void onLoadResources() {
-		System.out.println("onLoadResources");
 		this.mTexture = new Texture(256, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 		this.mPlayerTextureRegion = TextureRegionFactory.createTiledFromAsset(this.mTexture, this, "gfx/bird.png", 0, 0, 3, 4);
 		this.mEnemyTextureRegion1 = TextureRegionFactory.createTiledFromAsset(this.mTexture, this, "gfx/badpig.png", 97, 0, 3, 4);
-		this.mEnemyTextureRegion2 = TextureRegionFactory.createTiledFromAsset(this.mTexture, this, "gfx/badpig.png", 97, 0, 3, 4);
-		this.mEnemyTextureRegion3 = TextureRegionFactory.createTiledFromAsset(this.mTexture, this, "gfx/badpig.png", 97, 0, 3, 4);
 
 		//----- Background ------
 		this.mAutoParallaxBackgroundTexture = new Texture(1024, 1024, TextureOptions.DEFAULT);
@@ -87,7 +79,6 @@ public class Stage extends BaseGameActivity {
 
 	@Override
 	public Scene onLoadScene() {
-		System.out.println("onLoadEngine/");
 		this.mEngine.registerUpdateHandler(new FPSLogger());
 
 		//--------------- Criando a Cena e inserindo o background ---------------
@@ -113,13 +104,12 @@ public class Stage extends BaseGameActivity {
 		
 		final Pigeon pigeon = new Pigeon(playerX, playerY, Stage.mPlayerTextureRegion);
 		
-		final BadPigeon badPigeon1 = new BadPigeon(playerX - 80, playerY, Stage.mEnemyTextureRegion1);
-		final BadPigeon badPigeon2 = new BadPigeon(playerX - 100, playerY + 100, Stage.mEnemyTextureRegion2);
-		final BadPigeon badPigeon3 = new BadPigeon(playerX - 140, playerY - 100, Stage.mEnemyTextureRegion3);
+		final BadPigeon badPigeon1 = new BadPigeon(playerX - 120, playerY, Stage.mEnemyTextureRegion1);
+		final BadPigeon badPigeon2 = new BadPigeon(playerX - 130, playerY + 100, Stage.mEnemyTextureRegion1);
+		final BadPigeon badPigeon3 = new BadPigeon(playerX - 140, playerY - 100, Stage.mEnemyTextureRegion1);
 		
 		scene.getLastChild().attachChild(pigeon);
-		scene.getLastChild().attachChild(pigeon);
-		
+				
 		scene.getLastChild().attachChild(badPigeon1);
 		scene.getLastChild().attachChild(badPigeon2);
 		scene.getLastChild().attachChild(badPigeon3);
@@ -146,9 +136,6 @@ public class Stage extends BaseGameActivity {
 	}
 
 	@Override
-	public void onLoadComplete() {
-		System.out.println("onLoadComplete");
-
-	}
+	public void onLoadComplete() {}
 	
 }
