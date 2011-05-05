@@ -27,17 +27,19 @@ import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
 import android.content.Intent;
+import br.eng.mosaic.pigeon.andenginetest.personagens.BadPigeon;
+import br.eng.mosaic.pigeon.andenginetest.personagens.Pigeon;
 import br.ufpe.cin.mosaic.pigeon.business.android.facebook.LoginFacebook;
 
-public class Principal extends BaseGameActivity {
+public class Stage extends BaseGameActivity {
 	// ===========================================================
 	// Constants-
 	// ===========================================================
 
-	private static final float DEMO_VELOCITY = 10.0f;
+	public static final float DEMO_VELOCITY = 10.0f;
 
-	private static final int CAMERA_WIDTH = 720;
-	private static final int CAMERA_HEIGHT = 480;
+	public static final int CAMERA_WIDTH = 720;
+	public static final int CAMERA_HEIGHT = 480;
 
 	// ===========================================================
 	// Fields
@@ -46,10 +48,10 @@ public class Principal extends BaseGameActivity {
 	private Camera mCamera;
 
 	private Texture mTexture;
-	protected static TiledTextureRegion mPlayerTextureRegion;
-	protected static TiledTextureRegion mEnemyTextureRegion1;
-	protected static TiledTextureRegion mEnemyTextureRegion2;
-	protected static TiledTextureRegion mEnemyTextureRegion3;
+	public static TiledTextureRegion mPlayerTextureRegion;
+	public static TiledTextureRegion mEnemyTextureRegion1;
+	public static TiledTextureRegion mEnemyTextureRegion2;
+	public static TiledTextureRegion mEnemyTextureRegion3;
 
 	private Texture mAutoParallaxBackgroundTexture;
 
@@ -98,43 +100,28 @@ public class Principal extends BaseGameActivity {
 
 		/*Criando Retangulo para colisão*/
 		final int rectangleX = (CAMERA_WIDTH);
-		final int rectangleY = (CAMERA_HEIGHT - Principal.mPlayerTextureRegion.getTileHeight()) / 2;
+		final int rectangleY = (CAMERA_HEIGHT - Stage.mPlayerTextureRegion.getTileHeight()) / 2;
 		final Rectangle colisionRectangle = new Rectangle(rectangleX, rectangleY, 32, 32);
 		colisionRectangle.registerEntityModifier(new LoopEntityModifier(new ParallelEntityModifier(new RotationModifier(6, 0, 360), new SequenceEntityModifier(new ScaleModifier(3, 1, 1.5f), new ScaleModifier(3, 1.5f, 1)))));
 		
 		scene.getLastChild().attachChild(colisionRectangle);
 
 		/* Calculate the coordinates for the face, so its centered on the camera. */
-		final int playerX = (CAMERA_WIDTH - Principal.mPlayerTextureRegion.getTileWidth()) / 4;
-		final int playerY = (CAMERA_HEIGHT - Principal.mPlayerTextureRegion.getTileHeight()) / 2;
+		final int playerX = (CAMERA_WIDTH - Stage.mPlayerTextureRegion.getTileWidth()) / 4;
+		final int playerY = (CAMERA_HEIGHT - Stage.mPlayerTextureRegion.getTileHeight()) / 2;
 		
-		final Pigeon pigeon = new Pigeon(playerX, playerY, Principal.mPlayerTextureRegion);
+		final Pigeon pigeon = new Pigeon(playerX, playerY, Stage.mPlayerTextureRegion);
 		
-		final AnimatedSprite badpig1 = new AnimatedSprite(playerX - 80, playerY, Principal.mEnemyTextureRegion1);
-		final AnimatedSprite badpig2 = new AnimatedSprite(playerX - 100, playerY + 100, Principal.mEnemyTextureRegion2);
-		final AnimatedSprite badpig3 = new AnimatedSprite(playerX - 140, playerY - 100, Principal.mEnemyTextureRegion3);
+		final BadPigeon badPigeon1 = new BadPigeon(playerX - 80, playerY, Stage.mEnemyTextureRegion1);
+		final BadPigeon badPigeon2 = new BadPigeon(playerX - 100, playerY + 100, Stage.mEnemyTextureRegion2);
+		final BadPigeon badPigeon3 = new BadPigeon(playerX - 140, playerY - 100, Stage.mEnemyTextureRegion3);
 		
-		badpig1.setScaleCenterY(Principal.mEnemyTextureRegion1.getTileHeight());
-		badpig1.setScale(2);
-		badpig1.animate(new long[]{200, 200, 200}, 3, 5, true);
-
 		scene.getLastChild().attachChild(pigeon);
-		scene.getLastChild().attachChild(badpig1);
-		
-		badpig2.setScaleCenterY(Principal.mEnemyTextureRegion1.getTileHeight());
-		badpig2.setScale(2);
-		badpig2.animate(new long[]{200, 200, 200}, 3, 5, true);
-
 		scene.getLastChild().attachChild(pigeon);
-		scene.getLastChild().attachChild(badpig2);
-
-		badpig3.setScaleCenterY(Principal.mEnemyTextureRegion1.getTileHeight());
-		badpig3.setScale(2);
-		badpig3.animate(new long[]{200, 200, 200}, 3, 5, true);
-
-		scene.getLastChild().attachChild(badpig3);
-
 		
+		scene.getLastChild().attachChild(badPigeon1);
+		scene.getLastChild().attachChild(badPigeon2);
+		scene.getLastChild().attachChild(badPigeon3);
 		
 		/* The actual collision-checking. */
 		scene.registerUpdateHandler(new IUpdateHandler() {
@@ -167,30 +154,5 @@ public class Principal extends BaseGameActivity {
 		System.out.println("onLoadComplete");
 
 	}
-
-	private class Pigeon extends AnimatedSprite {
-		private final PhysicsHandler mPhysicsHandler;
-
-		public Pigeon(final float pX, final float pY, final TiledTextureRegion pTextureRegion) {
-			super(pX, pY, pTextureRegion);
-			this.setScaleCenterY(Principal.mPlayerTextureRegion.getTileHeight());
-			this.setScale(2);
-			this.animate(new long[]{200, 200, 200}, 3, 5, true);
-
-			this.mPhysicsHandler = new PhysicsHandler(this);
-			this.registerUpdateHandler(this.mPhysicsHandler);
-		}
-
-
-		@Override
-		protected void onManagedUpdate(final float pSecondsElapsed) {	
-
-			this.mPhysicsHandler.setVelocityX(DEMO_VELOCITY);
-			if(this.mX + this.getWidth() > CAMERA_WIDTH) {
-
-			}
-
-			super.onManagedUpdate(pSecondsElapsed);
-		}
-	}
+	
 }

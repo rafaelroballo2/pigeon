@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import br.eng.mosaic.pigeon.andenginetest.Principal;
+import br.eng.mosaic.pigeon.andenginetest.Stage;
 import br.ufpe.cin.mosaic.pigeon.business.android.facebook.LoginFacebook;
 import br.ufpe.cin.mosaic.pigeon.client.android.R;
 
@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
 	}
 
 	private void startGame(boolean startWithHuman) {
-		Intent i = new Intent(this, Principal.class);
+		Intent i = new Intent(this, Stage.class);
 		startActivity(i);
 	}
     
