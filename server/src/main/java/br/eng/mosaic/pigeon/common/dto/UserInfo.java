@@ -2,11 +2,17 @@ package br.eng.mosaic.pigeon.common.dto;
 
 public class UserInfo {
 	
-	public String name;
-	public String email;
+	public String idPigeon;
+	public String idFacebook;
+	public String idTwitter;
 	
-	public UserInfo(String name, String email) {
-		this.name = name;
+	public String email;
+	public String firstName;
+	public String lastName;
+	
+	public UserInfo(String first, String last, String email) {
+		this.firstName = first;
+		this.lastName = last;
 		this.email = email;
 	}
 

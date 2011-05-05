@@ -63,9 +63,9 @@ public class FacebookClient {
 
 		UserInfo user;
 		try {
-			String name = obj.getString("name");
+			String firstName = obj.getString("name");
 			String email = obj.getString("email");
-			user = new UserInfo(name, email);
+			user = new UserInfo(firstName, null, email);
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
