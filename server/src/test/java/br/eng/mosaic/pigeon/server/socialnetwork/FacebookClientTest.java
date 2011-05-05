@@ -110,7 +110,7 @@ public class FacebookClientTest extends TestCase {
 		UserInfo user = client.getBasicUserInfo(token);
 		
 		assertNotNull( user );
-		assertEquals( user.firstName, obj.getString("name"));
+		assertEquals( user.name, obj.getString("name"));
 		assertEquals( user.email, obj.getString("email"));
 		stopServer();
 	}
