@@ -4,7 +4,7 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="lib" path="lib/andengine.jar"/>
-	<classpathentry kind="src" path="com_android_facebook_src"/>
 	<classpathentry kind="src" path="MosaicTest_src"/>
+	<classpathentry kind="src" path="com_android_facebook_src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

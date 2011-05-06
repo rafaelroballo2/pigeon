@@ -1,24 +1,21 @@
 package br.eng.mosaic.pigeon.andenginetest;
 
+import org.anddev.andengine.audio.sound.Sound;
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.handler.IUpdateHandler;
-import org.anddev.andengine.engine.handler.physics.PhysicsHandler;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
-import org.anddev.andengine.entity.modifier.LoopEntityModifier;
-import org.anddev.andengine.entity.modifier.ParallelEntityModifier;
-import org.anddev.andengine.entity.modifier.RotationModifier;
-import org.anddev.andengine.entity.modifier.ScaleModifier;
-import org.anddev.andengine.entity.modifier.SequenceEntityModifier;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
+import org.anddev.andengine.entity.scene.Scene.IOnAreaTouchListener;
+import org.anddev.andengine.entity.scene.Scene.ITouchArea;
 import org.anddev.andengine.entity.scene.background.AutoParallaxBackground;
 import org.anddev.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
-import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.util.FPSLogger;
+import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
@@ -27,6 +24,7 @@ import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
 import android.content.Intent;
+import android.util.Log;
 import br.eng.mosaic.pigeon.andenginetest.personagens.BadPigeon;
 import br.eng.mosaic.pigeon.andenginetest.personagens.Pigeon;
 import br.ufpe.cin.mosaic.pigeon.business.android.facebook.LoginFacebook;
@@ -54,11 +52,13 @@ public class Stage extends BaseGameActivity {
 	private TextureRegion mParallaxLayerBack;
 	private TextureRegion mParallaxLayerMid;
 	private TextureRegion mParallaxLayerFront;
+	
+	//public static Sound mExplosionSound;
 
 	@Override
 	public Engine onLoadEngine() {
 		this.mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-		return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE, new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), this.mCamera));		
+		return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE, new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), this.mCamera).setNeedsSound(true));		
 	}
 
 	@Override
@@ -75,6 +75,12 @@ public class Stage extends BaseGameActivity {
 
 		this.mEngine.getTextureManager().loadTextures(this.mTexture, this.mAutoParallaxBackgroundTexture);
 		//-----------------------
+				
+		/*try {
+			Stage.mExplosionSound = SoundFactory.createSoundFromAsset(this.mEngine.getSoundManager(), this, "mfx/explosion.ogg");
+		} catch (final Exception e) {
+			Log.d("Erro: ", e.toString());
+		}*/
 	}
 
 	@Override
@@ -93,9 +99,9 @@ public class Stage extends BaseGameActivity {
 		// -------------- Criando Retangulo para colisão --------------------
 		final int rectangleX = (CAMERA_WIDTH) + 1;
 		final int rectangleY = (CAMERA_HEIGHT);		
-		final Rectangle colisionRectangle = new Rectangle(rectangleX, 0, rectangleX + 1, rectangleY);
+		final Rectangle colisionLine = new Rectangle(rectangleX, 0, rectangleX + 1, rectangleY);
 		//colisionRectangle.registerEntityModifier(new LoopEntityModifier(new ParallelEntityModifier(new RotationModifier(6, 0, 360), new SequenceEntityModifier(new ScaleModifier(3, 1, 1.5f), new ScaleModifier(3, 1.5f, 1)))));		
-		scene.getLastChild().attachChild(colisionRectangle);
+		scene.getLastChild().attachChild(colisionLine);
 		//-------------------------------------------------------------------
 
 		/* Calculate the coordinates for the face, so its centered on the camera. */
@@ -114,6 +120,18 @@ public class Stage extends BaseGameActivity {
 		scene.getLastChild().attachChild(badPigeon2);
 		scene.getLastChild().attachChild(badPigeon3);
 		
+		scene.registerTouchArea(pigeon);
+		scene.setOnAreaTouchListener(new IOnAreaTouchListener() {
+			@Override
+			public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final ITouchArea pTouchArea, final float pTouchAreaLocalX, final float pTouchAreaLocalY) {				
+				if(pSceneTouchEvent.isActionDown()) {
+					Log.d("Toque", "Tocou na tela");
+				}
+				return true;
+			}
+		});
+		scene.setTouchAreaBindingEnabled(true);
+		
 		/* The actual collision-checking. */
 		scene.registerUpdateHandler(new IUpdateHandler() {
 			@Override
@@ -121,14 +139,15 @@ public class Stage extends BaseGameActivity {
 
 			@Override
 			public void onUpdate(final float pSecondsElapsed) {				
-				if(colisionRectangle.collidesWith(pigeon)) {					
-					colisionRectangle.setColor(1, 0, 0);
-					//Chama a tela de login do facebook quando o pombo alcanca o final da tela
+				if(colisionLine.collidesWith(pigeon)) {
+					/*Chama a tela de login do facebook quando o pombo alcanca o final da tela*/
 					Intent i = new Intent(getBaseContext(),LoginFacebook.class);
 					startActivity(i);
-				} else {					
-					colisionRectangle.setColor(0, 1, 0);
-				}				
+				}
+				
+				/*if(badPigeon1.collidesWith(pigeon)) {
+					Stage.mExplosionSound.play();
+				}*/
 			}
 		});
 	
