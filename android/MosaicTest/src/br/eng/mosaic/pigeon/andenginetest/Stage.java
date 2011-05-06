@@ -4,6 +4,7 @@ import org.anddev.andengine.audio.sound.Sound;
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.handler.IUpdateHandler;
+import org.anddev.andengine.engine.handler.runnable.RunnableHandler;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
@@ -120,13 +121,24 @@ public class Stage extends BaseGameActivity {
 		scene.getLastChild().attachChild(badPigeon2);
 		scene.getLastChild().attachChild(badPigeon3);
 		
-		scene.registerTouchArea(pigeon);
+		scene.registerTouchArea(badPigeon1);
+		scene.registerTouchArea(badPigeon2);
+		scene.registerTouchArea(badPigeon3);		
 		scene.setOnAreaTouchListener(new IOnAreaTouchListener() {
 			@Override
 			public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final ITouchArea pTouchArea, final float pTouchAreaLocalX, final float pTouchAreaLocalY) {				
 				if(pSceneTouchEvent.isActionDown()) {
-					Log.d("Toque", "Tocou na tela");
-				}
+					final RunnableHandler runnableHandler = new RunnableHandler();
+			        Stage.this.mEngine.getScene().registerUpdateHandler(runnableHandler);
+			        /*Log.d("AreaLocalX", String.valueOf(pTouchAreaLocalX));
+			        Log.d("badPigeon1.getX()", String.valueOf(badPigeon1.getX()));*/
+                    runnableHandler.postRunnable(new Runnable() {
+                        @Override
+                        public void run() {
+                        	scene.getLastChild().detachChild(badPigeon1);                        	
+                        }
+                    });
+				}				
 				return true;
 			}
 		});
