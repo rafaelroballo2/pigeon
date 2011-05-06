@@ -3,6 +3,8 @@ package br.eng.mosaic.pigeon.server.socialnetwork;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import br.eng.mosaic.pigeon.server.integration.PigeonConfiguration;
+
 public abstract class SocialNetworkResolver {
 
 	private static final String defaultEncoding = "UTF-8";
@@ -12,6 +14,8 @@ public abstract class SocialNetworkResolver {
 	
 	abstract public String getApplicationInfo(String fbuid, String accessToken);
 	abstract public String getAccessTokenFromApplication();
+	
+	protected PigeonConfiguration pigeonConfig;
 	
 	protected String fetch(String query, String token, int pageSize, String ... params) {
 		String partialQuery = null;
@@ -45,5 +49,9 @@ public abstract class SocialNetworkResolver {
 		
 		public String method;
 	}	
+	
+	public void setPigeonConfig(PigeonConfiguration pigeonConfig) {
+		this.pigeonConfig = pigeonConfig;
+	}
 	
 }

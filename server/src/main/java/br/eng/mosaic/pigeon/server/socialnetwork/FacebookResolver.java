@@ -1,19 +1,12 @@
 package br.eng.mosaic.pigeon.server.socialnetwork;
 
-import br.eng.mosaic.pigeon.server.integration.PigeonConfiguration;
 
 public class FacebookResolver extends SocialNetworkResolver {
 	
-	protected PigeonConfiguration appConfig;
-	protected FacebookConfiguration fbConfig;
-	
-	public FacebookResolver() {
-		appConfig = new PigeonConfiguration();
-		fbConfig = new FacebookConfiguration();
-	}
+	private FacebookConfiguration fbConfig;
 	
 	protected String mount( String command ) {
-		return appConfig.app_root + command;
+		return pigeonConfig.fb_root + command;
 	}
 	
 	@Deprecated @Override public String getApplicationInfo(String fbuid, String accessToken) {
@@ -25,7 +18,7 @@ public class FacebookResolver extends SocialNetworkResolver {
 	
 	public String getAccessTokenFromApplication() {
 		String command = RequestMethod.fb_oauth_access_token.method
-			+ "?client_secret=" + fbConfig.keySecret
+			+ "?client_secret=" + fbConfig.secret
 			+ "&client_id=" + fbConfig.id
 			+ "&grant_type=" + "client_credentials";
 	
@@ -33,7 +26,7 @@ public class FacebookResolver extends SocialNetworkResolver {
 	}
 	
 	public String getUrlStartConnection(String callback) {
-		String cURLCallback = appConfig.app_root + callback; 
+		String cURLCallback = pigeonConfig.app_root + callback; 
 		String command = RequestMethod.fb_oauth_authorize.method 
 			+ "?client_id=" + fbConfig.id 
 			+ "&redirect_uri=" + cURLCallback + "?" 
@@ -42,10 +35,10 @@ public class FacebookResolver extends SocialNetworkResolver {
 	}
 	
 	public String getAccessTokenFromUser(String callback, String hash) {
-		String callbackUrl = appConfig.app_root + callback;
+		String callbackUrl = pigeonConfig.app_root + callback;
 		String command = RequestMethod.fb_oauth_access_token.method
 			+ "?client_id=" + fbConfig.id
-			+ "&client_secret=" + fbConfig.keySecret
+			+ "&client_secret=" + fbConfig.secret
 			+ "&code=" + hash 
 			+ "&redirect_uri=" + callbackUrl;
 		
@@ -65,6 +58,10 @@ public class FacebookResolver extends SocialNetworkResolver {
 			+"&" + ResponseAttribute.fb_access_token.key 
 			+ token;
 		return mount( command );
+	}
+	
+	public void setFbConfig(FacebookConfiguration fbConfig) {
+		this.fbConfig = fbConfig;
 	}
 	
 }

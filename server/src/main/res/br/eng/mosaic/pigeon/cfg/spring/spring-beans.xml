@@ -30,8 +30,8 @@
 	
 	<bean id="facebookConfig" class="br.eng.mosaic.pigeon.server.socialnetwork.FacebookConfiguration">
 		<property name="id" value="150586265008036" />
-		<property name="keySecret" value="346fba40bd7eb18f4c29984bf31fd18d" />
-		<property name="keySecret" value="keyAPI" />
+		<property name="secret" value="346fba40bd7eb18f4c29984bf31fd18d" />
+		<property name="api" value="afb21c6fd44d914ab89c717aa08c3e92" />
 	</bean>
 	
 </beans>
