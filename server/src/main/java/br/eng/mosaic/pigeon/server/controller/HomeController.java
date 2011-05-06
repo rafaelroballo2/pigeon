@@ -11,9 +11,8 @@ public class HomeController {
 		
 		/*
 		 * checar usuario autenticado, caso nao redirecionar dar signUp
-		 * checar mecanismos de segurança : considerar spring-security
+		 * checar mecanismos de seguranÔøΩa : considerar spring-security
 		 */
-		
 	}
-
+	
 }
