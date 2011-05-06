@@ -26,6 +26,7 @@ import org.anddev.andengine.ui.activity.BaseGameActivity;
 
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 import br.eng.mosaic.pigeon.andenginetest.personagens.BadPigeon;
 import br.eng.mosaic.pigeon.andenginetest.personagens.Pigeon;
 import br.ufpe.cin.mosaic.pigeon.business.android.facebook.LoginFacebook;
@@ -157,9 +158,10 @@ public class Stage extends BaseGameActivity {
 					startActivity(i);
 				}
 				
-				/*if(badPigeon1.collidesWith(pigeon)) {
-					Stage.mExplosionSound.play();
-				}*/
+				if(badPigeon1.collidesWith(pigeon)) {
+					//Stage.mExplosionSound.play();
+					System.exit(0);
+				}
 			}
 		});
 	
