@@ -18,10 +18,9 @@ public class FacebookController {
 	
 	protected interface uri {
 		String redir = "redirect:";
-		String ctx = "/**/server/pigeon/";
-		String main = redir + ctx + "main.do";
-		String start = ctx + "oauth/facebook/start.do";
-		String callback = ctx + "oauth/facebook/callback.do";
+		String main = redir + "/main.do";
+		String start = "/oauth/facebook/start.do";
+		String callback = "/oauth/facebook/callback.do";
 	}
 	
 	protected interface alias {
@@ -32,7 +31,7 @@ public class FacebookController {
 	@Autowired private UserService userService;
 	
 	@RequestMapping( uri.start )
-	public String start() {
+	public String start(HttpSession session) {	
 		return uri.redir + client.getStartConnection( uri.callback );
 	}
 	
@@ -40,7 +39,7 @@ public class FacebookController {
 	public ModelAndView callback( @RequestParam(value="code") String hash, HttpSession session) {
 		
 		ModelAndView view = new ModelAndView( uri.main );
-		if (hash == null || hash.isEmpty()) return view;
+		if (hash	 == null || hash.isEmpty()) return view;
 		
 		UserInfo userInfo = getUser( hash );
 		User user = userService.connect( userInfo );

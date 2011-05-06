@@ -14,8 +14,25 @@
 	<!-- others -->
 	<bean id="facebookClient" class="br.eng.mosaic.pigeon.server.socialnetwork.FacebookClient">
 		<property name="resolver" >
-			<bean class="br.eng.mosaic.pigeon.server.socialnetwork.FacebookResolver" />
+			<bean class="br.eng.mosaic.pigeon.server.socialnetwork.FacebookResolver" >
+				<property name="pigeonConfig" ref="pigeonConfiguration" />
+				<property name="fbConfig" ref="facebookConfiguration" />
+			</bean>
 		</property>
 	</bean>
+	
+	<bean id="pigeonConfiguration" class="br.eng.mosaic.pigeon.server.integration.PigeonConfiguration">
+		<property name="fb_root" value="http://localhost:6967/" />
+		<property name="app_root" value="http://localhost:8080/pigeon/" />
+		<!-- https://graph.facebook.com/ -->
+	</bean>
+	
+	<bean id="facebookConfig" class="br.eng.mosaic.pigeon.server.socialnetwork.FacebookConfiguration">
+		<property name="id" value="150586265008036" />
+		<property name="keySecret" value="346fba40bd7eb18f4c29984bf31fd18d" />
+		<property name="keySecret" value="keyAPI" />
+	</bean>
+	
+	
 	
 </beans>

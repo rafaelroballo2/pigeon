@@ -23,11 +23,6 @@ public abstract class SocialNetworkResolver {
 		return urlApiQuery + partialQuery + formatJSON + concatToken + token;
 	}
 	
-	// colocar depois em outro local adequado
-	protected String getContext() {
-		return "http://localhot:6967/";
-	}
-	
 	protected enum ResponseAttribute {
 		fb_access_token("access_token=");
 		

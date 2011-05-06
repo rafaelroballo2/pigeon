@@ -23,7 +23,15 @@
 		</property>
 	</bean>
 	
-	<context:component-scan base-package="br.eng.mosaic.pigeon.server.controller"/>
-	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+	<bean id="pigeonConfiguration" class="br.eng.mosaic.pigeon.server.integration.PigeonConfiguration">
+		<property name="fb_root" value="https://graph.facebook.com/" />
+		<property name="app_root" value="http://localhost:8080/pigeon/" />
+	</bean>
+	
+	<bean id="facebookConfig" class="br.eng.mosaic.pigeon.server.socialnetwork.FacebookConfiguration">
+		<property name="id" value="150586265008036" />
+		<property name="keySecret" value="346fba40bd7eb18f4c29984bf31fd18d" />
+		<property name="keySecret" value="keyAPI" />
+	</bean>
 	
 </beans>

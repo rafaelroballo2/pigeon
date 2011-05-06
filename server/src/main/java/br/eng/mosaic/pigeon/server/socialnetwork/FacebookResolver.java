@@ -1,15 +1,19 @@
 package br.eng.mosaic.pigeon.server.socialnetwork;
 
+import br.eng.mosaic.pigeon.server.integration.PigeonConfiguration;
+
 public class FacebookResolver extends SocialNetworkResolver {
 	
-	protected FacebookConfiguration config;
+	protected PigeonConfiguration appConfig;
+	protected FacebookConfiguration fbConfig;
 	
 	public FacebookResolver() {
-		config = new FacebookConfiguration();
+		appConfig = new PigeonConfiguration();
+		fbConfig = new FacebookConfiguration();
 	}
 	
 	protected String mount( String command ) {
-		return config.root + command;
+		return appConfig.app_root + command;
 	}
 	
 	@Deprecated @Override public String getApplicationInfo(String fbuid, String accessToken) {
@@ -21,27 +25,27 @@ public class FacebookResolver extends SocialNetworkResolver {
 	
 	public String getAccessTokenFromApplication() {
 		String command = RequestMethod.fb_oauth_access_token.method
-			+ "?client_secret=" + config.keySecret
-			+ "&client_id=" + config.id
+			+ "?client_secret=" + fbConfig.keySecret
+			+ "&client_id=" + fbConfig.id
 			+ "&grant_type=" + "client_credentials";
 	
 		return mount( command );
 	}
 	
 	public String getUrlStartConnection(String callback) {
-		String cURLCallback = getContext() + callback; 
+		String cURLCallback = appConfig.app_root + callback; 
 		String command = RequestMethod.fb_oauth_authorize.method 
-			+ "?client_id=" + config.id 
+			+ "?client_id=" + fbConfig.id 
 			+ "&redirect_uri=" + cURLCallback + "?" 
 			+ "&scope=email,user_about_me";
 		return mount( command );
 	}
 	
 	public String getAccessTokenFromUser(String callback, String hash) {
-		String callbackUrl = getContext() + callback;
+		String callbackUrl = appConfig.app_root + callback;
 		String command = RequestMethod.fb_oauth_access_token.method
-			+ "?client_id=" + config.id
-			+ "&client_secret=" + config.keySecret
+			+ "?client_id=" + fbConfig.id
+			+ "&client_secret=" + fbConfig.keySecret
 			+ "&code=" + hash 
 			+ "&redirect_uri=" + callbackUrl;
 		
