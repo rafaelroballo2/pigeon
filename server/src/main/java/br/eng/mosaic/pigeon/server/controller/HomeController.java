@@ -1,16 +1,15 @@
 package br.eng.mosaic.pigeon.server.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import br.eng.mosaic.pigeon.common.domain.User;
-import br.eng.mosaic.pigeon.server.controller.FacebookController.alias;
+import br.eng.mosaic.pigeon.common.dto.UserSocialInfo;
 import br.eng.mosaic.pigeon.server.controller.FacebookController.uri;
 import br.eng.mosaic.pigeon.server.helper.MimeType;
 
@@ -18,7 +17,8 @@ import br.eng.mosaic.pigeon.server.helper.MimeType;
 public class HomeController {
 	
 	@RequestMapping( uri.main )
-	public void home(HttpSession session, HttpServletResponse response) throws IOException {
+	public void home( @RequestParam(value = "user_id") String user_id,
+			HttpSession session, HttpServletResponse response) throws IOException {
 		
 		/*
 		 * checar usuario autenticado, caso nao redirecionar dar signUp
@@ -26,15 +26,34 @@ public class HomeController {
 		 */
 		
 		// TODO refact to set request scope
-		User user = (User) session.getAttribute( alias.user );
-		String message = "welcome <" + user.name + "> " + user.email;
-		display(response, message);
+		UserSocialInfo user = (UserSocialInfo) session.getAttribute( user_id );
+		String message = "welcome " + user.name + " : " + user.email;
+		String urlPhoto = uri.photo + "?access_token=" + user.oauth_token;
+		String urlMessage = "";
+		display(response, message, urlPhoto, urlMessage);
 	}
 	
-	private void display(HttpServletResponse response, String content) throws IOException {
-		response.setContentType(MimeType.text_plain.type);
-		PrintWriter out = response.getWriter();
-        out.write(content);
+	private void display(HttpServletResponse response, String content, 
+			String urlPhoto, String urlMessage) throws IOException {;
+			
+		response.setContentType(MimeType.text_html.type);
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append( "<html><body>" );
+		
+		builder.append( "<form>" );
+		builder.append( content + "<br/><br/>");
+		builder.append( "click to see your avatar <a href='" + urlPhoto + "'>here</a>" );
+		builder.append( "<br/><br/>");
+		builder.append( "Enter your message <input type='text' name='message'/>" );
+		builder.append( "<input type='submit' value='Send'/>" );
+		
+		builder.append( "</form>" );
+		builder.append( "<body></html>" );
+		
+		response.getWriter().write( builder.toString() );
+		response.getWriter().flush();
+		
 	}
 	
 }
