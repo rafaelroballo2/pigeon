@@ -1,5 +1,7 @@
 package br.eng.mosaic.pigeon.server.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +20,10 @@ public class FacebookController {
 	
 	protected interface uri {
 		String redir = "redirect:";
-		String main = redir + "/main.do";
-		String start = "/oauth/facebook/start.do";
-		String callback = "/oauth/facebook/callback.do";
+		String main = "/home.do";
+		String redirMain = redir + main;
+		String start = "oauth/facebook/start.do";
+		String callback = "oauth/facebook/callback.do";
 	}
 	
 	protected interface alias {
@@ -35,22 +38,24 @@ public class FacebookController {
 		return uri.redir + client.getStartConnection( uri.callback );
 	}
 	
-	@RequestMapping( uri.callback ) 
-	public ModelAndView callback( @RequestParam(value="code") String hash, HttpSession session) {
+	@RequestMapping( uri.callback )
+	public ModelAndView callback( @RequestParam(value="code") String hash, 
+			HttpSession session) throws IOException {
 		
-		ModelAndView view = new ModelAndView( uri.main );
+		ModelAndView view = new ModelAndView( uri.redirMain );
 		if (hash	 == null || hash.isEmpty()) return view;
 		
 		UserInfo userInfo = getUser( hash );
 		User user = userService.connect( userInfo );
-		
+
+		// TODO refact to set request scope
 		session.setAttribute(alias.user, user);
 		return view;
 	}
 	
 	private UserInfo getUser(String hash) {
-		String token = client.getAccessTokenFromUser(uri.callback , hash);
-		return client.getBasicUserInfo( token );
+		String token = client.getAccessTokenFromUser( uri.callback, hash );
+		return client.getBasicUserInfo( uri.callback, token );
 	}
 	
 }

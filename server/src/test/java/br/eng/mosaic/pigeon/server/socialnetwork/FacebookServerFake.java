@@ -3,9 +3,10 @@ package br.eng.mosaic.pigeon.server.socialnetwork;
 import java.io.IOException;
 import java.util.Properties;
 
+import br.eng.mosaic.pigeon.server.helper.MimeType;
 import br.eng.mosaic.pigeon.server.helper.NanoHTTPD;
 
-public class FacebookServerFake extends NanoHTTPD implements Runnable {
+public class FacebookServerFake extends NanoHTTPD {
 	
 	private String response;
 	private MimeType mime;
@@ -33,20 +34,4 @@ public class FacebookServerFake extends NanoHTTPD implements Runnable {
 		return new NanoHTTPD.Response(HTTP_OK, mime.type, response);
 	}
 	
-	public enum MimeType {
-		text_plain( "text/plain" ), text_html( "text/html" ),
-			text_json( "text/json" ), text_xml( "text/xml" ), 
-				binary_default( "application/octet-stream" );
-		
-		private MimeType(String type) {
-			this.type = type;
-		}
-		
-		private String type;
-	}
-
-	@Override public void run() {
-		
-	}
-
 }

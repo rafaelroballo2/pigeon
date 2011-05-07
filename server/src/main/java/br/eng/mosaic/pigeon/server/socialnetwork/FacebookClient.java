@@ -34,8 +34,7 @@ public class FacebookClient {
 	}
 	
 	public String getStartConnection(String callback) {
-		String cURL = resolver.getUrlStartConnection( callback );
-		return "redirect:" + cURL;
+		return resolver.getUrlStartConnection( callback );
 	}
 	
 	/*
@@ -45,15 +44,15 @@ public class FacebookClient {
 	 * o tratamento no resolver seria pegar o array de strings e quem chamou 
 	 * 		vai saber tratar e implementa-lo adequadamente
 	 */
-	public String getAccessTokenFromUser(String callback, String hash) {
-		String cURL = resolver.getAccessTokenFromUser(callback, hash);
+	public String getAccessTokenFromUser(String callbackUri, String hash) {
+		String cURL = resolver.getAccessTokenFromUser(callbackUri, hash);
 		String response = ioFetch.getContent( cURL );
 		return tagger.getAccessToken( response );
 	}
 	
 	// TODO refatorar para usar algum parser json e melhorar coesao
-	public UserInfo getBasicUserInfo(String token) {
-		String cURL = resolver.getBasicUserInfo( token );
+	public UserInfo getBasicUserInfo(String callbackUri, String token) {
+		String cURL = resolver.getBasicUserInfo( callbackUri, token );
 		String response = ioFetch.getContent( cURL );
 		JSONObject obj = tagger.getJSONObject( response );
 

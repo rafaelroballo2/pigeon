@@ -1,6 +1,5 @@
 package br.eng.mosaic.pigeon.server.socialnetwork;
 
-
 public class FacebookResolver extends SocialNetworkResolver {
 	
 	private FacebookConfiguration fbConfig;
@@ -25,8 +24,8 @@ public class FacebookResolver extends SocialNetworkResolver {
 		return mount( command );
 	}
 	
-	public String getUrlStartConnection(String callback) {
-		String cURLCallback = pigeonConfig.app_root + callback; 
+	public String getUrlStartConnection(String callbackUri) {
+		String cURLCallback = pigeonConfig.app_root + callbackUri; 
 		String command = RequestMethod.fb_oauth_authorize.method 
 			+ "?client_id=" + fbConfig.id 
 			+ "&redirect_uri=" + cURLCallback + "?" 
@@ -34,28 +33,31 @@ public class FacebookResolver extends SocialNetworkResolver {
 		return mount( command );
 	}
 	
-	public String getAccessTokenFromUser(String callback, String hash) {
-		String callbackUrl = pigeonConfig.app_root + callback;
+	public String getAccessTokenFromUser(String callbackUri, String hash) {
+		String callbackUrl = pigeonConfig.app_root + callbackUri;
 		String command = RequestMethod.fb_oauth_access_token.method
 			+ "?client_id=" + fbConfig.id
 			+ "&client_secret=" + fbConfig.secret
-			+ "&code=" + hash 
+			+ "&code=" + hash
 			+ "&redirect_uri=" + callbackUrl;
 		
 		return mount( command );
 	}
 	
-	public String getBasicUserInfo(String token) {
-		String command = RequestMethod.fb_oauth_access_token.method
-			+ ResponseAttribute.fb_access_token.key 
-			+ token;
+	public String getBasicUserInfo(String callbackUri, String token) {
+		String commandToken = ResponseAttribute.fb_access_token.key + token; 
+		String command = RequestMethod.fb_user_info.method 
+			+ "?" + commandToken
+			+ "&client_id=" + fbConfig.id
+			+ "&redirect_uri=" + pigeonConfig.app_root 
+			+ callbackUri;
 		return mount( command );
 	}
 	
 	public String getPictureFromUser(String token) {
 		String command = RequestMethod.fb_user_picture.method
 			+ "?type=large"
-			+"&" + ResponseAttribute.fb_access_token.key 
+			+"&" + ResponseAttribute.fb_access_token.key  
 			+ token;
 		return mount( command );
 	}

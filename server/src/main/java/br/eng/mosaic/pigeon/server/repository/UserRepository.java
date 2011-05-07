@@ -7,5 +7,7 @@ public interface UserRepository {
 	User getAccount(String email);
 	
 	void update(User user);
+	
+	void insert(User user);
 
 }

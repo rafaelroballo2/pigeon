@@ -1,14 +1,12 @@
 package br.eng.mosaic.pigeon.server.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import br.eng.mosaic.pigeon.common.domain.User;
 import br.eng.mosaic.pigeon.common.dto.UserInfo;
 import br.eng.mosaic.pigeon.server.repository.UserRepository;
 
 public class UserService {
 	
-	@Autowired private UserRepository userRepository;
+	private UserRepository userRepository;
 	
 	public User connect(UserInfo userInfo) {
 		
@@ -16,7 +14,12 @@ public class UserService {
 		if ( user == null ) {
 			/*
 			 * TODO register and confirm registration
+			 * TODO refactor code below, argh!
 			 */
+			user = new User();
+			user.name = userInfo.name;
+			user.email = userInfo.email;
+			userRepository.insert(user);
 		}
 		
 		updateInfoStatisticals(user);
@@ -30,5 +33,5 @@ public class UserService {
 	public void setUserRepository(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
-
+	
 }

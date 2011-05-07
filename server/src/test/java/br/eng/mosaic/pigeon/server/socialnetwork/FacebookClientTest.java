@@ -1,7 +1,7 @@
 package br.eng.mosaic.pigeon.server.socialnetwork;
 
-import static br.eng.mosaic.pigeon.server.socialnetwork.FacebookServerFake.MimeType.text_json;
-import static br.eng.mosaic.pigeon.server.socialnetwork.FacebookServerFake.MimeType.text_plain;
+import static br.eng.mosaic.pigeon.server.helper.MimeType.text_json;
+import static br.eng.mosaic.pigeon.server.helper.MimeType.text_plain;
 import static br.eng.mosaic.pigeon.server.socialnetwork.SocialNetworkResolver.ResponseAttribute.fb_access_token;
 
 import java.io.IOException;
@@ -21,7 +21,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import br.eng.mosaic.pigeon.common.dto.UserInfo;
-import br.eng.mosaic.pigeon.server.socialnetwork.FacebookServerFake.MimeType;
+import br.eng.mosaic.pigeon.server.helper.MimeType;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:br/eng/mosaic/pigeon/cfg/spring/spring-test-beans.xml" })
@@ -82,12 +82,10 @@ public class FacebookClientTest extends TestCase {
 	 */
 	
 	@Test public void testGetCommandStartConnectionSuccessfully() {
-		String redirect = "redirect:";
 		String callback = "oauth/facebook/connect.do";
 		String cURL = facebookClient.getStartConnection( callback );
 		
 		assertNotNull( cURL );
-		assertTrue( cURL.contains( redirect ) );
 		assertTrue( cURL.contains( callback ) );
 	}
 	
@@ -114,7 +112,8 @@ public class FacebookClientTest extends TestCase {
 		String token = String.valueOf( random.nextInt(1000001) );
 		startServer(text_json, obj.toString() );
 		
-		UserInfo user = facebookClient.getBasicUserInfo(token);
+		String callback = "oauth/facebook/connect.do";
+		UserInfo user = facebookClient.getBasicUserInfo( callback, token );
 		
 		assertNotNull( user );
 		assertEquals( user.name, obj.getString("name"));
