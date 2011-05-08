@@ -134,19 +134,19 @@ public class Stage extends BaseGameActivity {
                     runnableHandler.postRunnable(new Runnable() {
                         @Override
                         public void run() {
-                        	final float margem = 5;
+                        	final float margem = 20;
                         	float x = pSceneTouchEvent.getX();
                         	float y = pSceneTouchEvent.getY();
-                        	if (((x - margem > badPigeon1.getX()) && (x + margem < badPigeon1.getX() + badPigeon1.getWidth())) && 
-                        		((y - margem > badPigeon1.getY()) && (y + margem < badPigeon1.getY() + badPigeon1.getHeight())))  {
+                        	if (((x + margem > badPigeon1.getX()) && (x + margem < badPigeon1.getX() + badPigeon1.getWidth())) && 
+                        		((y + margem > badPigeon1.getY()) && (y + margem < badPigeon1.getY() + badPigeon1.getHeight())))  {
                         			scene.getLastChild().detachChild(badPigeon1);
                         	} 
-                        	if (((x - margem > badPigeon2.getX()) && (x + margem < badPigeon2.getX() + badPigeon2.getWidth())) && 
-                                ((y - margem > badPigeon2.getY()) && (y + margem < badPigeon2.getY() + badPigeon2.getHeight())))  {
+                        	if (((x + margem > badPigeon2.getX()) && (x + margem < badPigeon2.getX() + badPigeon2.getWidth())) && 
+                                ((y + margem > badPigeon2.getY()) && (y + margem < badPigeon2.getY() + badPigeon2.getHeight())))  {
                                 	scene.getLastChild().detachChild(badPigeon2);
                         	} 
-                        	if (((x - margem > badPigeon3.getX()) && (x + margem < badPigeon3.getX() + badPigeon3.getWidth())) && 
-                        		((y - margem > badPigeon3.getY()) && (y + margem < badPigeon3.getY() + badPigeon3.getHeight())))  {
+                        	if (((x + margem > badPigeon3.getX()) && (x + margem < badPigeon3.getX() + badPigeon3.getWidth())) && 
+                        		((y + margem > badPigeon3.getY()) && (y + margem < badPigeon3.getY() + badPigeon3.getHeight())))  {
                         			scene.getLastChild().detachChild(badPigeon3);
                         	}
                         }

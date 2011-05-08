@@ -63,11 +63,11 @@ public class Facebook {
 
     // Facebook server endpoints: may be modified in a subclass for testing
     protected static String DIALOG_BASE_URL =
-        "https://m.facebook.com/dialog/";
+        "http://m.facebook.com/dialog/";
     protected static String GRAPH_BASE_URL =
-        "https://graph.facebook.com/";
+        "http://graph.facebook.com/";
     protected static String RESTSERVER_URL =
-        "https://api.facebook.com/restserver.php";
+        "http://api.facebook.com/restserver.php";
 
     private String mAccessToken = null;
     private long mAccessExpires = 0;
@@ -513,7 +513,7 @@ public class Facebook {
      *            key-value string parameters, e.g. the path "search" with
      *            parameters "q" : "facebook" would produce a query for the
      *            following graph resource:
-     *            https://graph.facebook.com/search?q=facebook
+     *            http://graph.facebook.com/search?q=facebook
      * @throws IOException
      * @throws MalformedURLException
      * @return JSON string representation of the response
@@ -541,7 +541,7 @@ public class Facebook {
      *            Key-value string parameters, e.g. the path "search" with
      *            parameters {"q" : "facebook"} would produce a query for the
      *            following graph resource:
-     *            https://graph.facebook.com/search?q=facebook
+     *            http://graph.facebook.com/search?q=facebook
      * @param httpMethod
      *            http verb, e.g. "GET", "POST", "DELETE"
      * @throws IOException
