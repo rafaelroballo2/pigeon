@@ -1,6 +1,5 @@
 package br.eng.mosaic.pigeon.andenginetest;
 
-import org.anddev.andengine.audio.sound.Sound;
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.handler.IUpdateHandler;
@@ -25,13 +24,12 @@ import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
 import android.content.Intent;
-import android.util.Log;
-import android.widget.Toast;
 import br.eng.mosaic.pigeon.andenginetest.personagens.BadPigeon;
 import br.eng.mosaic.pigeon.andenginetest.personagens.Pigeon;
 import br.ufpe.cin.mosaic.pigeon.business.android.facebook.LoginFacebook;
 
 public class Stage extends BaseGameActivity {
+
 	// ===========================================================
 	// Constants-
 	// ===========================================================
@@ -110,7 +108,7 @@ public class Stage extends BaseGameActivity {
 		final int playerX = (CAMERA_WIDTH - Stage.mPlayerTextureRegion.getTileWidth()) / 4;
 		final int playerY = (CAMERA_HEIGHT - Stage.mPlayerTextureRegion.getTileHeight()) / 2;
 		
-		final Pigeon pigeon = new Pigeon(playerX, playerY, Stage.mPlayerTextureRegion);
+		final Pigeon pigeon = new Pigeon(playerX + 200, playerY, Stage.mPlayerTextureRegion);
 		
 		final BadPigeon badPigeon1 = new BadPigeon(playerX - 120, playerY, Stage.mEnemyTextureRegion1);
 		final BadPigeon badPigeon2 = new BadPigeon(playerX - 130, playerY + 100, Stage.mEnemyTextureRegion1);
@@ -136,7 +134,21 @@ public class Stage extends BaseGameActivity {
                     runnableHandler.postRunnable(new Runnable() {
                         @Override
                         public void run() {
-                        	scene.getLastChild().detachChild(badPigeon1);                        	
+                        	final float margem = 5;
+                        	float x = pSceneTouchEvent.getX();
+                        	float y = pSceneTouchEvent.getY();
+                        	if (((x - margem > badPigeon1.getX()) && (x + margem < badPigeon1.getX() + badPigeon1.getWidth())) && 
+                        		((y - margem > badPigeon1.getY()) && (y + margem < badPigeon1.getY() + badPigeon1.getHeight())))  {
+                        			scene.getLastChild().detachChild(badPigeon1);
+                        	} 
+                        	if (((x - margem > badPigeon2.getX()) && (x + margem < badPigeon2.getX() + badPigeon2.getWidth())) && 
+                                ((y - margem > badPigeon2.getY()) && (y + margem < badPigeon2.getY() + badPigeon2.getHeight())))  {
+                                	scene.getLastChild().detachChild(badPigeon2);
+                        	} 
+                        	if (((x - margem > badPigeon3.getX()) && (x + margem < badPigeon3.getX() + badPigeon3.getWidth())) && 
+                        		((y - margem > badPigeon3.getY()) && (y + margem < badPigeon3.getY() + badPigeon3.getHeight())))  {
+                        			scene.getLastChild().detachChild(badPigeon3);
+                        	}
                         }
                     });
 				}				

@@ -27,7 +27,9 @@ public class BadPigeon extends Ave {
 	protected void onManagedUpdate(final float pSecondsElapsed) { 
 		this.mPhysicsHandler.setVelocityX(this.velocity);
 		//A perseguicao e feita calculando a diferenca de altura entre o pombo mau e o bom e em seguindo diminuindo a distancia entre eles com a porcentagem entre a distancia do pombo mau e o bom
+		//this.mPhysicsHandler.setVelocityY((Pigeon.posY - this.posY) * (this.posX/Pigeon.posX));
 		this.mPhysicsHandler.setVelocityY((Pigeon.posY - this.posY) * (this.posX/Pigeon.posX));
+		
 		super.onManagedUpdate(pSecondsElapsed);
 	}
 	
