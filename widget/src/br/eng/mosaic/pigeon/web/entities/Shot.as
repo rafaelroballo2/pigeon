@@ -16,20 +16,25 @@ package br.eng.mosaic.pigeon.web.entities
 			graphic=new Image(sprite);
 			this.width=16;
 			this.height=16;
-			
+			type = "shot";
 		}
 		
 		override public function update():void{
 			time--;
 			var enemies:Array=[];
 			world.getClass(Enemy, enemies);
-			enemies.forEach(checkCollistion);
+			
+			if (time <=0){
+				world.remove(this);
+			}
+			
+			//enemies.forEach(checkCollistion); 
 		}
 		
-		private function checkCollistion(enemy:Enemy, index:int, array:Array):void{
+		/*private function checkCollistion(enemy:Enemy, index:int, array:Array):void{
 			if(this.collideWith(enemy, x, y)!=null){
 				enemy.die();
 			}
-		}
+		}*/
 	}
 }

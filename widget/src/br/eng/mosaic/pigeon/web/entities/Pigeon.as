@@ -9,7 +9,8 @@ package br.eng.mosaic.pigeon.web.entities
 	import net.flashpunk.Sfx;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Spritemap;
-	import net.flashpunk.utils.Input; import net.flashpunk.utils.Key;	
+	import net.flashpunk.utils.Input;
+	import net.flashpunk.utils.Key;	
 	
 	public class Pigeon extends Entity
 	{
@@ -19,11 +20,11 @@ package br.eng.mosaic.pigeon.web.entities
 		private var contadorColisao:int = 0;
 		private var gritou:Boolean = false;
 		
-		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/SpritVoo.png')]
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/pombo_sprite.png')]
 		private const pigeon:Class; 
 		
-		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/NovaExplosao.png')]
-		private const explosao:Class; 
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/explosao.png')]
+		private const EXPLOSAO:Class; 
 		
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/gritao.mp3')]
 		private const GRITO:Class;
@@ -34,12 +35,13 @@ package br.eng.mosaic.pigeon.web.entities
 		public function Pigeon()
 		{
 		
-			sprPigeon = new Spritemap(pigeon, 45, 50);
-			sprPigeon.add("voo", [0, 1, 2, 3, 4, 5], 5, true); 
+			sprPigeon = new Spritemap(pigeon, 90, 110);
+			sprPigeon.add("voo", [1, 0, 2, 0], 10, true); 
 			graphic = sprPigeon;
 			
 			//essa linha é igual às duas de baixo: faz a mesma coisa
-			setHitbox(45, 50);
+			//setHitbox(90, 110);
+			setHitbox(80,100, 5, 5);
 			//height = 45;
 			//width = 50;
 			
@@ -62,8 +64,8 @@ package br.eng.mosaic.pigeon.web.entities
 				if (!colidiu && collide("enemy", x, y)) {
 					colidiu = true;
 					
-					sprPigeon2 = new Spritemap(explosao, 40, 33);
-					sprPigeon2.add("explosao", [0, 1, 2], 5, true); 
+					sprPigeon2 = new Spritemap(EXPLOSAO, 112, 107);
+					sprPigeon2.add("explosao", [0, 1, 2, 3], 5, true); 
 					//sprPigeon2.add("explosao", [0, 1, 2]); 
 					graphic = sprPigeon2;
 				}

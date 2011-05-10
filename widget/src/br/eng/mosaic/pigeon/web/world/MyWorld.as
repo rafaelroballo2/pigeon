@@ -74,12 +74,12 @@ package br.eng.mosaic.pigeon.web.world
 				add(shot);
 			}
 			this.bringForward(cursor);
-			updateShots();
+			//updateShots();
 			
 		}
 		
 		
-		private function findExpiredShots(item:Shot, index:int, array:Array):Boolean{
+		/*private function findExpiredShots(item:Shot, index:int, array:Array):Boolean{
 			return item.time<0;
 		}
 		
@@ -97,6 +97,6 @@ package br.eng.mosaic.pigeon.web.world
 			var temp:Array=shots.filter(findExpiredShots);
 			temp.forEach(removeShot);
 			shots=shots.filter(findAliveShots);
-		}
+		}*/
 	}
 }
