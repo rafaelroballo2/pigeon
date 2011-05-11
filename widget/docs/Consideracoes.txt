@@ -1,0 +1,4 @@
+Algoritmo de Dificuldade
+
+- Pombo sempre anda com velocidade constante
+- Inimigos aumentam de velocidade com o passar das fases
