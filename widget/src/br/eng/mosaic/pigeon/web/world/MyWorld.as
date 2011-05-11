@@ -13,6 +13,8 @@ package br.eng.mosaic.pigeon.web.world
 	public class MyWorld extends World
 	{
 	
+		private var pigeon:Pigeon = new Pigeon();
+		
 		public static var playing = false;
 		
 		public static var userX:int = 0;
@@ -22,11 +24,11 @@ package br.eng.mosaic.pigeon.web.world
 		public var cursor:Cursor=new Cursor;
 		
 		public function MyWorld() {
-			
 			add(new Background);
 			//addGraphic(new Background);
 			
-			add(new Pigeon);
+			add(pigeon);
+			
 			add(cursor);
 			var enemy:Enemy = new Enemy();
 			
@@ -62,8 +64,6 @@ package br.eng.mosaic.pigeon.web.world
 		
 		private var shots:Array=[];
 		
-		
-		
 		override public function update():void{
 			super.update();
 			if(Input.mousePressed){
@@ -74,29 +74,11 @@ package br.eng.mosaic.pigeon.web.world
 				add(shot);
 			}
 			this.bringForward(cursor);
-			//updateShots();
 			
+			//Se não tem mais inimigos, termina
+			if (this.classCount(Enemy)==0){
+				pigeon.finalize();
+			}
 		}
-		
-		
-		/*private function findExpiredShots(item:Shot, index:int, array:Array):Boolean{
-			return item.time<0;
-		}
-		
-		private function findAliveShots(item:Shot, index:int, array:Array):Boolean{
-			return !findExpiredShots(item, index, array);
-		}
-		
-		
-		private function removeShot(item:Shot, index:int, array:Array):void{
-			remove(item);
-			
-		}
-		
-		private function updateShots():void{
-			var temp:Array=shots.filter(findExpiredShots);
-			temp.forEach(removeShot);
-			shots=shots.filter(findAliveShots);
-		}*/
 	}
 }

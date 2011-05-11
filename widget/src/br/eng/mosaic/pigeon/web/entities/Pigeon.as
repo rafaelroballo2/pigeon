@@ -14,11 +14,12 @@ package br.eng.mosaic.pigeon.web.entities
 	
 	public class Pigeon extends Entity
 	{
-		private var sprPigeon2:Spritemap;
-		private var terminou:Boolean = false;
-		private var colidiu :Boolean= false;
-		private var contadorColisao:int = 0;
 		private var gritou:Boolean = false;
+		private var dead:Boolean=false;
+		private var deadCount:int = 0;
+		private const deadCountLimit:int = 50;
+		
+		private var velocity:int = 1;
 		
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/pombo_sprite.png')]
 		private const pigeon:Class; 
@@ -39,56 +40,70 @@ package br.eng.mosaic.pigeon.web.entities
 			sprPigeon.add("voo", [1, 0, 2, 0], 10, true); 
 			graphic = sprPigeon;
 			
-			//essa linha é igual às duas de baixo: faz a mesma coisa
-			//setHitbox(90, 110);
+			//O tamanho acertável é 10x10 menor, e o centro fica 5x5 desclocado, para 
+			//o hitbox continuar central
 			setHitbox(80,100, 5, 5);
-			//height = 45;
-			//width = 50;
 			
 			y=300;
+		}
+		
+		private function die():void{
+			//O pombo vira uma nuvem explodida
+			var cloud:Cloud = new Cloud();
+			cloud.x = x;
+			cloud.y = y;
+			world.add(cloud);
+			
+			//e as penas voam. cada uma aparece em uma quina do pombo
+			var pena:Pena = new Pena(Pena.PLAYER, x - 10, y);
+			world.add(pena);
+			pena = new Pena(Pena.PLAYER, x +(this.width), y - 10);
+			world.add(pena);
+			pena = new Pena(Pena.PLAYER, x, y + (this.height/2));
+			world.add(pena);
+			pena = new Pena(Pena.PLAYER, x +(this.width/2), y + (this.height/2) + 20);
+			world.add(pena);
+			
+			this.graphic = null;
+			dead = true;
+			
+			//world.remove(this);
+		}
+		
+		public function finalize():void{
+			velocity += 5;
 		}
 		
 		override public function update():void {
 			super.update();
 			
 			//Check de colisões
-			if (x < FP.width && !terminou) {
+			if (x < FP.width && !dead) {
 				sprPigeon.play("voo")
-				x+=1;
-				//x += (2 + TelaInicial.pontuacao);
+				x+=velocity;
 				
 				MyWorld.userX = x;
 				MyWorld.userY = y;
 				
-				//Explode mas não para
-				if (!colidiu && collide("enemy", x, y)) {
-					colidiu = true;
-					
-					sprPigeon2 = new Spritemap(EXPLOSAO, 112, 107);
-					sprPigeon2.add("explosao", [0, 1, 2, 3], 5, true); 
-					//sprPigeon2.add("explosao", [0, 1, 2]); 
-					graphic = sprPigeon2;
+				//Morte do pombo
+				if (collide("enemy", x, y)) {
+					die();
 				}
-				
-			} else if (x >= FP.width && !terminou){
-				terminou = true;
-				//FP.world = new LevelComplete;
+			
+			//Venceu
+			} else if (x >= FP.width && !dead){
 				FP.world = new TelaInicial;
 				TelaInicial.pontuacao += 1;
 			}
 			
-			if (colidiu) {
+			if (dead) {
 				if (!gritou) {
 					grito.play();
 					gritou = true;
 				}
-				if (contadorColisao == 100) {
-					terminou = true;
+				if (deadCount++ >= deadCountLimit) {
+					world.remove(this);
 					FP.world = new TelaInicial;
-				} else {
-					//sprPigeon.play("explosao");
-					contadorColisao++;
-					sprPigeon2.play("explosao")
 				}
 			}
 			

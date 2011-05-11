@@ -14,37 +14,23 @@ package br.eng.mosaic.pigeon.web.entities
 	{
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/inimigo_sprite_dir.png')] 
 		private static const INIMIGO_DIR:Class;
-		//private static const aliveSprite:Class;
 		
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/inimigo_sprite_esq.png')] 
 		private static const INIMIGO_ESQ:Class;
 		
-		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/explosao.png')]
-		private const EXPLOSAO:Class;
-		
 		public var sprEnemyDir:Spritemap;
 		public var sprEnemyEsq:Spritemap;
-		//public var sprExplosao:Spritemap;
 		public var sprActive:Spritemap;
-		
-		private var virou:Boolean = false;
-		private var dead:Boolean=false;
-		private var deadCount:int;
 		
 		public function Enemy(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null)
 		{
 			super(x, y, graphic, mask);
-			
-			virou = false;
 			
 			sprEnemyDir = new Spritemap(INIMIGO_DIR, 100, 110);
 			sprEnemyDir.add("vooInimigo", [1, 0, 2, 0], 10, true); 
 			
 			sprEnemyEsq = new Spritemap(INIMIGO_ESQ, 100, 110);
 			sprEnemyEsq.add("vooInimigo", [1, 2, 1, 0], 10, true); 
-			
-			//sprExplosao = new Spritemap(EXPLOSAO, 112, 107);
-			//sprExplosao.add("vooInimigo", [0, 1, 2, 3], 5, false);
 			
 			if (MyWorld.userX >= this.x){
 				sprActive = sprEnemyDir;
@@ -53,86 +39,78 @@ package br.eng.mosaic.pigeon.web.entities
 			}
 			
 			this.graphic = sprActive;
-			//this.graphic=new Image(aliveSprite);
-			//var hitbox:Hitbox=new Hitbox();
-			
+
+			//O tamanho acertável é 10x10 menor, e o centro fica 5x5 desclocado, para 
+			//o hitbox continuar central
 			setHitbox(90, 90, 5, 5);
 			
-			//this.width=40;
-			//this.height = 40;
-			//this.centerOrigin();
 			type = "enemy"; //usado para tratar a colisÃ£o
 		}
 		
 		public function die():void{
-			dead=true;
-			deadCount=0;
+			
+			//O pombo vira uma nuvem explodida
 			var cloud:Cloud = new Cloud();
 			cloud.x = x;
 			cloud.y = y;
 			world.add(cloud);
 			
-			world.remove(this);
+			//e as penas voam. cada uma aparece em uma quina do pombo
+			var pena:Pena = new Pena(Pena.ENEMY, x - 10, y);
+			world.add(pena);
+			pena = new Pena(Pena.ENEMY, x +(this.width), y - 10);
+			world.add(pena);
+			pena = new Pena(Pena.ENEMY, x, y + (this.height/2));
+			world.add(pena);
+			pena = new Pena(Pena.ENEMY, x +(this.width/2), y + (this.height/2) + 20);
+			world.add(pena);
 			
-			//this.graphic=new Image(deadSprite1);
-			//sprActive = sprExplosao;
-			//this.graphic = sprActive;
-			//this.type = "nuvem";
+			world.remove(this);
 		}
 		
 		
 		override public function update():void{
 			super.update();
 			
-			//Vira o inimigo para o pombo, mas só quando entra na aplicação
-			if (!virou){
-				if (MyWorld.userX >= this.x){
-					sprActive = sprEnemyDir;
-				} else {
-					sprActive = sprEnemyEsq;
-				}
-				this.graphic = sprActive;
-				
-				virou = true;
+			//Vira o inimigo para o pombo, sempre
+			if (MyWorld.userX >= this.x){
+				sprActive = sprEnemyDir;
+			} else {
+				sprActive = sprEnemyEsq;
 			}
+			this.graphic = sprActive;
+			
+			//Faz a animação do vôo
 			sprActive.play("vooInimigo");
 			
+			//Se colidiu com o tiro do usuário, morre
 			if (collide("shot", x, y)){
 				die();
 			}
 			
-			/*if(dead&&deadCount++>50){
-				world.remove(this);
-			}else{*/
+			if (!collide("player", x, y)) {
+				//Esse fator velocidade vai dar a dificuldade do jogo
+				var fatorVelocidade:int = (1 + TelaInicial.pontuacao*2/3);
 				
-				//Se colidir, fica parado
-				if (!collide("player", x, y) && !dead) {
-					
-					//Esse fator velocidade vai dar a dificuldade do jogo
-					var fatorVelocidade:int = (1 + TelaInicial.pontuacao*2/3);
-					
-					var userX:int = MyWorld.userX;
-					var userY:int = MyWorld.userY;
-					
-					//Anda 2 pixels para perto do pombo, em cada eixo
-					if (userX != x) {
-						if (userX > x) {
-							x += fatorVelocidade;
-						} else {
-							x -= fatorVelocidade;
-						}
-					}
-					if (userY != y) {
-						if (userY > y) {
-							y += fatorVelocidade;
-						} else {
-							y -= fatorVelocidade;
-						}
+				var userX:int = MyWorld.userX;
+				var userY:int = MyWorld.userY;
+				
+				//Anda 2 pixels para perto do pombo, em cada eixo
+				if (userX != x) {
+					if (userX > x) {
+						x += fatorVelocidade;
+					} else {
+						x -= fatorVelocidade;
 					}
 				}
-				
-			//}
-			
+				if (userY != y) {
+					if (userY > y) {
+						y += fatorVelocidade;
+					} else {
+						y -= fatorVelocidade;
+					}
+				}
+			}
 		}
 	}
 }
