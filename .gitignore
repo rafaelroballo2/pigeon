@@ -1,2 +1,7 @@
+<<<<<<< HEAD
+*\bin
+*.DS_Store
+=======
 .DS_Store
 server/build/*
+>>>>>>> 2d0739b4af39fd4c7d534cab24c8b5cfe10a3c9b

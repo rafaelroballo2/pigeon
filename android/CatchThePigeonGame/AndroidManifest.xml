@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" 
+		package="br.ufpe.cin.mosaic.pigeon.client.android.gameplay">
+    <application>
+        <activity android:name="GameActivity" />
+    </application>
+</manifest>
