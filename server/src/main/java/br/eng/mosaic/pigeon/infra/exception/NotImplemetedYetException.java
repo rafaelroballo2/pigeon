@@ -5,7 +5,7 @@ public class NotImplemetedYetException extends RuntimeException {
 	private static final long serialVersionUID = 5065443852530113766L;
 
 	public NotImplemetedYetException() {
-		super("ainda não implementado pelo desenvolvedor");
+		super("ainda n√£o implementado pelo desenvolvedor");
 	}
 
 }

@@ -8,7 +8,7 @@ public class TwitterResolver extends SocialNetworkResolver {
 		throw new NotImplemetedYetException();
 	}
 
-	@Override public String getAccessTokenFromApplication() {
+	@Override public String getApplicationCredentials() {
 		throw new NotImplemetedYetException();
 	}
 

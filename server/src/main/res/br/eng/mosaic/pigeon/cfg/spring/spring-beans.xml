@@ -29,12 +29,24 @@
 	<bean id="pigeonConfig" class="br.eng.mosaic.pigeon.server.integration.PigeonConfiguration">
 		<property name="fb_root" value="https://graph.facebook.com/" />
 		<property name="app_root" value="http://localhost:8080/pigeon/" />
+		
 	</bean>
 	
 	<bean id="fbConfig" class="br.eng.mosaic.pigeon.server.socialnetwork.FacebookConfiguration">
-		<property name="id" value="150586265008036" />
-		<property name="secret" value="346fba40bd7eb18f4c29984bf31fd18d" />
-		<property name="api" value="afb21c6fd44d914ab89c717aa08c3e92" />
+		<!-- local -->
+		<property name="id" value="114292618654468" />
+		<property name="secret" value="dffe4fce9782ab906dbcf15a81f0c855" />
+		<property name="api" value="59705b9c7e5087bd8aa14c5e5b8837b3" />
+		
+		<!-- homologacao -->
+<!--		<property name="id" value="150586265008036" />-->
+<!--		<property name="secret" value="346fba40bd7eb18f4c29984bf31fd18d" />-->
+<!--		<property name="api" value="afb21c6fd44d914ab89c717aa08c3e92" />-->
+		
+		<!-- producao -->
+<!--		<property name="id" value="" />-->
+<!--		<property name="secret" value="" />-->
+<!--		<property name="api" value="" />-->
 	</bean>
 	
 </beans>

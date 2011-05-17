@@ -1,10 +1,11 @@
 package br.eng.mosaic.pigeon.common.domain;
 
+import java.util.Set;
+
 public class User {
 	
-	// TODO temp soluction ad-hoc : wait dao team
-	public Long id;
 	public String name;
 	public String email;
+	public Set<SocialNetwork> socials;
 
 }

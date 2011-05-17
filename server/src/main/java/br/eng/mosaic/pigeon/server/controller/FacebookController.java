@@ -1,14 +1,8 @@
 package br.eng.mosaic.pigeon.server.controller;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.nio.ByteBuffer;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
-import java.nio.channels.WritableByteChannel;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,83 +10,67 @@ import javax.servlet.http.HttpSession;
 import org.apache.http.client.ClientProtocolException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
-import br.eng.mosaic.pigeon.common.dto.UserSocialInfo;
+import br.eng.mosaic.pigeon.common.domain.SocialNetwork.Social;
+import br.eng.mosaic.pigeon.common.dto.UserInfo;
+import br.eng.mosaic.pigeon.server.controller.HomeController.uri;
 import br.eng.mosaic.pigeon.server.helper.MimeType;
 import br.eng.mosaic.pigeon.server.service.UserService;
 import br.eng.mosaic.pigeon.server.socialnetwork.FacebookClient;
 
 @Controller
-public class FacebookController {
-
-	protected interface uri {
-		String redir = "redirect:";
-		String main = "/home.do";
-		String redirMain = redir + main;
-		String start = "oauth/facebook/start.do";
-		String callback = "oauth/facebook/callback.do";
-		String photo = "oauth/facebook/photo.do";
+public class FacebookController extends AbstractSocialController {
+	
+	protected interface uri_fb {
+		String sign_in = "oauth/facebook/signIn.do";
+		String sign_callback = "oauth/facebook/callback.do";
+		String photo = "{user_id}/oauth/facebook/photo.do";
+		String publish = "{user_id}/oauth/facebook/publish.do";
 	}
 
-	protected interface alias {
-		String user = "user";
-	}
+	@Autowired private FacebookClient client;
+	@Autowired private UserService userService;
 
-	@Autowired
-	private FacebookClient client;
-	@Autowired
-	private UserService userService;
-
-	@RequestMapping(uri.start)
-	public String start(HttpSession session) {
-		return uri.redir + client.getStartConnection(uri.callback);
+	@RequestMapping( uri_fb.sign_in )
+	public String sign_in(HttpSession session) throws MalformedURLException {
+		return uri.redir + client.getUrlCodeKnowUser(uri_fb.sign_callback);
 	}
 	
-	@RequestMapping( "oauth/facebook/starter.do" )
-	public String starter( @RequestParam(value = "accessToken") String token,
-			HttpServletResponse response) throws ClientProtocolException,
-					URISyntaxException, IOException {
-		System.out.println( "ueape" );
-		return "";
+	@RequestMapping( uri_fb.sign_callback )
+	public void callback( @RequestParam(value = "code") String hash,
+			HttpSession session, HttpServletResponse response ) throws IOException {
+
+		if ( hash == null || hash.isEmpty() )
+			ack_error(response, "erro ao autenticar com server facebook");
+
+		UserInfo user = client.getUser(uri_fb.sign_callback, hash);
+		userService.connect(user);
+		session.setAttribute(user.email, user);
+		
+		ack_ok(response, user.email);
 	}
 
-	@RequestMapping(uri.callback)
-	public ModelAndView callback(@RequestParam(value = "code") String hash,
-			HttpSession session) throws IOException {
+	@RequestMapping( uri_fb.photo )
+	public void photo( @PathVariable String user_id, HttpSession session, HttpServletResponse response) 
+			throws ClientProtocolException, URISyntaxException, IOException {
 
-		ModelAndView view = new ModelAndView(uri.redir + "/");
-		if (hash == null || hash.isEmpty())
-			return view;
+		UserInfo user = getUser(session, user_id);
+		String token = user.get( Social.facebook ).token;
 
-		UserSocialInfo userInfo = getUser(hash);
-		userService.connect(userInfo);
-
-		// TODO refact to set request scope
-		session.setAttribute(userInfo.email, userInfo);
-		return new ModelAndView(uri.redirMain + "?user_id=" + userInfo.email );
+		byte[] photo = client.getPicture( token );
+		download(response, MimeType.image_png, photo );
 	}
-
-	@RequestMapping( uri.photo )
-	public void photo( @RequestParam(value = "access_token") String token,
-			HttpServletResponse response) throws ClientProtocolException,
-				URISyntaxException, IOException {
-
-		byte[] photo = client.getPicture(token);
-		downPhoto(response, photo );
+	
+	@RequestMapping( uri_fb.publish )
+	public void publish( @PathVariable String user_id, HttpSession session, HttpServletResponse response,
+			@RequestParam(value = "message") String message ) throws IOException, URISyntaxException {
+		
+		UserInfo user = getUser(session, user_id);
+		String doc_id = client.publish(user, message);
+		ack_ok(response, doc_id);
 	}
-
-	private void downPhoto(HttpServletResponse response, byte[] bytes) throws IOException {
-		response.setContentType("image/png");
-		OutputStream out = response.getOutputStream();
-		out.write( bytes );
-	}
-
-	private UserSocialInfo getUser(String hash) {
-		String token = client.getAccessTokenFromUser(uri.callback, hash);
-		return client.getBasicUserInfo(uri.callback, token);
-	}
-
+	
 }
