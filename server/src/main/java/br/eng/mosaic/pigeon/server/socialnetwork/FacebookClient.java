@@ -16,6 +16,8 @@ import org.json.JSONObject;
 
 import br.eng.mosaic.pigeon.common.domain.SocialNetwork.Social;
 import br.eng.mosaic.pigeon.common.dto.UserInfo;
+import br.eng.mosaic.pigeon.server.exception.ServerUnavailableResourceException;
+import br.eng.mosaic.pigeon.server.exception.ServerUnknownResourceException;
 import br.eng.mosaic.pigeon.server.helper.IOFetchContent;
 import br.eng.mosaic.pigeon.server.socialnetwork.SocialNetworkResolver.ResponseAttribute;
 import br.eng.mosaic.pigeon.server.socialnetwork.SocialNetworkResolver.ScopePermission;
@@ -39,8 +41,7 @@ public class FacebookClient {
 	
 	public String getUrlCodeKnowUser(String callback) throws MalformedURLException {
 		if ( callback == null || callback.isEmpty() )
-			throw new MalformedURLException(); 
-			
+			throw new MalformedURLException();			
 		return resolver.getCodeKnownUser( callback, ScopePermission.all() );
 	}
 	
@@ -68,7 +69,7 @@ public class FacebookClient {
 			user.add(facebook, id, token);
 			return user;
 		} catch (JSONException e) {
-			throw new RuntimeException(e);
+			throw new ServerUnknownResourceException();
 		}
 	}
 	
@@ -114,15 +115,15 @@ public class FacebookClient {
 				return unfortunately;
 			
 			String[] puzzle = response.split( alias.key );
-			if ( puzzle.length != 2  )
+			if ( puzzle.length != 2 )
 				return unfortunately;
 			
 			return puzzle[1];
 		}
 		
 		private String getAccessToken(String response) {
-			if ( !response.contains("") )
-				throw new RuntimeException("");
+			if ( !response.contains("access_token=") )
+				throw new ServerUnknownResourceException();
 			
 			Map<String, String> entries = new HashMap<String, String>(); 
 			String[] params = response.split("&");
@@ -138,12 +139,12 @@ public class FacebookClient {
 			return entries.get( fb_access_token.key );
 		}
 		
-		private JSONObject getJSONObject( String content ) {
+		private JSONObject getJSONObject(String content) {
 			JSONObject jsonObj = null;
 			try {
 				jsonObj = new JSONObject(content);
 			} catch (JSONException e) {
-				throw new RuntimeException("erro ao extrair objeto json");
+				throw new ServerUnavailableResourceException();
 			} 
 			return jsonObj;
 		}
