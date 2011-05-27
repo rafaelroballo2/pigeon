@@ -12,7 +12,8 @@ package br.eng.mosaic.pigeon.web.remote
 		}
 		
 		public function init():void{
-			Facebook.init("199453210096251", initCallBack);
+			Facebook.init("150586265008036", initCallBack);
+			
 		}
 		
 		public function initCallBack(sucess:Object, fail:Object):void{
@@ -23,7 +24,8 @@ package br.eng.mosaic.pigeon.web.remote
 		}
 		
 		public function login():void{
-			Facebook.login(loginCallback);
+			init();
+			Facebook.login(loginCallback, {perms:"user_birthday,read_stream,publish_stream"});
 		}
 		
 		public function loginCallback(sucess:Object, fail:Object):void{
@@ -32,6 +34,16 @@ package br.eng.mosaic.pigeon.web.remote
 			}else{
 				login();
 			}
+		}
+		
+		
+		public function submitPost(text:String):void
+		{
+			Facebook.api("/me/feed",submitPostHandler,{message:text}, "POST");
+		}
+		
+		private function submitPostHandler(sucess:Object, fail:Object):void{
+			
 		}
 	}
 }
