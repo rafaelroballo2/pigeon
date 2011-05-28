@@ -24,7 +24,7 @@ package br.eng.mosaic.pigeon.web.entities
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/pombo_sprite.png')]
 		private const pigeon:Class; 
 		
-		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/explosao.png')]
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/Explosao.png')]
 		private const EXPLOSAO:Class; 
 		
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/gritao.mp3')]

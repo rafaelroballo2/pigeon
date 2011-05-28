@@ -9,7 +9,7 @@ package br.eng.mosaic.pigeon.web.entities
 	public class Cloud extends Entity
 	{
 		
-		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/explosao.png')]
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/Explosao.png')]
 		private const EXPLOSAO:Class; 
 		
 		private var sprNuvem:Spritemap;

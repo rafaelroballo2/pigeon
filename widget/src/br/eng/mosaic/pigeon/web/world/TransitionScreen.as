@@ -4,6 +4,7 @@ package br.eng.mosaic.pigeon.web.world
 	import br.eng.mosaic.pigeon.web.entities.FacebookConfig;
 	import br.eng.mosaic.pigeon.web.entities.PlayButton;
 	import br.eng.mosaic.pigeon.web.entities.background.*;
+	import br.eng.mosaic.pigeon.web.entities.background.transition.*;
 	
 	import com.facebook.graph.Facebook;
 	
@@ -23,7 +24,7 @@ package br.eng.mosaic.pigeon.web.world
 	 * ...
 	 * @author Kellyton Brito
 	 */
-	public class  TelaInicial extends World {
+	public class TransitionScreen extends World {
 		
 		public static var pontuacao:int = 0;
 		var mensagem = "";
@@ -43,21 +44,33 @@ package br.eng.mosaic.pigeon.web.world
 			var obj:Entity;
 			
 			add(new Bg());
-			add(new OpeningScreen());
-			add(new PlayButton(FP.width/2, FP.height*2/3));
+			add(new BgScreenTransition());
+			//add(new OpeningScreen());
+			//add(new PlayButton(FP.width/2, FP.height*2/3));
 			
 			obj = new UserMessage();
 			obj.x = FP.width/2 - 130;// - obj.width/2;
 			obj.y = FP.height - 100; //obj.height;
 			add(obj);
 			
-			add(new Avatar(150, 20));
-			add(new Avatar(250, 20));
-			add(new Avatar(350, 20));
+			add (new Points(250,30));
+			add (new Figeon(250, 120));
+			
+			//TODO ajeitar para aparecer bonitinho
+			add (new Back(280, 380));
+			add (new Separator(280 + 67, 380));
+			add (new Go(420, 380));
+			
+			//TODO Ajeitar a posição para aparecer bonitinho
 			add(new Avatar(450, 20));
 			add(new Avatar(550, 20));
+			add(new Avatar(650, 20));
+			add(new Avatar(450, 200));
+			add(new Avatar(550, 200));
 			
-			add(new Star(210,10));
+			
+			
+			//add(new Star(210,10));
 			
 			add (new Help(620,415));
 			
@@ -78,38 +91,27 @@ package br.eng.mosaic.pigeon.web.world
 			
 			// COlocar a musica de novo
 			/*if (!bkg_music.playing){
-				bkg_music.play(0.5, 1);
+			bkg_music.play(0.5, 1);
 			}*/
 			
 			add(cursor);
-	
+			
 			
 			super.begin();
 		}
 		
-		public function TelaInicial() {
+		public function TransitionScreen() {
 			
 		}
 		
-		 public function startGame():void{
-				FP.world = new MyWorld;
+		public function startGame():void{
+			//FP.world = new MyWorld;
 		}
 		
 		override public function update():void {
 			super.update();
 			
-			
 			mensagem = Input.keyString;
-			
-			/*if (userTextEntity!=null){
-				remove(userTextEntity);
-			}
-			
-			textoDoUsuario = new Text(mensagem);
-			userTextEntity = new Entity(0, 0, textoDoUsuario);
-			userTextEntity.x = (FP.width / 2) - (textoDoUsuario.width / 2);
-			userTextEntity.y = (100);
-			add(userTextEntity);*/
 			
 			this.bringForward(cursor);
 			
