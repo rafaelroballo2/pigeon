@@ -1,18 +1,20 @@
 package br.eng.mosaic.pigeon.web.world 
 {
-	import net.flashpunk.World;
-	import net.flashpunk.utils.Input;
-	import net.flashpunk.FP;
-	import net.flashpunk.Sfx;
-	import br.eng.mosaic.pigeon.web.entities.Background;
 	import br.eng.mosaic.pigeon.web.entities.Cursor;
 	import br.eng.mosaic.pigeon.web.entities.Enemy;
 	import br.eng.mosaic.pigeon.web.entities.Pigeon;
 	import br.eng.mosaic.pigeon.web.entities.Shot;
+	
+	import net.flashpunk.Entity;
+	import net.flashpunk.FP;
+	import net.flashpunk.Sfx;
+	import net.flashpunk.World;
+	import net.flashpunk.graphics.Image;
+	import net.flashpunk.utils.Input;
 
 	public class MyWorld extends World
 	{
-	
+
 		private var pigeon:Pigeon = new Pigeon();
 		
 		public static var playing = false;
@@ -22,9 +24,9 @@ package br.eng.mosaic.pigeon.web.world
 		
 		//public static var cursor:Cursor=new Cursor;
 		public var cursor:Cursor=new Cursor;
-		
-		public function MyWorld() {
-			add(new Background);
+
+		public function MyWorld() {	
+			//add(new Background);
 			//addGraphic(new Background);
 			
 			add(pigeon);

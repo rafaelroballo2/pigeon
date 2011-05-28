@@ -3,8 +3,11 @@ package br.eng.mosaic.pigeon.web.world
 	import br.eng.mosaic.pigeon.web.entities.Cursor;
 	import br.eng.mosaic.pigeon.web.entities.FacebookConfig;
 	import br.eng.mosaic.pigeon.web.entities.PlayButton;
+	import br.eng.mosaic.pigeon.web.entities.background.*;
 	
 	import com.facebook.graph.Facebook;
+	
+	import flash.text.TextField;
 	
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
@@ -13,6 +16,8 @@ package br.eng.mosaic.pigeon.web.world
 	import net.flashpunk.graphics.Text;
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
+	
+	import punk.ui.*;
 	
 	/**
 	 * ...
@@ -26,55 +31,59 @@ package br.eng.mosaic.pigeon.web.world
 		var userTextEntity:Entity ;
 		public var cursor:Cursor=new Cursor;
 		
+		private var textArea:PunkTextArea;
+		
 		//public static var cursor:Cursor=new Cursor;
 		
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/smb2-title.mp3')]
 		private static const BKG_MUSIC:Class;
 		public static var bkg_music = new Sfx(BKG_MUSIC);
 		
+		private function createBackground(){
+			var obj:Entity;
+			
+			add(new Bg());
+			add(new OpeningScreen());
+			add(new PlayButton(FP.width/2, FP.height*2/3));
+			
+			obj = new UserMessage();
+			obj.x = FP.width/2 - 130;// - obj.width/2;
+			obj.y = FP.height - 100; //obj.height;
+			add(obj);
+			
+			add(new Avatar(150, 20));
+			add(new Avatar(250, 20));
+			add(new Avatar(350, 20));
+			add(new Avatar(450, 20));
+			add(new Avatar(550, 20));
+			
+			add(new Star(210,10));
+			
+			add (new Help(620,415));
+			
+			add (new Twitter(20, FP.height * 1/2));
+			add (new FacebookButton(20, FP.height * 1/2 + 70));
+			add (new Pause(100, FP.height*1/2 + 240));
+			
+		}
+		
 		override public function begin():void 
 		{
+			createBackground();
 			
-			if (!bkg_music.playing){
+			textArea = new PunkTextArea("<Put Message Here>", FP.width/2 - 115, FP.height - 65, 300, 65);
+			//textArea = new PunkTextArea("Cade a merda do texto, kct!?!?!?", 0, FP.height - 100, 300, 100);
+			
+			add(textArea); 
+			
+			// COlocar a musica de novo
+			/*if (!bkg_music.playing){
 				bkg_music.play(0.5, 1);
-			}
+			}*/
 			
 			add(cursor);
+	
 			
-			// step 1 tell flashPunk what size you want the text
-			Text.size = 30;
-			
-			// step 2 create a Text object
-			var myText:Text = new Text(  " Welcome to Catch the Pigeon!\n"
-										+"Just type the message to post\n"
-										+"and click or Press ENTER to Play!");
-			
-			// step 3 create an Entity to easily display the text
-			var myTextEntity:Entity = new Entity(0, 0, myText);
-			
-			// optional step 3b - position the text somewhere else - here I center it on the screen.
-			myTextEntity.x = (FP.width / 2) - (myText.width / 2);
-			myTextEntity.y = (FP.height / 2) - (myText.height / 2);
-			
-			// step 4 add the entity to the world
-			add(myTextEntity);
-			
-			
-			var pontuacao:Text = new Text("Score = " + pontuacao);
-			var pontuacaoEntity:Entity = new Entity(0, 0, pontuacao);
-			pontuacaoEntity.x = 0; // (FP.width - 10) - (pontuacaoEntity.width);
-			pontuacaoEntity.y = (20);
-			add(pontuacaoEntity);
-			
-			var botaoIniciar:PlayButton=new PlayButton();
-			botaoIniciar.x= 370;
-			botaoIniciar.y= 400;
-			add(botaoIniciar);
-			
-			var botaoFacebook:FacebookConfig=new FacebookConfig;
-			botaoFacebook.x= 650;
-			botaoFacebook.y= 50;
-			add(botaoFacebook);
 			super.begin();
 		}
 		
@@ -83,7 +92,8 @@ package br.eng.mosaic.pigeon.web.world
 		}
 		
 		 public function startGame():void{
-				FP.world = new MyWorld;
+				//FP.world = new MyWorld;
+			 FP.world = new Scenario1;
 		}
 		
 		override public function update():void {
@@ -92,7 +102,7 @@ package br.eng.mosaic.pigeon.web.world
 			
 			mensagem = Input.keyString;
 			
-			if (userTextEntity!=null){
+			/*if (userTextEntity!=null){
 				remove(userTextEntity);
 			}
 			
@@ -100,7 +110,7 @@ package br.eng.mosaic.pigeon.web.world
 			userTextEntity = new Entity(0, 0, textoDoUsuario);
 			userTextEntity.x = (FP.width / 2) - (textoDoUsuario.width / 2);
 			userTextEntity.y = (100);
-			add(userTextEntity);
+			add(userTextEntity);*/
 			
 			this.bringForward(cursor);
 			

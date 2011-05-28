@@ -1,22 +1,13 @@
+
 package
 {
 	import br.eng.mosaic.pigeon.web.remote.FbHandler;
-	import br.eng.mosaic.pigeon.web.remote.Service;
-	import br.eng.mosaic.pigeon.web.remote.dto.UserInfo;
-	import br.eng.mosaic.pigeon.web.world.TelaInicial;
+	import br.eng.mosaic.pigeon.web.world.*;
 	
-	import com.adobe.serialization.json.JSON;
-	import com.adobe.serialization.json.JSONTokenType;
-	
-	import flash.display.LoaderInfo;
 	import flash.display.Sprite;
 	import flash.net.FileFilter;
 	import flash.ui.Mouse;
 	import flash.ui.MouseCursor;
-	
-	import mx.rpc.Responder;
-	import mx.rpc.events.FaultEvent;
-	import mx.rpc.events.ResultEvent;
 	
 	import net.flashpunk.Engine;
 	import net.flashpunk.FP;
@@ -24,8 +15,6 @@ package
 	
 	public class CatchThePigeon extends Engine
 	{
-		
-	
 		private var _service:Service;
 		
 		public var userName:String;
@@ -34,31 +23,18 @@ package
 		
 		public static var engine:CatchThePigeon;
 		
+		public static var engine:CatchThePigeon;
+		
 		public function CatchThePigeon()
 		{
 			super(760,600, 60, false);
 			Mouse.hide();
-			FP.world = new TelaInicial;
+			//FP.world=new MyWorld;
+			//FP.world = new TelaInicial;
+			FP.world = new TransitionScreen;
 			engine=this;
 			
-			
-			
 		}
-
-		public function get service():Service
-		{
-			if(!_service){
-				_service=new Service();
-			
-			}
-			return _service;
-		}
-
-		public function set service(value:Service):void
-		{
-			_service = value;
-		}
-
 		override public function init():void {
 			var paramObj:Object = LoaderInfo(this.root.loaderInfo).parameters;
 			userName = paramObj.userName;
@@ -88,7 +64,7 @@ package
 			
 			
 		}
-	
 		
 	}
+
 }

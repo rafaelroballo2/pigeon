@@ -12,8 +12,8 @@ package br.eng.mosaic.pigeon.web.entities
 	public class PlayButton extends Entity
 	{
 		
-		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/iniciar.png')]
-		private const sprite:Class; 
+		//[Embed(source = 'br/eng/mosaic/pigeon/web/assets/iniciar.png')] private const sprite:Class; 
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/bnt_start.png')] private const sprite:Class;
 		
 		public function PlayButton(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null)
 		{

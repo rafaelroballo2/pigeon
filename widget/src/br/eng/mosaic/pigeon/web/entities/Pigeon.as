@@ -21,10 +21,10 @@ package br.eng.mosaic.pigeon.web.entities
 		
 		private var velocity:int = 1;
 		
-		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/pombo_sprite.png')]
-		private const pigeon:Class; 
+		//[Embed(source = 'br/eng/mosaic/pigeon/web/assets/pombo_sprite.png')] private const pigeon:Class; 
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/sprites_man_pigeons.png')] private const pigeon:Class;
 		
-		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/explosao.png')]
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/Explosao.png')]
 		private const EXPLOSAO:Class; 
 		
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/gritao.mp3')]
@@ -36,8 +36,8 @@ package br.eng.mosaic.pigeon.web.entities
 		public function Pigeon()
 		{
 		
-			sprPigeon = new Spritemap(pigeon, 90, 110);
-			sprPigeon.add("voo", [1, 0, 2, 0], 10, true); 
+			sprPigeon = new Spritemap(pigeon, 100, 100);
+			sprPigeon.add("voo", [16, 17, 18, 19, 20, 21, 22, 23], 10, true); 
 			graphic = sprPigeon;
 			
 			//O tamanho acertável é 10x10 menor, e o centro fica 5x5 desclocado, para 
