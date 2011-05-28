@@ -27,15 +27,15 @@ package br.eng.mosaic.pigeon.web.world
 		private function createBackground(){
 
 			add(new MainLayer());
-			add(new Layer02(0, 420));
-			add(new Layer03(0, 480));
-			add(new Layer04(0, 560));
+			add(new Layer02(0, 450));
+			add(new Layer03(0, 500));
+			add(new Layer04(0, 577));
 			
 			add(new HudFigeon(10,10));
 			
-			add (new Life(50, 10));
-			add (new Life(100, 10));
-			add (new Life(150, 10));
+			add (new Life(112, 40));
+			add (new Life(158, 40));
+			add (new Life(204, 40));
 			
 			
 		}
