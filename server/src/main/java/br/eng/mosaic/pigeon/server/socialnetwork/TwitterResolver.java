@@ -4,14 +4,8 @@ import br.eng.mosaic.pigeon.infra.exception.NotImplemetedYetException;
 
 public class TwitterResolver extends SocialNetworkResolver {
 
-	@Override public String getApplicationInfo(String fbuid, String accessToken) {
+	@Override public String getCredentials() {
 		throw new NotImplemetedYetException();
 	}
-
-	@Override public String getAccessTokenFromApplication() {
-		throw new NotImplemetedYetException();
-	}
-
-	
 
 }

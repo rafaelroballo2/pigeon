@@ -4,14 +4,27 @@
 	<classpathentry kind="src" path="src/test/res"/>
 	<classpathentry kind="src" path="src/main/res"/>
 	<classpathentry kind="src" path="src/test/java"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/JVM 1.6.0 (MacOS X Default)">
-		<attributes>
-			<attribute name="owner.project.facets" value="jst.java"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="src/test/lib/org.junit-4.8.2.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/apache-tomcat-6.0.32"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/home/dhiego/workspace/Pigeon/pigeon/server/src/main/webapp/WEB-INF/lib/commons-codec-1.4.jar"/>
+	<classpathentry kind="lib" path="/home/dhiego/workspace/Pigeon/pigeon/server/src/main/webapp/WEB-INF/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/dhiego/workspace/Pigeon/pigeon/server/src/main/webapp/WEB-INF/lib/httpclient-4.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/dhiego/workspace/Pigeon/pigeon/server/src/main/webapp/WEB-INF/lib/httpclient-cache-4.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/dhiego/workspace/Pigeon/pigeon/server/src/main/webapp/WEB-INF/lib/httpcore-4.1.jar"/>
+	<classpathentry kind="lib" path="/home/dhiego/workspace/Pigeon/pigeon/server/src/main/webapp/WEB-INF/lib/httpmime-4.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/dhiego/workspace/Pigeon/pigeon/server/src/main/webapp/WEB-INF/lib/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="/home/dhiego/workspace/Pigeon/pigeon/server/src/main/webapp/WEB-INF/lib/myjson.jar"/>
+	<classpathentry kind="lib" path="/home/dhiego/workspace/Pigeon/pigeon/server/src/main/webapp/WEB-INF/lib/org.springframework.asm-3.0.5.jar"/>
+	<classpathentry kind="lib" path="/home/dhiego/workspace/Pigeon/pigeon/server/src/main/webapp/WEB-INF/lib/org.springframework.beans-3.0.5.jar"/>
+	<classpathentry kind="lib" path="/home/dhiego/workspace/Pigeon/pigeon/server/src/main/webapp/WEB-INF/lib/org.springframework.context.support-3.0.5.jar"/>
+	<classpathentry kind="lib" path="/home/dhiego/workspace/Pigeon/pigeon/server/src/main/webapp/WEB-INF/lib/org.springframework.context-3.0.5.jar"/>
+	<classpathentry kind="lib" path="/home/dhiego/workspace/Pigeon/pigeon/server/src/main/webapp/WEB-INF/lib/org.springframework.core-3.0.5.jar"/>
+	<classpathentry kind="lib" path="/home/dhiego/workspace/Pigeon/pigeon/server/src/main/webapp/WEB-INF/lib/org.springframework.expression-3.0.5.jar"/>
+	<classpathentry kind="lib" path="/home/dhiego/workspace/Pigeon/pigeon/server/src/main/webapp/WEB-INF/lib/org.springframework.test-3.0.5.jar"/>
+	<classpathentry kind="lib" path="/home/dhiego/workspace/Pigeon/pigeon/server/src/main/webapp/WEB-INF/lib/org.springframework.web.servlet-3.0.5.jar"/>
+	<classpathentry kind="lib" path="/home/dhiego/workspace/Pigeon/pigeon/server/src/main/webapp/WEB-INF/lib/org.springframework.web-3.0.5.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -1,15 +1,16 @@
-package br.eng.mosaic.pigeon.server.socialnetwork;
+ package br.eng.mosaic.pigeon.server.helper;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Properties;
 
 import br.eng.mosaic.pigeon.server.helper.MimeType;
-import br.eng.mosaic.pigeon.server.helper.NanoHTTPD;
 
-public class FacebookServerFake extends NanoHTTPD {
+public class ServerFakeLocal extends NanoHTTPD {
 	
-	private String response;
 	private MimeType mime;
+	private String response;
+	private Map<String, String> map;
 	
 	/*
 	 * well known ports
@@ -20,9 +21,10 @@ public class FacebookServerFake extends NanoHTTPD {
 	/*
 	 * specify your mime type and content to get from response
 	 */
-	public FacebookServerFake(MimeType mime, String response) throws IOException {
+	public ServerFakeLocal(MimeType mime, Map<String, String> map, String response) throws IOException {
 		super(defaultPortNumber);
 		this.mime = mime;
+		this.map = map;
 		this.response = response;
 	}
 	
@@ -31,7 +33,20 @@ public class FacebookServerFake extends NanoHTTPD {
 	 */
 	protected Response serve(String uri, String method, 
 			Properties header, Properties parms, Properties files) {
+		
+		if ( map == null || map.isEmpty() )
+			return defaultResponse();
+		
+		System.out.println( "server.log : attending uri > " + uri.substring(1) );
+		return getResponse(uri.substring(1));
+	}
+	
+	private Response defaultResponse() {
 		return new NanoHTTPD.Response(HTTP_OK, mime.type, response);
+	}
+	
+	private Response getResponse(String uri) {
+		return new NanoHTTPD.Response(HTTP_OK, mime.type, map.get(uri));
 	}
 	
 }

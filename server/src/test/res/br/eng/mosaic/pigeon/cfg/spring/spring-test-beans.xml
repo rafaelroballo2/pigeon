@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<!-- controllers -->
+	<bean id="facebookController" class="br.eng.mosaic.pigeon.server.controller.FacebookController">
+		<property name="facebookClient" ref="facebookClient" />
+		<property name="userService" ref="userService" />
+	</bean>
+	
+	<bean id="handlerAdapter" class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+	<bean id="handlerMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+
+	<!-- services -->
+	<bean id="userService" class="br.eng.mosaic.pigeon.server.service.UserService">
+		<property name="userRepository" ref="userRepository" />
+	</bean>
+		
+	<!-- repositories -->
+	<bean id="userRepository" class="br.eng.mosaic.pigeon.server.repository.mem.UserRepositoryMemory"/>
+	
+	<!-- others -->
+	<bean id="facebookClient" class="br.eng.mosaic.pigeon.server.socialnetwork.FacebookClient">
+		<property name="resolver" >
+			<bean class="br.eng.mosaic.pigeon.server.socialnetwork.FacebookResolver" >
+				<property name="pigeonConfig" ref="pigeonConfig" />
+				<property name="fbConfig" ref="fbConfig" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="pigeonConfig" class="br.eng.mosaic.pigeon.server.integration.PigeonConfiguration">
+		<property name="fb_root" value="http://localhost:6967/" />
+		<property name="app_root" value="http://localhost:8080/pigeon/" />
+	</bean>
+	
+	<bean id="fbConfig" class="br.eng.mosaic.pigeon.server.socialnetwork.FacebookConfiguration">
+		<property name="id" value="150586265008036" />
+		<property name="secret" value="346fba40bd7eb18f4c29984bf31fd18d" />
+		<property name="api" value="afb21c6fd44d914ab89c717aa08c3e92" />
+	</bean>
+	
+</beans>

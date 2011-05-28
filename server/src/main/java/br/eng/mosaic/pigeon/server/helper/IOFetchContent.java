@@ -8,37 +8,76 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.DefaultRedirectHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-@SuppressWarnings("deprecation") 
+import br.eng.mosaic.pigeon.server.exception.ServerCrashException;
+
 public class IOFetchContent {
+	
+	private static final Logger logger = 
+		Logger.getLogger(IOFetchContent.class.getName());
 
 	public String getContent(String theUrl) {
 		
 		String content;
+		
 		try {
-			System.out.println( "get :> " + theUrl );
+			logger.log(Level.INFO, "get :> " + theUrl);
 			URL url = new URL(theUrl);
 			BufferedReader bufferedReader = getReader( url );
 			content = extract( bufferedReader );
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			logger.log(Level.SEVERE, "server.error.social.network > " + e.getMessage());
+			throw new RuntimeException();
+//			throw new ServerCrashException();
 		}
 
 		return content;
 	}
 	
-	public byte[] getStream( String theUri ) throws URISyntaxException, ClientProtocolException, IOException {
-		HttpEntity entity = getEntityFromResponse( theUri );
+	public String getHttpClientContent( URI uri ) {
+		
+		HttpClient client = new DefaultHttpClient();
+		HttpPost post = new HttpPost( uri );
+		String content = "";
+		
+		try {
+			HttpResponse response = client.execute( post );
+			InputStreamReader reader = new InputStreamReader(response.getEntity().getContent());
+			BufferedReader brd = new BufferedReader(reader);
+			
+			while ((content = brd.readLine()) != null) {
+				continue;
+			}
+			
+			brd.close();
+			reader.close();
+			
+		} catch (ClientProtocolException e) {
+			logger.log(Level.SEVERE, "server.error.social.network > " + e.getMessage());
+			throw new ServerCrashException();
+		} catch (IOException e) {
+			logger.log(Level.SEVERE, "server.error.social.network > " + e.getMessage());
+			throw new ServerCrashException();
+		}
+		
+		return content;
+	}
+	
+	public byte[] getStream( URI uri) throws URISyntaxException, ClientProtocolException, IOException {
+		HttpEntity entity = getEntityFromResponse( uri );
 
 		InputStream stream = entity.getContent();
 		int length = (int) entity.getContentLength();
@@ -67,11 +106,10 @@ public class IOFetchContent {
 		return bytes;
 	}
 
-	// TODO refatorar para otimizar posteriormente e remover deprecia‹o > DefaultRedirectHandler
-	private HttpEntity getEntityFromResponse(String theUri) 
+	// TODO refatorar para otimizar posteriormente e remover depreciaÃ§Ã£o > DefaultRedirectHandler
+	private HttpEntity getEntityFromResponse(URI uri) 
 			throws URISyntaxException, ClientProtocolException, IOException{
 		
-		URI uri = new URI( theUri );
 		HttpGet get = new HttpGet(uri);
 	
 		HttpClient client = new DefaultHttpClient();

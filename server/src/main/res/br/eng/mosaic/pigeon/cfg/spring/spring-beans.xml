@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- services -->
+	<bean id="userService" class="br.eng.mosaic.pigeon.server.service.UserService">
+		<property name="userRepository" ref="userRepository" />
+	</bean>
+		
+	<!-- repositories -->
+	<bean id="userRepository" class="br.eng.mosaic.pigeon.server.repository.mem.UserRepositoryMemory"/>
+	
+	<!-- others -->
+	<bean id="facebookClient" class="br.eng.mosaic.pigeon.server.socialnetwork.FacebookClient">
+		<property name="resolver" >
+			<bean class="br.eng.mosaic.pigeon.server.socialnetwork.FacebookResolver" >
+				<property name="pigeonConfig" ref="pigeonConfig" />
+				<property name="fbConfig" ref="fbConfig" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="pigeonConfig" class="br.eng.mosaic.pigeon.server.integration.PigeonConfiguration">
+		<property name="fb_root" value="https://graph.facebook.com/" />
+		
+		<!-- local -->
+		<property name="app_root" value="http://localhost:8080/pigeon/" />
+		<!-- homologacao -->
+<!--		<property name="app_root" value="http://www.mosaic.com.br:8080/pigeon/" />-->
+		<!-- producao -->
+<!--		<property name="app_root" value="http://localhost:8080/pigeon/" />-->
+	</bean>
+	
+	<bean id="fbConfig" class="br.eng.mosaic.pigeon.server.socialnetwork.FacebookConfiguration">
+		<!-- local -->
+		<property name="id" value="114292618654468" />
+		<property name="secret" value="dffe4fce9782ab906dbcf15a81f0c855" />
+		<property name="api" value="59705b9c7e5087bd8aa14c5e5b8837b3" />
+		
+		<!-- homologacao -->
+<!--		<property name="id" value="150586265008036" />-->
+<!--		<property name="secret" value="346fba40bd7eb18f4c29984bf31fd18d" />-->
+<!--		<property name="api" value="afb21c6fd44d914ab89c717aa08c3e92" />-->
+		
+		<!-- producao -->
+<!--		<property name="id" value="" />-->
+<!--		<property name="secret" value="" />-->
+<!--		<property name="api" value="" />-->
+	</bean>
+	
+</beans>
