@@ -17,7 +17,7 @@ public class UserInfo {
 		this.socials = new ArrayList<SocialInfo>(); 
 	}
 	
-	public class SocialInfo {
+	public static class SocialInfo {
 		public String id;
 		public String token;
 		public Social social;

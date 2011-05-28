@@ -34,7 +34,7 @@ public class FacebookClient {
 	}
 	
 	public String getTokenApplication() {
-		String cURL = resolver.getApplicationCredentials();
+		String cURL = resolver.getCredentials();
 		String response = ioFetch.getContent( cURL );
 		return tagger.get(response, fb_access_token);
 	}

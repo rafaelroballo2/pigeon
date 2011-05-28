@@ -2,6 +2,7 @@ package br.eng.mosaic.pigeon.server.socialnetwork;
 
 import static br.eng.mosaic.pigeon.server.helper.MimeType.text_json;
 import static br.eng.mosaic.pigeon.server.helper.MimeType.text_plain;
+import static br.eng.mosaic.pigeon.server.helper.Miscellany.getJSONSample;
 import static br.eng.mosaic.pigeon.server.socialnetwork.SocialNetworkResolver.RequestMethod.fb_oauth_access_token;
 import static br.eng.mosaic.pigeon.server.socialnetwork.SocialNetworkResolver.RequestMethod.fb_user_info;
 import static br.eng.mosaic.pigeon.server.socialnetwork.SocialNetworkResolver.ResponseAttribute.fb_access_token;
@@ -11,15 +12,11 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
-
-import javax.annotation.Resource;
 
 import junit.framework.TestCase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,13 +27,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import br.eng.mosaic.pigeon.common.domain.SocialNetwork.Social;
 import br.eng.mosaic.pigeon.common.dto.UserInfo;
 import br.eng.mosaic.pigeon.common.dto.UserInfo.SocialInfo;
 import br.eng.mosaic.pigeon.server.exception.ServerCrashException;
 import br.eng.mosaic.pigeon.server.exception.ServerUnknownResourceException;
 import br.eng.mosaic.pigeon.server.helper.MimeType;
+import br.eng.mosaic.pigeon.server.helper.Miscellany;
 import br.eng.mosaic.pigeon.server.helper.ServerFakeLocal;
 import br.eng.mosaic.pigeon.server.integration.PigeonConfiguration;
 import br.eng.mosaic.pigeon.server.socialnetwork.SocialNetworkResolver.RequestMethod;
@@ -48,14 +45,9 @@ import br.eng.mosaic.pigeon.server.socialnetwork.SocialNetworkResolver.ScopePerm
 public class FacebookClientTest extends TestCase {
 	
 	private ServerFakeLocal fakeServer;
-	private static Random random;
 	
-	@Resource private PigeonConfiguration pigeonConfig;
+	@Autowired private PigeonConfiguration pigeonConfig;
 	@Autowired private FacebookClient facebookClient;
-	
-	@BeforeClass public static void beforeAll() {
-		random = new Random();
-	}
 	
 	private synchronized void startServer(MimeType mime, String content) {
 		prepareLocalServer(mime, null, content);
@@ -78,31 +70,15 @@ public class FacebookClientTest extends TestCase {
 		this.fakeServer.stop();
 	}
 	
-	private JSONObject createBasicUserInfo() {
-		JSONObject obj = new JSONObject();
-		try {
-			obj.put("id"	, "807235872353");
-			obj.put("name"	, "rafa");
-			obj.put("email"	, "faelcavalcanti@gmail.com");
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
-		return obj;
-	}
-	
-	private Map<String, String> getRequestMapping(String first, JSONObject second) {
+	private Map<String, String> getMapping(String first, JSONObject second) {
 		Map<String,String> map = new HashMap<String, String>();
 		map.put(fb_oauth_access_token.method, first);
 		map.put(fb_user_info.method, second.toString());
 		return map;
 	}
 	
-	private String newToken() {
-		return String.valueOf( random.nextInt(1000000001) );
-	}
-
 	@Test public void testGetTokenApplicationSuccessfully() {
-		String token = newToken();
+		String token = Miscellany.getNumber();
 		startServer(text_plain, fb_access_token.key + token );
 		
 		String found = facebookClient.getTokenApplication();
@@ -144,11 +120,9 @@ public class FacebookClientTest extends TestCase {
 	}
 	
 	@Test public void testGetUserSuccessfully() throws JSONException {
-		JSONObject json = createBasicUserInfo();
-		String prefixToken = "access_token=";
-		String token = prefixToken + newToken();
-		
-		startServer(text_json, getRequestMapping(token, json));
+		String token = Miscellany.getNumber();
+		JSONObject json = Miscellany.getJSONUser();
+		startServer(text_json, getMapping(fb_access_token.key + token, json));
 		
 		UserInfo user = facebookClient.getUser( "whatever.thing.this", token );
 		assertNotNull( user );
@@ -158,7 +132,7 @@ public class FacebookClientTest extends TestCase {
 		
 		SocialInfo social = user.get( Social.facebook );
 		assertEquals( social.id , json.getString("id") );
-		assertEquals( social.token , token.substring( prefixToken.length() ) );
+		assertEquals( social.token , token );
 		
 		stopServer();
 	}
@@ -167,8 +141,7 @@ public class FacebookClientTest extends TestCase {
 		facebookClient.getUser( "whatever.thing.this", null );
 	}	
 	
-	@Test 
-	public void testGetUserWhenTokenUnknownOnServer() {
+	@Test public void testGetUserWhenTokenUnknownOnServer() {
 		startServer(text_json, "nothing" );
 		boolean behavior = false;
 		try {
@@ -181,11 +154,10 @@ public class FacebookClientTest extends TestCase {
 	}
 	
 	@Test public void testGetUserWhenBasicUserInfoNotAvailableOnServer() throws JSONException {
-		String token = newToken();
-		startServer(text_json, getRequestMapping(token, new JSONObject()));
+		startServer(text_json, getMapping( "", new JSONObject()));
 		boolean behavior = false;
 		try {
-			facebookClient.getUser( "whatever.thing.this", token );
+			facebookClient.getUser( "whatever.thing.this", "" );
 		} catch (ServerUnknownResourceException e) {			
 			behavior = true; // sucess
 		} 
@@ -194,12 +166,10 @@ public class FacebookClientTest extends TestCase {
 	}
 	
 	@Test public void testGetUserWhenBasicUserInfoChangedOnServer() throws JSONException {
-		String confuseJSONContent = "{ 'teste' : '1234' }";
-		JSONObject json = new JSONObject(confuseJSONContent);
-		String token = newToken();
-		startServer(text_json, getRequestMapping(token, json));
-		
+		String token = Miscellany.getNumber();
+		startServer(text_json, getMapping(token, getJSONSample()));
 		boolean behavior = false;
+		
 		try {
 			facebookClient.getUser( "whatever.thing.this", token );
 		} catch (ServerUnknownResourceException e) {			
@@ -209,13 +179,15 @@ public class FacebookClientTest extends TestCase {
 		stopServer();
 	}
 	
-	@Ignore @Test public void testPublishSuccessfully() throws JSONException {
-		JSONObject json = createBasicUserInfo();
-		String token = "access_token=" + newToken();
-		startServer(text_json, getRequestMapping(token, json));
+	@Test public void testPublishSuccessfully() throws JSONException {
+		String token = fb_access_token.key + Miscellany.getNumber();
+		JSONObject json = Miscellany.getJSONUser();
+		startServer(text_json, getMapping(token, json));
 		
 		UserInfo user = facebookClient.getUser( "whatever.thing.this", token );
-		facebookClient.publish(user, "teste 123 mensagem 456");
+		String response = facebookClient.publish(user, "teste 123 mensagem 456");
+		
+		assertNotNull( response );
 		
 		stopServer();
 	}
@@ -235,5 +207,8 @@ public class FacebookClientTest extends TestCase {
 	@Ignore @Test public void testPublishWhenTokenExpired() {
 		throw new NotImplementedException();
 	}
-		
+	
+	// TODO se mandar url com outro email dah nullPont pq nao existe na session, tratar isso
+	// isso fica no controller, ele nao deveria deixar passar!
+	
 }

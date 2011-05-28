@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
 import br.eng.mosaic.pigeon.common.dto.UserInfo;
 import br.eng.mosaic.pigeon.server.helper.MimeType;
 
@@ -41,5 +43,5 @@ public abstract class AbstractSocialController {
 	private String getAckJSON(String signal, String message) {
 		return "{ '" + signal + "' : '" + message + "' }";
 	}
-
+	
 }

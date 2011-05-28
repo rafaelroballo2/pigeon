@@ -139,8 +139,7 @@ public class InstallCert {
 			System.out.println();
 		}
 
-		System.out
-				.println("Enter certificate to add to trusted keystore or 'q' to quit: [1]");
+		System.out.println("Enter certificate to add to trusted keystore or 'q' to quit: [1]");
 		String line = reader.readLine().trim();
 		int k;
 		try {

@@ -1,4 +1,4 @@
-package br.eng.mosaic.pigeon.server.helper;
+ package br.eng.mosaic.pigeon.server.helper;
 
 import java.io.IOException;
 import java.util.Map;
@@ -37,7 +37,7 @@ public class ServerFakeLocal extends NanoHTTPD {
 		if ( map == null || map.isEmpty() )
 			return defaultResponse();
 		
-		System.out.println( "server.log : attending uri >" + uri.substring(1) );
+		System.out.println( "server.log : attending uri > " + uri.substring(1) );
 		return getResponse(uri.substring(1));
 	}
 	

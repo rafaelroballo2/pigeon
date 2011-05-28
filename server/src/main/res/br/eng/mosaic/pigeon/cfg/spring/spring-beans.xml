@@ -28,8 +28,13 @@
 	
 	<bean id="pigeonConfig" class="br.eng.mosaic.pigeon.server.integration.PigeonConfiguration">
 		<property name="fb_root" value="https://graph.facebook.com/" />
-		<property name="app_root" value="http://localhost:8080/pigeon/" />
 		
+		<!-- local -->
+		<property name="app_root" value="http://localhost:8080/pigeon/" />
+		<!-- homologacao -->
+<!--		<property name="app_root" value="http://www.mosaic.com.br:8080/pigeon/" />-->
+		<!-- producao -->
+<!--		<property name="app_root" value="http://localhost:8080/pigeon/" />-->
 	</bean>
 	
 	<bean id="fbConfig" class="br.eng.mosaic.pigeon.server.socialnetwork.FacebookConfiguration">

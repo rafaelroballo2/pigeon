@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.http.client.ClientProtocolException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,12 +32,12 @@ public class FacebookController extends AbstractSocialController {
 		String publish = "{user_id}/oauth/facebook/publish.do";
 	}
 
-	@Autowired private FacebookClient client;
+	@Autowired private FacebookClient facebookClient;
 	@Autowired private UserService userService;
 
 	@RequestMapping( uri_fb.sign_in )
 	public String sign_in(HttpSession session) throws MalformedURLException {
-		return uri.redir + client.getUrlCodeKnowUser(uri_fb.sign_callback);
+		return uri.redir + facebookClient.getUrlCodeKnowUser(uri_fb.sign_callback);
 	}
 	
 	@RequestMapping( uri_fb.sign_callback )
@@ -46,7 +47,7 @@ public class FacebookController extends AbstractSocialController {
 		if ( hash == null || hash.isEmpty() )
 			ack_error(response, "erro ao autenticar com server facebook");
 
-		UserInfo user = client.getUser(uri_fb.sign_callback, hash);
+		UserInfo user = facebookClient.getUser(uri_fb.sign_callback, hash);
 		userService.connect(user);
 		session.setAttribute(user.email, user);
 		
@@ -60,7 +61,7 @@ public class FacebookController extends AbstractSocialController {
 		UserInfo user = getUser(session, user_id);
 		String token = user.get( Social.facebook ).token;
 
-		byte[] photo = client.getPicture( token );
+		byte[] photo = facebookClient.getPicture( token );
 		download(response, MimeType.image_png, photo );
 	}
 	
@@ -69,8 +70,27 @@ public class FacebookController extends AbstractSocialController {
 			@RequestParam(value = "message") String message ) throws IOException, URISyntaxException {
 		
 		UserInfo user = getUser(session, user_id);
-		String doc_id = client.publish(user, message);
+		String doc_id = facebookClient.publish(user, message);
 		ack_ok(response, doc_id);
 	}
 	
+	public void setFacebookClient(FacebookClient facebookClient) {
+		this.facebookClient = facebookClient;
+	}
+	
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+	
+	@ExceptionHandler(RuntimeException.class) public void handleException(
+			RuntimeException e, HttpServletResponse response) {
+		System.out.println( e.getMessage() );
+		System.out.println( response );
+	}
+	
+	@RequestMapping( "test.do" )
+	public void test() {
+		throw new RuntimeException();
+	}
+
 }

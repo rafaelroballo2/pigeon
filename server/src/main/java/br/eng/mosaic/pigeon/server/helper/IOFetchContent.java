@@ -40,7 +40,8 @@ public class IOFetchContent {
 			content = extract( bufferedReader );
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "server.error.social.network > " + e.getMessage());
-			throw new ServerCrashException();
+			throw new RuntimeException();
+//			throw new ServerCrashException();
 		}
 
 		return content;
@@ -60,6 +61,9 @@ public class IOFetchContent {
 			while ((content = brd.readLine()) != null) {
 				continue;
 			}
+			
+			brd.close();
+			reader.close();
 			
 		} catch (ClientProtocolException e) {
 			logger.log(Level.SEVERE, "server.error.social.network > " + e.getMessage());

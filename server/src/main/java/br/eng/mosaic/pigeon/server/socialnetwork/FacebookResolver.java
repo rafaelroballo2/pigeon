@@ -7,15 +7,7 @@ public class FacebookResolver extends SocialNetworkResolver {
 	
 	private FacebookConfiguration fbConfig;
 	
-	@Deprecated @Override public String getApplicationInfo(String fbuid, String accessToken) {
-		String query = 
-			"SELECT display_name, description " +
-				"FROM application WHERE app_id= :param1";
-		
-		return fetch(query, accessToken, -1, fbuid);
-	}
-	
-	public String getApplicationCredentials() {
+	public String getCredentials() {
 		String command = RequestMethod.fb_oauth_access_token.method
 			+ "?client_secret=" + fbConfig.secret
 			+ "&client_id=" + fbConfig.id
@@ -86,5 +78,5 @@ public class FacebookResolver extends SocialNetworkResolver {
 	protected URI mountUri( String command ) {
 		return URI.create( pigeonConfig.fb_root + command );
 	}
-	
+
 }

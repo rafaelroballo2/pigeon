@@ -3,6 +3,15 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
+	<!-- controllers -->
+	<bean id="facebookController" class="br.eng.mosaic.pigeon.server.controller.FacebookController">
+		<property name="facebookClient" ref="facebookClient" />
+		<property name="userService" ref="userService" />
+	</bean>
+	
+	<bean id="handlerAdapter" class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+	<bean id="handlerMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+
 	<!-- services -->
 	<bean id="userService" class="br.eng.mosaic.pigeon.server.service.UserService">
 		<property name="userRepository" ref="userRepository" />
