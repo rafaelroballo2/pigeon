@@ -7,12 +7,12 @@ package br.eng.mosaic.pigeon.web.remote
 	
 	import mx.rpc.AsyncToken;
 	import mx.rpc.http.HTTPService;
-	import mx.rpc.http.Operation;
+	
 
 	public class Service 
 	{
 		
-		private const serviceBaseUrl:String="http://localhost:8080/JSonServlet/";
+		private const serviceBaseUrl:String="http://localhost:8080/pigeon";
 		
 		private var operations:Object;
 		
@@ -20,7 +20,11 @@ package br.eng.mosaic.pigeon.web.remote
 		{
 			operations=new Object;
 			
-			operations["postarScore"]=createHttpService("postarScore");
+			operations["postarScore"]=createHttpService(serviceBaseUrl+"/postarScore");
+			operations["getUserData"]= createHttpService(serviceBaseUrl+"/getUserData.do");
+			
+			
+			
 			
 		}
 		
@@ -29,6 +33,8 @@ package br.eng.mosaic.pigeon.web.remote
 			var service:HTTPService = new HTTPService();
 			service.url=url;
 			service.method="POST";
+			
+			
 			return service;
 		}
 		
@@ -37,19 +43,24 @@ package br.eng.mosaic.pigeon.web.remote
 		}
 		
 		
-		private function serailize(object:Object){
-			
-		}
 		
 		public function postarScore(parametros:PostarScoreDTO):AsyncToken{
 			var data:Object=new Object();
 			data.jsonSent=JSON.encode(parametros);
-			var token:AsyncToken=operations["postarScore"].send(data);
+			var token:AsyncToken=HTTPService(operations["postarScore"]).send(data);
 			return token;
 		}
 		
 		public function mashedPotato():AsyncToken{
-			return operations["mashedpotato"].send();
+			return HTTPService(operations["mashedpotato"]).send();
+		}
+		
+		
+		public function getUserData(username:String):AsyncToken{
+			var data:Object=new Object();
+			data.username=username;
+			var token:AsyncToken=HTTPService(operations["getUserData"]).send(data);
+			return token;
 		}
 	}
 }

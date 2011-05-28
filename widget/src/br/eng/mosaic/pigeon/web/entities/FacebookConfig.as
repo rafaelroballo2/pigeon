@@ -27,8 +27,6 @@ package br.eng.mosaic.pigeon.web.entities
 		public override function update():void{
 			if(Input.mousePressed&&this.collidePoint(x, y, Input.mouseX, Input.mouseY)){
 				if(FP.world is TelaInicial){
-					CatchThePigeon.engine.fbHandler.init();
-					CatchThePigeon.engine.fbHandler.login();
 				}
 			}
 		}
