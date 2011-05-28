@@ -92,7 +92,8 @@ package br.eng.mosaic.pigeon.web.world
 		}
 		
 		 public function startGame():void{
-				FP.world = new MyWorld;
+				//FP.world = new MyWorld;
+			 FP.world = new Scenario1;
 		}
 		
 		override public function update():void {

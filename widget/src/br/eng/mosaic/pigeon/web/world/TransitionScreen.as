@@ -49,7 +49,7 @@ package br.eng.mosaic.pigeon.web.world
 			//add(new PlayButton(FP.width/2, FP.height*2/3));
 			
 			obj = new UserMessage();
-			obj.x = FP.width/2 - 130;// - obj.width/2;
+			obj.x = FP.width/2 - 165;
 			obj.y = FP.height - 100; //obj.height;
 			add(obj);
 			
@@ -57,25 +57,23 @@ package br.eng.mosaic.pigeon.web.world
 			add (new Figeon(250, 120));
 			
 			//TODO ajeitar para aparecer bonitinho
-			add (new Back(280, 380));
+			add (new Back(272, 380));
 			add (new Separator(280 + 67, 380));
-			add (new Go(420, 380));
+			add (new Go(415, 380));
 			
 			//TODO Ajeitar a posição para aparecer bonitinho
 			add(new Avatar(450, 20));
 			add(new Avatar(550, 20));
 			add(new Avatar(650, 20));
-			add(new Avatar(450, 200));
-			add(new Avatar(550, 200));
-			
-			
+			add(new Avatar(450, 150));
+			add(new Avatar(550, 150));
 			
 			//add(new Star(210,10));
 			
-			add (new Help(620,415));
+			add (new Help(635,420));
 			
-			add (new Twitter(20, FP.height * 1/2));
-			add (new FacebookButton(20, FP.height * 1/2 + 70));
+			add (new FacebookButton(20, FP.height * 1.8/3));
+			add (new Twitter(20, FP.height * 1.8/3 + 70));
 			add (new Pause(100, FP.height*1/2 + 240));
 			
 		}
@@ -84,7 +82,7 @@ package br.eng.mosaic.pigeon.web.world
 		{
 			createBackground();
 			
-			textArea = new PunkTextArea("<Put Message Here>", FP.width/2 - 115, FP.height - 65, 300, 65);
+			textArea = new PunkTextArea("<Put Message Here>", FP.width/2 - 150, FP.height - 65, 300, 65);
 			//textArea = new PunkTextArea("Cade a merda do texto, kct!?!?!?", 0, FP.height - 100, 300, 100);
 			
 			add(textArea); 
