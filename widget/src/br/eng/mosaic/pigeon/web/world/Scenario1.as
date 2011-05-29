@@ -91,7 +91,7 @@ package br.eng.mosaic.pigeon.web.world
 		{
 			// COlocar a musica de novo
 			if (!bkg_music.playing){
-				bkg_music.loop(0.5, 1);
+				bkg_music.play(0.2, 1);
 			}
 		}
 		
@@ -103,6 +103,9 @@ package br.eng.mosaic.pigeon.web.world
 				shot.y=cursor.y + cursor.height/2 - shot.height/2;
 				shots[shots.length]=shot;
 				add(shot);
+				if (!bkg_music.playing){
+					bkg_music.play(0.2, 1);
+				}
 			}
 			this.bringForward(cursor);
 			

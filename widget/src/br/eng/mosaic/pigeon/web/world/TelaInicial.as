@@ -78,7 +78,7 @@ package br.eng.mosaic.pigeon.web.world
 			
 			// COlocar a musica de novo
 			if (!bkg_music.playing){
-				bkg_music.loop(0.5, 1);
+				bkg_music.play(0.5, 1);
 			}
 			
 			add(cursor);
