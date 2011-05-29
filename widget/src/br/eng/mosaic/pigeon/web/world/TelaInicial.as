@@ -35,9 +35,9 @@ package br.eng.mosaic.pigeon.web.world
 		
 		//public static var cursor:Cursor=new Cursor;
 		
-		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/smb2-title.mp3')]
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/mosaic_pigeon_snd_menu5.mp3')]
 		private static const BKG_MUSIC:Class;
-		public static var bkg_music = new Sfx(BKG_MUSIC);
+		public static var bkg_music : Sfx = new Sfx(BKG_MUSIC);
 		
 		private function createBackground(){
 			var obj:Entity;
@@ -77,9 +77,9 @@ package br.eng.mosaic.pigeon.web.world
 			add(textArea); 
 			
 			// COlocar a musica de novo
-			/*if (!bkg_music.playing){
-				bkg_music.play(0.5, 1);
-			}*/
+			if (!bkg_music.playing){
+				bkg_music.loop(0.5, 1);
+			}
 			
 			add(cursor);
 	
