@@ -94,6 +94,9 @@ package br.eng.mosaic.pigeon.web.world
 				bkg_music.play(0.2, 1);
 			}
 		}
+		override public function end():void{
+			bkg_music.stop();
+		}
 		
 		override public function update():void{
 			super.update();

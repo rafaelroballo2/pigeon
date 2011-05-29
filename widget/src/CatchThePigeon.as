@@ -81,8 +81,7 @@ package
 			var object:Object=JSON.decode(data);
 			userinfo =new UserInfo(object);
 			
-			
-			
+					
 			
 		}
 		

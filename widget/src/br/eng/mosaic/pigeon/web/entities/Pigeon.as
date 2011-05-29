@@ -15,6 +15,7 @@ package br.eng.mosaic.pigeon.web.entities
 	public class Pigeon extends Entity
 	{
 		private var gritou:Boolean = false;
+		public static var playing = false;
 		private var dead:Boolean=false;
 		private var deadCount:int = 0;
 		private const deadCountLimit:int = 50;
@@ -30,6 +31,10 @@ package br.eng.mosaic.pigeon.web.entities
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/mosaic_pigeon_snd_explosion.mp3')]
 		private const GRITO:Class;
 		public var grito:Sfx = new Sfx(GRITO);
+		
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/mosaic_pigeon_snd_sigeon.mp3')]
+		private static const BKG_MUSIC:Class;
+		public static var bkg_music : Sfx = new Sfx(BKG_MUSIC);
 		
 		public var sprPigeon:Spritemap;
 		
@@ -47,6 +52,7 @@ package br.eng.mosaic.pigeon.web.entities
 			y=300;
 		}
 		
+	
 		private function die():void{
 			//O pombo vira uma nuvem explodida
 			var cloud:Cloud = new Cloud();
@@ -70,12 +76,21 @@ package br.eng.mosaic.pigeon.web.entities
 			//world.remove(this);
 		}
 		
+		
+		
 		public function finalize():void{
 			velocity += 5;
 		}
-		
+		var contadorcanto  : int = 50; 
 		override public function update():void {
 			super.update();
+			
+			if(contadorcanto == 0){
+				if (!bkg_music.playing){
+					bkg_music.play(1, 1);
+				}contadorcanto = 50;
+			}else -- contadorcanto;
+			
 			
 			//Check de colisões
 			if (x < FP.width && !dead) {

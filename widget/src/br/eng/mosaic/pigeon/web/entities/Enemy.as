@@ -27,6 +27,10 @@ package br.eng.mosaic.pigeon.web.entities
 		private static const BKG_MUSIC:Class;
 		public static var bkg_music : Sfx = new Sfx(BKG_MUSIC);
 		
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/mosaic_pigeon_snd_bad.mp3')]
+		private static const BKG_MUSIC2:Class;
+		public static var bkg_music2 : Sfx = new Sfx(BKG_MUSIC2);
+		
 		public function Enemy(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null)
 		{
 			super(x, y, graphic, mask);
@@ -73,10 +77,19 @@ package br.eng.mosaic.pigeon.web.entities
 			world.remove(this);
 		}
 		
-		
+		var contadorcanto : int = 120;
 		override public function update():void{
 			super.update();
 			
+			if(contadorcanto == 0){
+				if (!bkg_music2.playing){
+					bkg_music2.play(0.7, 1);
+				}contadorcanto = 120
+			}else --contadorcanto;
+				
+				
+			
+				
 			//Vira o inimigo para o pombo, sempre
 			if (MyWorld.userX >= this.x){
 				sprActive = sprEnemyDir;
