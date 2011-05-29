@@ -43,6 +43,9 @@ package br.eng.mosaic.pigeon.web.remote
 		}
 		
 		
+		private function serailize(object:Object){
+			
+		}
 		
 		public function postarScore(parametros:PostarScoreDTO):AsyncToken{
 			var data:Object=new Object();
