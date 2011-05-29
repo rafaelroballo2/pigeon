@@ -43,28 +43,30 @@ package
 			engine=this;
 			
 		}
-
+		
 		public function get service():Service
 		{
 			return _service;
 		}
-
+		
 		public function set service(value:Service):void
 		{
 			_service = value;
 		}
-
+		
 		override public function init():void {
 			var paramObj:Object = LoaderInfo(this.root.loaderInfo).parameters;
 			userName = paramObj.userName;
-			service.getUserData(userName).addResponder(new Responder(usernameResult, communcationFault));
+			if(service){
+				service.getUserData(userName).addResponder(new Responder(usernameResult, communcationFault));
+			}
 		}
-
+		
 		private function communcationFault(faultEvent:FaultEvent):void
 		{
 			
 		}
-
+		
 		private function usernameResult(resultEvent:ResultEvent):void
 		{
 			var resultString:String=resultEvent.result as String;
@@ -85,5 +87,5 @@ package
 		}
 		
 	}
-
+	
 }
