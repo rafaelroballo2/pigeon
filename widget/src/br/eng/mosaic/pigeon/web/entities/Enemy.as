@@ -3,6 +3,7 @@ package br.eng.mosaic.pigeon.web.entities
 	import br.eng.mosaic.pigeon.web.world.MyWorld;
 	import br.eng.mosaic.pigeon.web.world.TelaInicial;
 	
+	import net.flashpunk.Sfx;
 	import net.flashpunk.Entity;
 	import net.flashpunk.Graphic;
 	import net.flashpunk.Mask;
@@ -21,6 +22,10 @@ package br.eng.mosaic.pigeon.web.entities
 		public var sprEnemyDir:Spritemap;
 		public var sprEnemyEsq:Spritemap;
 		public var sprActive:Spritemap;
+		
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/mosaic_pigeon_snd_punch.mp3')]
+		private static const BKG_MUSIC:Class;
+		public static var bkg_music : Sfx = new Sfx(BKG_MUSIC);
 		
 		public function Enemy(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null)
 		{
@@ -86,6 +91,9 @@ package br.eng.mosaic.pigeon.web.entities
 			//Se colidiu com o tiro do usuário, morre
 			if (collide("shot", x, y)){
 				die();
+				if (!bkg_music.playing){
+					bkg_music.play(0.7, 1);
+				}
 			}
 			
 			if (!collide("player", x, y)) {

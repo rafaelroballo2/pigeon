@@ -27,7 +27,7 @@ package br.eng.mosaic.pigeon.web.entities
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/explosao.png')]
 		private const EXPLOSAO:Class; 
 		
-		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/gritao.mp3')]
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/mosaic_pigeon_snd_explosion.mp3')]
 		private const GRITO:Class;
 		public var grito:Sfx = new Sfx(GRITO);
 		
