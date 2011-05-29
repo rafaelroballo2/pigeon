@@ -59,7 +59,6 @@ package br.eng.mosaic.pigeon.web.world
 			
 			add(cursor);
 			
-			
 		}
 		
 		private var shots:Array=[];
@@ -96,28 +95,27 @@ package br.eng.mosaic.pigeon.web.world
 			if (this.classCount(Enemy)==0){
 				pigeon.finalize();
 			}
+			
+			// go to transition screen
+			if (pigeon.dead){
+				if (this.classCount(Pigeon)==0 && this.classCount(Cloud)==0)
+				FP.world = new TransitionScreen(1);
+			}
+			// go to transition screen
+			if (pigeon.finished){
+				FP.world = new TransitionScreen(2);
+			}
 		}
-		
-		
-		
-		
-	
 		
 		public function get enemyMaxCount():int{
 			return 4;
 		}
 		
-		
 		public function get totalEnemies():int{
 			return 10;
 		}
 		
-		
-		
-		
 		private function updateEnemiesCount():void{
-			
-			
 			var enemies:Array=[];
 			
 			getClass(Enemy, enemies);
@@ -138,16 +136,8 @@ package br.eng.mosaic.pigeon.web.world
 					enemy.x=position.x;
 					enemy.y=position.y;
 				}
-				
-				add(enemy);
-				
-				
-				
-				
+				add(enemy);				
 			}
-			
-			
-			
 		}
 		
 		
@@ -195,12 +185,7 @@ package br.eng.mosaic.pigeon.web.world
 				var position:Point = new Point(x, y);
 				y+=step;
 				list.addItem(position);
-			}
-			
-			
-			
-			
-			
+			}			
 		}
 	}
 }

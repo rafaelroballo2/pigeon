@@ -17,6 +17,8 @@ package br.eng.mosaic.pigeon.web.entities.background.transition
 			
 			super(x, y, graphic, mask);
 			
+			this.setHitboxTo(this.graphic);
+			
 		}
 	}
 }

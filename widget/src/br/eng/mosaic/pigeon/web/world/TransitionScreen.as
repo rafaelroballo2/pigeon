@@ -19,6 +19,7 @@ package br.eng.mosaic.pigeon.web.world
 	import net.flashpunk.utils.Key;
 	
 	import punk.ui.*;
+	import punk.ui.skins.WhiteAfterlife;
 	
 	/**
 	 * ...
@@ -32,6 +33,8 @@ package br.eng.mosaic.pigeon.web.world
 		var userTextEntity:Entity ;
 		public var cursor:Cursor=new Cursor;
 		
+		private var level:int;
+		
 		private var textArea:PunkTextArea;
 		
 		//public static var cursor:Cursor=new Cursor;
@@ -39,6 +42,8 @@ package br.eng.mosaic.pigeon.web.world
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/smb2-title.mp3')]
 		private static const BKG_MUSIC:Class;
 		public static var bkg_music = new Sfx(BKG_MUSIC);
+		
+		var go:Go;
 		
 		private function createBackground(){
 			var obj:Entity;
@@ -59,7 +64,9 @@ package br.eng.mosaic.pigeon.web.world
 			//TODO ajeitar para aparecer bonitinho
 			add (new Back(272, 380));
 			add (new Separator(280 + 67, 380));
-			add (new Go(415, 380));
+			
+			go = new Go(415, 380);
+			add(go);
 			
 			//TODO Ajeitar a posição para aparecer bonitinho
 			add(new Avatar(450, 20));
@@ -82,7 +89,7 @@ package br.eng.mosaic.pigeon.web.world
 		{
 			createBackground();
 			
-			textArea = new PunkTextArea("<Put Message Here>", FP.width/2 - 150, FP.height - 65, 300, 65);
+			textArea = new PunkTextArea("<Put Message Here>", FP.width/2 - 150, FP.height - 65, 300, 65, new WhiteAfterlife);
 			//textArea = new PunkTextArea("Cade a merda do texto, kct!?!?!?", 0, FP.height - 100, 300, 100);
 			
 			add(textArea); 
@@ -98,8 +105,19 @@ package br.eng.mosaic.pigeon.web.world
 			super.begin();
 		}
 		
-		public function TransitionScreen() {
-			
+		public function TransitionScreen(level:int) {
+			this.level = level;
+			switch (level) {
+				case 1:
+					//carrega imagem do level 1
+					break;
+				case 2:
+					//carrega imagem do level 2
+					break;
+				case 3:
+					//carrega imagem do level 3
+					break;
+			}
 		}
 		
 		public function startGame():void{
@@ -109,10 +127,21 @@ package br.eng.mosaic.pigeon.web.world
 		override public function update():void {
 			super.update();
 			
-			mensagem = Input.keyString;
+			if(Input.mousePressed && go.collidePoint(go.x, go.y, Input.mouseX, Input.mouseY)){
+				switch (level) {
+					case 1:
+						FP.world = new Scenario1;
+						break;
+					case 2:
+						FP.world = new Scenario2;
+						break;
+					case 3:
+						FP.world = new Scenario3;
+						break;
+				}
+			}
 			
 			this.bringForward(cursor);
-			
 		}
 		
 	}

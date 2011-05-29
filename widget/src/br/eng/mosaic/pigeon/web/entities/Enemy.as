@@ -13,10 +13,10 @@ package br.eng.mosaic.pigeon.web.entities
 	
 	public class Enemy extends Entity
 	{
-		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/inimigo_sprite_dir.png')] 
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/sprite_bad.png')] 
 		private static const INIMIGO_DIR:Class;
 		
-		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/inimigo_sprite_esq.png')] 
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/sprite_bad-l.png')] 
 		private static const INIMIGO_ESQ:Class;
 		
 		public var sprEnemyDir:Spritemap;
@@ -35,11 +35,11 @@ package br.eng.mosaic.pigeon.web.entities
 		{
 			super(x, y, graphic, mask);
 			
-			sprEnemyDir = new Spritemap(INIMIGO_DIR, 100, 110);
-			sprEnemyDir.add("vooInimigo", [1, 0, 2, 0], 10, true); 
+			sprEnemyDir = new Spritemap(INIMIGO_DIR, 105, 105);
+			sprEnemyDir.add("vooInimigo", [0, 1, 2, 3], 10, true); 
 			
-			sprEnemyEsq = new Spritemap(INIMIGO_ESQ, 100, 110);
-			sprEnemyEsq.add("vooInimigo", [1, 2, 1, 0], 10, true); 
+			sprEnemyEsq = new Spritemap(INIMIGO_ESQ, 105, 105);
+			sprEnemyEsq.add("vooInimigo", [0, 1, 2, 3], 10, true); 
 			
 			if (MyWorld.userX >= this.x){
 				sprActive = sprEnemyDir;
@@ -51,7 +51,7 @@ package br.eng.mosaic.pigeon.web.entities
 
 			//O tamanho acertável é 10x10 menor, e o centro fica 5x5 desclocado, para 
 			//o hitbox continuar central
-			setHitbox(90, 90, 5, 5);
+			setHitbox(100, 100, 5, 5);
 			
 			type = "enemy"; //usado para tratar a colisÃ£o
 		}

@@ -16,7 +16,8 @@ package br.eng.mosaic.pigeon.web.entities
 	{
 		private var gritou:Boolean = false;
 		public static var playing = false;
-		private var dead:Boolean=false;
+		public var dead:Boolean=false;
+		public var finished:Boolean=false;
 		private var deadCount:int = 0;
 		private const deadCountLimit:int = 50;
 		
@@ -70,10 +71,10 @@ package br.eng.mosaic.pigeon.web.entities
 			pena = new Pena(Pena.PLAYER, x +(this.width/2), y + (this.height/2) + 20);
 			world.add(pena);
 			
-			this.graphic = null;
+			//this.graphic = null;
 			dead = true;
 			
-			//world.remove(this);
+			world.remove(this);
 		}
 		
 		
@@ -107,19 +108,20 @@ package br.eng.mosaic.pigeon.web.entities
 			
 			//Venceu
 			} else if (x >= FP.width && !dead){
-				FP.world = new TelaInicial;
-				TelaInicial.pontuacao += 1;
+				finished = true;
+				//FP.world = new TelaInicial;
+				//TelaInicial.pontuacao += 1;
 			}
 			
 			if (dead) {
 				if (!gritou) {
-					grito.play();
+					grito.play(1, 1);
 					gritou = true;
 				}
-				if (deadCount++ >= deadCountLimit) {
+				/*if (deadCount++ >= deadCountLimit) {
 					world.remove(this);
 					FP.world = new TelaInicial;
-				}
+				}*/
 			}
 			
 			//Movimento do pombo

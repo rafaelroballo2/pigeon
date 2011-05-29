@@ -3,6 +3,7 @@ package br.eng.mosaic.pigeon.web.world
 	import br.eng.mosaic.pigeon.web.entities.*;
 	import br.eng.mosaic.pigeon.web.entities.background.*;
 	import br.eng.mosaic.pigeon.web.entities.background.scenario1.*;
+	import br.eng.mosaic.pigeon.web.entities.background.scenario2.*;
 	
 	import flash.geom.Point;
 	
@@ -35,12 +36,14 @@ package br.eng.mosaic.pigeon.web.world
 		
 		private function createBackground(){
 			
-			add(new MainLayer());
-			add(new Layer2.2(0, 450));
-			add(new Layer03(0, 500));
-			add(new Layer04(0, 577));
 			
-			add(new HudFigeon(10,10));
+			add(new Layer21());
+			add(new Layer22(0, 473));
+			add(new Layer23(0, 463));
+			add(new Layer24(0, 470));
+			
+			var a:HudFigeon = new HudFigeon(10,10);
+			add(a);
 			
 			add (new Life(112, 40));
 			add (new Life(158, 40));
@@ -96,10 +99,21 @@ package br.eng.mosaic.pigeon.web.world
 			if (this.classCount(Enemy)==0){
 				pigeon.finalize();
 			}
+			
+			// go to transition screen
+			if (pigeon.dead){
+				if (this.classCount(Pigeon)==0 && this.classCount(Cloud)==0)
+					FP.world = new TransitionScreen(2);
+			}
+			
+			// go to transition screen
+			if (pigeon.finished){
+				FP.world = new TransitionScreen(3);
+			}
+			
 		}
 		
-		
-		
+			
 		
 		
 		
@@ -140,14 +154,12 @@ package br.eng.mosaic.pigeon.web.world
 				}
 				
 				add(enemy);
-				
-				
+							
 				
 				
 			}
 			
-			
-			
+						
 		}
 		
 		

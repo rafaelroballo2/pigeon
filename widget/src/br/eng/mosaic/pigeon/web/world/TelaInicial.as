@@ -5,6 +5,8 @@ package br.eng.mosaic.pigeon.web.world
 	import br.eng.mosaic.pigeon.web.entities.PlayButton;
 	import br.eng.mosaic.pigeon.web.entities.background.*;
 	
+	import punk.ui.skins.*;
+	
 	import com.facebook.graph.Facebook;
 	
 	import flash.text.TextField;
@@ -71,7 +73,7 @@ package br.eng.mosaic.pigeon.web.world
 		{
 			createBackground();
 			
-			textArea = new PunkTextArea("<Put Message Here>", FP.width/2 - 115, FP.height - 65, 300, 65);
+			textArea = new PunkTextArea("<Put Message Here>", FP.width/2 - 115, FP.height - 65, 300, 65, new WhiteAfterlife);
 			//textArea = new PunkTextArea("Cade a merda do texto, kct!?!?!?", 0, FP.height - 100, 300, 100);
 			
 			add(textArea); 
@@ -96,8 +98,9 @@ package br.eng.mosaic.pigeon.web.world
 		
 		 public function startGame():void{
 				//FP.world = new MyWorld;
-			 //FP.world = new Scenario1;
-			 FP.world = new Scenario2;
+			 FP.world = new Scenario1;
+			 //FP.world = new Scenario2;
+			 //FP.world = new Scenario3;
 		}
 		
 		override public function update():void {
