@@ -23,6 +23,10 @@ package br.eng.mosaic.pigeon.web.world
 		
 		//public static var cursor:Cursor=new Cursor;
 		public var cursor:Cursor=new Cursor;
+		
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/mosaic_pigeon_snd_environmentsound1.mp3')]
+		private static const BKG_MUSIC:Class;
+		public static var bkg_music : Sfx = new Sfx(BKG_MUSIC);
 
 		private function createBackground(){
 
@@ -82,6 +86,14 @@ package br.eng.mosaic.pigeon.web.world
 		}
 		
 		private var shots:Array=[];
+		
+		override public function begin():void 
+		{
+			// COlocar a musica de novo
+			if (!bkg_music.playing){
+				bkg_music.loop(0.5, 1);
+			}
+		}
 		
 		override public function update():void{
 			super.update();
