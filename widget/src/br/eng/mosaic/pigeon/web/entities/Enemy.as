@@ -73,7 +73,7 @@ package br.eng.mosaic.pigeon.web.entities
 			world.add(pena);
 			pena = new Pena(Pena.ENEMY, x +(this.width/2), y + (this.height/2) + 20);
 			world.add(pena);
-			
+			bkg_music.play(0.7, 1);
 			world.remove(this);
 		}
 		
@@ -104,9 +104,7 @@ package br.eng.mosaic.pigeon.web.entities
 			//Se colidiu com o tiro do usuário, morre
 			if (collide("shot", x, y)){
 				die();
-				if (!bkg_music.playing){
-					bkg_music.play(0.7, 1);
-				}
+				
 			}
 			
 			if (!collide("player", x, y)) {
