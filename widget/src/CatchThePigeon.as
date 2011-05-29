@@ -38,8 +38,8 @@ package
 			super(760,600, 60, false);
 			Mouse.hide();
 			//FP.world=new MyWorld;
-			//FP.world = new TelaInicial;
-			FP.world = new TransitionScreen;
+			FP.world = new TelaInicial;
+			//FP.world = new TransitionScreen;
 			engine=this;
 			
 		}
