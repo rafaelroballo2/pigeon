@@ -35,6 +35,10 @@ package br.eng.mosaic.pigeon.web.world
 		private static const BKG_MUSIC:Class;
 		public static var bkg_music : Sfx = new Sfx(BKG_MUSIC);
 		
+		public static const FIGEON = 1;
+		public static const SIGEON = 2;
+		public static const FIGEAN = 3;
+		
 		var typePigeon:int;
 		
 		private function createBackground(){
@@ -73,6 +77,8 @@ package br.eng.mosaic.pigeon.web.world
 					pigeon = new Figean();
 					break;
 			}*/
+			
+			pigeon = new Pigeon();
 			
 			add(pigeon);
 			
