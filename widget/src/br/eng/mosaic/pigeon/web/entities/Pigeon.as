@@ -21,7 +21,10 @@ package br.eng.mosaic.pigeon.web.entities
 		private var deadCount:int = 0;
 		private const deadCountLimit:int = 50;
 		
-		private var velocity:int = 1;
+		public var lives: int;
+		public var maxLives : int = 3;
+		
+		private var velocity:int = 1.2;
 		
 		//[Embed(source = 'br/eng/mosaic/pigeon/web/assets/pombo_sprite.png')] private const pigeon:Class; 
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/sprites_man_pigeons.png')] private const pigeon:Class;
@@ -51,6 +54,7 @@ package br.eng.mosaic.pigeon.web.entities
 			setHitbox(80,100, 5, 5);
 			
 			y=300;
+			lives = maxLives;
 		}
 		
 	
@@ -73,7 +77,7 @@ package br.eng.mosaic.pigeon.web.entities
 			
 			//this.graphic = null;
 			dead = true;
-			
+			type="player";
 			world.remove(this);
 		}
 		
@@ -82,14 +86,14 @@ package br.eng.mosaic.pigeon.web.entities
 		public function finalize():void{
 			velocity += 5;
 		}
-		var contadorcanto  : int = 50; 
+		var contadorcanto  : int = 200; 
 		override public function update():void {
 			super.update();
 			
 			if(contadorcanto == 0){
 				if (!bkg_music.playing){
 					bkg_music.play(1, 1);
-				}contadorcanto = 50;
+				}contadorcanto = 400;
 			}else -- contadorcanto;
 			
 			
@@ -101,9 +105,14 @@ package br.eng.mosaic.pigeon.web.entities
 				MyWorld.userX = x;
 				MyWorld.userY = y;
 				
-				//Morte do pombo
-				if (collide("enemy", x, y)) {
-					die();
+				//Morte do pombo 
+				var enemy:Enemy = Enemy(collide("enemy", x, y));
+				if (enemy) {
+					--lives;
+					enemy.die();
+					if(lives == 0){
+						die();	
+					}
 				}
 			
 			//Venceu

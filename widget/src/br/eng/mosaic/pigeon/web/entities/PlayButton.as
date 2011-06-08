@@ -9,6 +9,8 @@ package br.eng.mosaic.pigeon.web.entities
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.utils.Input;
 
+	import br.eng.mosaic.pigeon.web.world.*;
+	
 	public class PlayButton extends Entity
 	{
 		
@@ -24,11 +26,11 @@ package br.eng.mosaic.pigeon.web.entities
 			
 		}
 		
-		
 		public override function update():void{
 			if(Input.mousePressed&&this.collidePoint(x, y, Input.mouseX, Input.mouseY)){
 				if(FP.world is TelaInicial){
-					TelaInicial(FP.world).startGame();	
+					FP.world = new PigeonSelection;
+					//FP.world = new TransitionScreen(1);
 				}
 			}
 		}
