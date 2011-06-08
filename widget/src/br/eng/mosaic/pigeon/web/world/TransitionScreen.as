@@ -44,6 +44,7 @@ package br.eng.mosaic.pigeon.web.world
 		public static var bkg_music = new Sfx(BKG_MUSIC);
 		
 		var go:Go;
+		var back:Back;
 		
 		private function createBackground(){
 			var obj:Entity;
@@ -62,7 +63,8 @@ package br.eng.mosaic.pigeon.web.world
 			add (new Figeon(250, 120));
 			
 			//TODO ajeitar para aparecer bonitinho
-			add (new Back(272, 380));
+			back = new Back(272, 380); 
+			add (back);
 			add (new Separator(280 + 67, 380));
 			
 			go = new Go(415, 380);
@@ -82,6 +84,20 @@ package br.eng.mosaic.pigeon.web.world
 			add (new FacebookButton(20, FP.height * 1.8/3));
 			add (new Twitter(20, FP.height * 1.8/3 + 70));
 			add (new Pause(100, FP.height*1/2 + 240));
+			
+			switch (level) {
+				case 1:
+					add(new LevelLabel(1, 250, 270));
+					break;
+				case 2:
+					add(new LevelLabel(2, 250, 270));
+					//carrega imagem do level 2
+					break;
+				case 3:
+					add(new LevelLabel(3, 250, 270));
+					//carrega imagem do level 3
+					break;
+			}
 			
 		}
 		
@@ -107,17 +123,6 @@ package br.eng.mosaic.pigeon.web.world
 		
 		public function TransitionScreen(level:int) {
 			this.level = level;
-			switch (level) {
-				case 1:
-					//carrega imagem do level 1
-					break;
-				case 2:
-					//carrega imagem do level 2
-					break;
-				case 3:
-					//carrega imagem do level 3
-					break;
-			}
 		}
 		
 		public function startGame():void{
@@ -130,13 +135,27 @@ package br.eng.mosaic.pigeon.web.world
 			if(Input.mousePressed && go.collidePoint(go.x, go.y, Input.mouseX, Input.mouseY)){
 				switch (level) {
 					case 1:
-						FP.world = new Scenario1;
+						FP.world = new Scenario1(1);
 						break;
 					case 2:
-						FP.world = new Scenario2;
+						FP.world = new Scenario2(1);
 						break;
 					case 3:
-						FP.world = new Scenario3;
+						FP.world = new Scenario3(1);
+						break;
+				}
+			}
+			
+			if(Input.mousePressed && go.collidePoint(back.x, go.y, Input.mouseX, Input.mouseY)){
+				switch (level) {
+					case 1:
+						FP.world = new TelaInicial;
+						break;
+					case 2:
+						FP.world = new Scenario1(1);
+						break;
+					case 3:
+						FP.world = new Scenario2(1);
 						break;
 				}
 			}

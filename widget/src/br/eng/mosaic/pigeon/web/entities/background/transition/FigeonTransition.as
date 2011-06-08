@@ -6,11 +6,11 @@ package br.eng.mosaic.pigeon.web.entities.background.transition
 	import net.flashpunk.Mask;
 	import net.flashpunk.graphics.Image;
 	
-	public class Figean extends Entity 	{
+	public class FigeonTransition extends Entity 	{
 		
-		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/figean_noselection.png')] private const IMAGE:Class;
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/figeon_noselection.png')] private const IMAGE:Class;
 		
-		public function Figean(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null){
+		public function FigeonTransition(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null){
 			//super(x, y, graphic, mask);
 			
 			graphic = new Image(IMAGE);

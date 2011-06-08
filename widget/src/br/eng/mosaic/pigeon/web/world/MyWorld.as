@@ -12,6 +12,13 @@ package br.eng.mosaic.pigeon.web.world
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.utils.Input;
 
+	import br.eng.mosaic.pigeon.web.entities.Cursor;
+	import br.eng.mosaic.pigeon.web.entities.FacebookConfig;
+	import br.eng.mosaic.pigeon.web.entities.PlayButton;
+	import br.eng.mosaic.pigeon.web.entities.background.*;
+	import br.eng.mosaic.pigeon.web.entities.background.selection.*;
+	import br.eng.mosaic.pigeon.web.entities.background.transition.*;
+	
 	public class MyWorld extends World
 	{
 
@@ -61,6 +68,8 @@ package br.eng.mosaic.pigeon.web.world
 			//enemy.x = Math.random()%(FP.width)
 			enemy.y=FP.height - enemy.height;
 			add(enemy);
+			
+			add (new FigeanSelection);
 			
 		}
 		

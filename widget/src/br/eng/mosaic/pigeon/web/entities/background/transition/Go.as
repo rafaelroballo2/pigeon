@@ -10,9 +10,7 @@ package br.eng.mosaic.pigeon.web.entities.background.transition
 		
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/go.png')] private const IMAGE:Class;
 		
-		public function Go(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null){
-			//super(x, y, graphic, mask);
-			
+		public function Go(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null){	
 			graphic = new Image(IMAGE);
 			
 			super(x, y, graphic, mask);

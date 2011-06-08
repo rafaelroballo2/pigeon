@@ -19,7 +19,9 @@ package br.eng.mosaic.pigeon.web.world
 	public class Scenario1 extends World
 	{
 		
-		private var pigeon:Pigeon = new Pigeon();
+		//private var pigeon:Pigeon = new Pigeon();
+		
+		private var pigeon:Pigeon;
 		
 		public static var playing = false;
 		
@@ -32,6 +34,12 @@ package br.eng.mosaic.pigeon.web.world
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/mosaic_pigeon_snd_environmentsound1.mp3')]
 		private static const BKG_MUSIC:Class;
 		public static var bkg_music : Sfx = new Sfx(BKG_MUSIC);
+		
+		public static const FIGEON = 1;
+		public static const SIGEON = 2;
+		public static const FIGEAN = 3;
+		
+		var typePigeon:int;
 		
 		private function createBackground(){
 			
@@ -49,11 +57,28 @@ package br.eng.mosaic.pigeon.web.world
 			
 		}
 		
-		public function Scenario1() {	
+		public function Scenario1(typePigeon:int) {	
 			//add(new Background);
 			//addGraphic(new Background);
 			
+			this.typePigeon = typePigeon;
+			
 			createBackground();
+			
+			//Criar uma interface pra permitir fazer isso
+			/*switch (typePigeon) {
+				case 1:
+					pigeon = new Pigeon();
+					break;
+				case 2:
+					pigeon = new Pigeon();
+					break;
+				case 3:
+					pigeon = new Figean();
+					break;
+			}*/
+			
+			pigeon = new Pigeon();
 			
 			add(pigeon);
 			
