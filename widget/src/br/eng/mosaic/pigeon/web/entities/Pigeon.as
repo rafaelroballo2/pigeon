@@ -1,18 +1,21 @@
 package br.eng.mosaic.pigeon.web.entities 
 {
+	import br.eng.mosaic.pigeon.web.entities.background.scenario1.Life;
 	import br.eng.mosaic.pigeon.web.world.LevelComplete;
 	import br.eng.mosaic.pigeon.web.world.MyWorld;
+	import br.eng.mosaic.pigeon.web.world.Scenario;
 	import br.eng.mosaic.pigeon.web.world.TelaInicial;
 	
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
+	import net.flashpunk.Screen;
 	import net.flashpunk.Sfx;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Spritemap;
 	import net.flashpunk.utils.Input;
-	import net.flashpunk.utils.Key;	
+	import net.flashpunk.utils.Key;
 	
-	public class Pigeon extends Entity
+	public class Pigeon extends ScenarioEntity
 	{
 		private var gritou:Boolean = false;
 		public static var playing = false;
@@ -21,10 +24,11 @@ package br.eng.mosaic.pigeon.web.entities
 		private var deadCount:int = 0;
 		private const deadCountLimit:int = 50;
 		
+		private var velocity:int = 1;
 		public var lives: int;
 		public var maxLives : int = 3;
 		
-		private var velocity:int = 1.2;
+		
 		
 		//[Embed(source = 'br/eng/mosaic/pigeon/web/assets/pombo_sprite.png')] private const pigeon:Class; 
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/sprites_man_pigeons.png')] private const pigeon:Class;
@@ -90,6 +94,9 @@ package br.eng.mosaic.pigeon.web.entities
 		override public function update():void {
 			super.update();
 			
+			MyWorld.userX = x;
+			MyWorld.userY = y;
+			
 			if(contadorcanto == 0){
 				if (!bkg_music.playing){
 					bkg_music.play(1, 1);
@@ -98,13 +105,11 @@ package br.eng.mosaic.pigeon.web.entities
 			
 			
 			//Check de colisões
-			if (x < FP.width && !dead) {
+			if (true || (x < FP.width && !dead)) {
 				sprPigeon.play("voo")
 				x+=velocity;
 				
-				MyWorld.userX = x;
-				MyWorld.userY = y;
-				
+						
 				//Morte do pombo 
 				var enemy:Enemy = Enemy(collide("enemy", x, y));
 				if (enemy) {
@@ -116,7 +121,9 @@ package br.eng.mosaic.pigeon.web.entities
 				}
 			
 			//Venceu
-			} else if (x >= FP.width && !dead){
+			}
+			if ((x - FP.camera.x) >= (FP.width) && !dead){
+				
 				finished = true;
 				//FP.world = new TelaInicial;
 				//TelaInicial.pontuacao += 1;

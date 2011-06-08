@@ -46,6 +46,7 @@ package
 		
 		public function get service():Service
 		{
+			_service= new Service();
 			return _service;
 		}
 		

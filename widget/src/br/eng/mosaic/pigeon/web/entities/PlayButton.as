@@ -26,8 +26,9 @@ package br.eng.mosaic.pigeon.web.entities
 			
 		}
 		
+		
 		public override function update():void{
-			if(Input.mousePressed&&this.collidePoint(x, y, Input.mouseX, Input.mouseY)){
+			if(Input.mousePressed&&this.collidePoint(x, y, Input.mouseX+42, Input.mouseY+42)){
 				if(FP.world is TelaInicial){
 					FP.world = new PigeonSelection;
 					//FP.world = new TransitionScreen(1);

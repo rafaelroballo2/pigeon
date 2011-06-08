@@ -3,15 +3,15 @@ package br.eng.mosaic.pigeon.web.entities
 	import br.eng.mosaic.pigeon.web.world.MyWorld;
 	import br.eng.mosaic.pigeon.web.world.TelaInicial;
 	
-	import net.flashpunk.Sfx;
 	import net.flashpunk.Entity;
 	import net.flashpunk.Graphic;
 	import net.flashpunk.Mask;
+	import net.flashpunk.Sfx;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Spritemap;
 	import net.flashpunk.masks.Hitbox;
 	
-	public class Enemy extends Entity
+	public class Enemy extends ScenarioEntity
 	{
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/sprite_bad.png')] 
 		private static const INIMIGO_DIR:Class;

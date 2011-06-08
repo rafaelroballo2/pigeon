@@ -14,13 +14,13 @@ package br.eng.mosaic.pigeon.web.world
 	import net.flashpunk.FP;
 	import net.flashpunk.Sfx;
 	import net.flashpunk.World;
+	import net.flashpunk.graphics.Backdrop;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.utils.Input;
 	
-	public class Scenario2 extends World
+	public class Scenario2 extends Scenario
 	{
 		
-		private var pigeon:Pigeon = new Pigeon();
 		
 		public static var playing = false;
 		
@@ -30,19 +30,51 @@ package br.eng.mosaic.pigeon.web.world
 		//public static var cursor:Cursor=new Cursor;
 		public var cursor:Cursor=new Cursor;
 		
+		
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/mosaic_pigeon_snd_environmentsound1.mp3')]
 		private static const BKG_MUSIC:Class;
 		public static var bkg_music : Sfx = new Sfx(BKG_MUSIC);
 		
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/layer_21.png')] 
+		private const BG_LAYER1:Class;
+		
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/layer_22.png')] 
+		private const BG_LAYER2:Class;
+		
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/layer_23.png')] 
+		private const BG_LAYER3:Class;
+		
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/layer_24.png')] 
+		private const BG_LAYER4:Class;
+		
+
 		var typePigeon:int;
 		
 		private function createBackground(){
 			
 			
-			add(new Layer21());
-			add(new Layer22(0, 473));
-			add(new Layer23(0, 463));
-			add(new Layer24(0, 470));
+			var backDropLayer1:Backdrop=new Backdrop(BG_LAYER1, true, false);
+			backDropLayer1.scrollX=0.1;
+			addGraphic(backDropLayer1);
+			
+			var backDropLayer2:Backdrop=new Backdrop(BG_LAYER2, true, false);
+			backDropLayer2.scrollX=0.3;
+			addGraphic(backDropLayer2);
+			backDropLayer2.y=473;
+			
+			var backDropLayer3:Backdrop=new Backdrop(BG_LAYER3, true, false);
+			backDropLayer3.y=463;
+			backDropLayer3.scrollX=0.5;
+			addGraphic(backDropLayer3);
+			
+			var backDropLayer4:Backdrop=new Backdrop(BG_LAYER4, true, false);
+			backDropLayer4.scrollX=1;
+			backDropLayer4.y=470;
+			addGraphic(backDropLayer4);
+//			add(new Layer21());
+//			add(new Layer22(0, 473));
+//			add(new Layer23(0, 463));
+//			add(new Layer24(0, 470));
 			
 			var a:HudFigeon = new HudFigeon(10,10);
 			add(a);
@@ -85,6 +117,10 @@ package br.eng.mosaic.pigeon.web.world
 		}
 		
 		override public function update():void{
+			
+			cursor.x+=2;
+			updateEnemiesCount();
+			FP.camera.x += 2;
 			updateEnemiesCount();
 			super.update();
 			if(Input.mousePressed){
@@ -115,59 +151,20 @@ package br.eng.mosaic.pigeon.web.world
 				FP.world = new TransitionScreen(3);
 			}
 			
+			cursor.x+=2;
+			
 		}
 		
 			
 		
 		
 		
-		public function get enemyMaxCount():int{
-			return 4;
-		}
-		
-		
-		public function get totalEnemies():int{
-			return 10;
-		}
 		
 		
 		
 		
-		private function updateEnemiesCount():void{
-			
-			
-			var enemies:Array=[];
-			
-			getClass(Enemy, enemies);
-			
-			var count:int = enemyMaxCount- enemies.length;
-			
-			for(var i:int=0;i<count;i++){
-				trace(classCount(Enemy)<enemyMaxCount);
-				var positionNumber:int=(Math.random()*1000)%positions.length;
-				var enemy:Enemy = new Enemy();
-				var position:Point = Point(positions.getItemAt(positionNumber));
-				enemy.x=position.x;
-				enemy.y=position.y;
-				while(enemy.collideWith(pigeon, enemy.x, enemy.y)){
-					positionNumber=(Math.random()*1000)%positions.length;
-					enemy = new Enemy();
-					position = Point(positions.getItemAt(positionNumber));
-					enemy.x=position.x;
-					enemy.y=position.y;
-				}
-				
-				add(enemy);
-							
-				
-				
-			}
-			
-						
-		}
 		
 		
-		private var positions:IList;
 		
 		
 		

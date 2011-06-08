@@ -3,7 +3,7 @@ package br.eng.mosaic.pigeon.web.entities
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Image;
 
-	public class Shot extends Entity
+	public class Shot extends ScenarioEntity
 	{
 		
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/beam.png')] 

@@ -1,14 +1,20 @@
 package br.eng.mosaic.pigeon.web.world 
 {
 	import br.eng.mosaic.pigeon.web.entities.Cursor;
-	import br.eng.mosaic.pigeon.web.entities.FacebookConfig;
-	import br.eng.mosaic.pigeon.web.entities.PlayButton;
-	import br.eng.mosaic.pigeon.web.entities.background.*;
-	import br.eng.mosaic.pigeon.web.entities.background.transition.*;
-	
-	import com.facebook.graph.Facebook;
-	
-	import flash.text.TextField;
+	import br.eng.mosaic.pigeon.web.entities.background.Avatar;
+	import br.eng.mosaic.pigeon.web.entities.background.Bg;
+	import br.eng.mosaic.pigeon.web.entities.background.FacebookButton;
+	import br.eng.mosaic.pigeon.web.entities.background.Figeon;
+	import br.eng.mosaic.pigeon.web.entities.background.Help;
+	import br.eng.mosaic.pigeon.web.entities.background.Pause;
+	import br.eng.mosaic.pigeon.web.entities.background.Twitter;
+	import br.eng.mosaic.pigeon.web.entities.background.UserMessage;
+	import br.eng.mosaic.pigeon.web.entities.background.transition.Back;
+	import br.eng.mosaic.pigeon.web.entities.background.transition.BgScreenTransition;
+	import br.eng.mosaic.pigeon.web.entities.background.transition.Go;
+	import br.eng.mosaic.pigeon.web.entities.background.transition.LevelLabel;
+	import br.eng.mosaic.pigeon.web.entities.background.transition.Points;
+	import br.eng.mosaic.pigeon.web.entities.background.transition.Separator;
 	
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
@@ -16,7 +22,6 @@ package br.eng.mosaic.pigeon.web.world
 	import net.flashpunk.World;
 	import net.flashpunk.graphics.Text;
 	import net.flashpunk.utils.Input;
-	import net.flashpunk.utils.Key;
 	
 	import punk.ui.*;
 	import punk.ui.skins.WhiteAfterlife;
@@ -123,6 +128,17 @@ package br.eng.mosaic.pigeon.web.world
 		
 		public function TransitionScreen(level:int) {
 			this.level = level;
+			switch (level) {
+				case 1:
+					//carrega imagem do level 1
+					break;
+				case 2:
+					//carrega imagem do level 2
+					break;
+				case 3:
+					//carrega imagem do level 3
+					break;
+			}
 		}
 		
 		public function startGame():void{
@@ -132,7 +148,7 @@ package br.eng.mosaic.pigeon.web.world
 		override public function update():void {
 			super.update();
 			
-			if(Input.mousePressed && go.collidePoint(go.x, go.y, Input.mouseX, Input.mouseY)){
+			if(Input.mousePressed && go.collidePoint(go.x, go.y, Input.mouseX+44, Input.mouseY+44)){
 				switch (level) {
 					case 1:
 						FP.world = new Scenario1(1);

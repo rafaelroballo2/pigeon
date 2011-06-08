@@ -1,13 +1,13 @@
 package br.eng.mosaic.pigeon.web.entities 
 {
 	import net.flashpunk.Entity;
+	import net.flashpunk.FP;
 	import net.flashpunk.Graphic;
 	import net.flashpunk.Mask;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Spritemap;
-	import net.flashpunk.FP;
 	
-	public class Pena extends Entity
+	public class Pena extends ScenarioEntity
 	{
 		
 		public static const PLAYER:int = 1;

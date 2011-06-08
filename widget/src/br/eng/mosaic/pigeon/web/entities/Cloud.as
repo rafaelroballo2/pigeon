@@ -6,7 +6,7 @@ package br.eng.mosaic.pigeon.web.entities
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Spritemap;
 	
-	public class Cloud extends Entity
+	public class Cloud extends ScenarioEntity
 	{
 		
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/explosao.png')]
