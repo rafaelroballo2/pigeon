@@ -38,14 +38,11 @@ package br.eng.mosaic.pigeon.web.world
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/layer_01.png')] 
 		private const BG_LAYER1:Class;	
 
-		public static const FIGEON = 1;
-		public static const SIGEON = 2;
-		public static const FIGEAN = 3;
+		
 		
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/layer_02.png')] 
 		private const BG_LAYER2:Class;
 
-		var typePigeon:int;
 		
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/layer_03.png')] 
 		private const BG_LAYER3:Class;
@@ -80,38 +77,41 @@ package br.eng.mosaic.pigeon.web.world
 		}
 		
 		public function Scenario1(typePigeon:int) {	
-			//add(new Background);
-			//addGraphic(new Background);
-			
-			this.typePigeon = typePigeon;
-			
-			createBackground();
-			
-			//Criar uma interface pra permitir fazer isso
-			/*switch (typePigeon) {
-				case 1:
-					pigeon = new Pigeon();
-					break;
-				case 2:
-					pigeon = new Pigeon();
-					break;
-				case 3:
-					pigeon = new Figean();
-					break;
-			}*/
-			
-			pigeon = new Pigeon();
-			
-			add(pigeon);
-			
-			add(cursor);
-			
+			super();
+			this.pigeonType = typePigeon;
 		}
 		
 		private var shots:Array=[];
 		
 		override public function begin():void 
 		{
+			super.begin();
+			
+			//add(new Background);
+			//addGraphic(new Background);
+			
+			
+			
+			createBackground();
+			
+			//Criar uma interface pra permitir fazer isso
+			/*switch (typePigeon) {
+			case 1:
+			pigeon = new Pigeon();
+			break;
+			case 2:
+			pigeon = new Pigeon();
+			break;
+			case 3:
+			pigeon = new Figean();
+			break;
+			}*/
+			
+			
+			add(pigeon);
+			
+			add(cursor);
+			
 			initPositions();
 			scenarioSpeed+=2;
 			// COlocar a musica de novo
@@ -149,11 +149,11 @@ package br.eng.mosaic.pigeon.web.world
 			// go to transition screen
 			if (pigeon.dead){
 				if (this.classCount(Pigeon)==0 && this.classCount(Cloud)==0)
-				FP.world = new TransitionScreen(1);
+				FP.world = new TransitionScreen(1, pigeonType);
 			}
 			// go to transition screen
 			if (pigeon.finished){
-				FP.world = new TransitionScreen(2);
+				FP.world = new TransitionScreen(2, pigeonType);
 			}
 			
 				cursor.x+=scenarioSpeed;

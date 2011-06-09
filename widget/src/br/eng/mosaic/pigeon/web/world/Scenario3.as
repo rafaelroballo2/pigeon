@@ -48,7 +48,6 @@ package br.eng.mosaic.pigeon.web.world
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/layer_34.png')] 
 		private const BG_LAYER4:Class;
 
-		var typePigeon:int;
 		
 		private function createBackground(){
 			
@@ -91,13 +90,9 @@ package br.eng.mosaic.pigeon.web.world
 			//add(new Background);
 			//addGraphic(new Background);
 			
-			this.typePigeon = typePigeon;
+			this.pigeonType = typePigeon;
 			
-			createBackground();
 			
-			add(pigeon);
-			
-			add(cursor);
 			
 			
 		}
@@ -106,6 +101,12 @@ package br.eng.mosaic.pigeon.web.world
 		
 		override public function begin():void 
 		{
+			super.begin();
+			createBackground();
+			
+			add(pigeon);
+			
+			add(cursor);
 			initPositions();
 			// COlocar a musica de novo
 			if (!bkg_music.playing){
@@ -144,12 +145,12 @@ package br.eng.mosaic.pigeon.web.world
 			// go to transition screen
 			if (pigeon.dead){
 				if (this.classCount(Pigeon)==0 && this.classCount(Cloud)==0)
-					FP.world = new TransitionScreen(3);
+					FP.world = new TransitionScreen(3, pigeonType);
 			}
 			
 			// go to transition screen
 			if (pigeon.finished){
-				FP.world = new TransitionScreen(3);
+				FP.world = new TransitionScreen(3, pigeonType);
 			}
 			
 			cursor.x+=2;

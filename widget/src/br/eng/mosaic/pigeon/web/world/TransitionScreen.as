@@ -38,6 +38,9 @@ package br.eng.mosaic.pigeon.web.world
 		var userTextEntity:Entity ;
 		public var cursor:Cursor=new Cursor;
 		
+		
+		private var pigeonType:int;
+		
 		private var level:int;
 		
 		private var textArea:PunkTextArea;
@@ -56,12 +59,10 @@ package br.eng.mosaic.pigeon.web.world
 			
 			add(new Bg());
 			add(new BgScreenTransition());
-			//add(new OpeningScreen());
-			//add(new PlayButton(FP.width/2, FP.height*2/3));
 			
 			obj = new UserMessage();
 			obj.x = FP.width/2 - 165;
-			obj.y = FP.height - 100; //obj.height;
+			obj.y = FP.height - 100; 
 			add(obj);
 			
 			add (new Points(250,30));
@@ -111,7 +112,6 @@ package br.eng.mosaic.pigeon.web.world
 			createBackground();
 			
 			textArea = new PunkTextArea("<Put Message Here>", FP.width/2 - 150, FP.height - 65, 300, 65, new WhiteAfterlife);
-			//textArea = new PunkTextArea("Cade a merda do texto, kct!?!?!?", 0, FP.height - 100, 300, 100);
 			
 			add(textArea); 
 			
@@ -126,8 +126,9 @@ package br.eng.mosaic.pigeon.web.world
 			super.begin();
 		}
 		
-		public function TransitionScreen(level:int) {
+		public function TransitionScreen(level:int, pigeonType:int) {
 			this.level = level;
+			this.pigeonType = pigeonType;
 			switch (level) {
 				case 1:
 					//carrega imagem do level 1
@@ -151,13 +152,13 @@ package br.eng.mosaic.pigeon.web.world
 			if(Input.mousePressed && go.collidePoint(go.x, go.y, Input.mouseX+44, Input.mouseY+44)){
 				switch (level) {
 					case 1:
-						FP.world = new Scenario1(1);
+						FP.world = new Scenario1(pigeonType);
 						break;
 					case 2:
-						FP.world = new Scenario2(1);
+						FP.world = new Scenario2(pigeonType);
 						break;
 					case 3:
-						FP.world = new Scenario3(1);
+						FP.world = new Scenario3(pigeonType);
 						break;
 				}
 			}

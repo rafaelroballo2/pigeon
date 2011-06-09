@@ -1,7 +1,10 @@
 package br.eng.mosaic.pigeon.web.world
 {
 	import br.eng.mosaic.pigeon.web.entities.Enemy;
+	import br.eng.mosaic.pigeon.web.entities.Figean;
+	import br.eng.mosaic.pigeon.web.entities.Figeon;
 	import br.eng.mosaic.pigeon.web.entities.Pigeon;
+	import br.eng.mosaic.pigeon.web.entities.Sigeon;
 	import br.eng.mosaic.pigeon.web.entities.background.scenario1.Life;
 	
 	import flash.geom.Point;
@@ -14,12 +17,36 @@ package br.eng.mosaic.pigeon.web.world
 	public class Scenario extends World
 	{
 		
-		public var pigeon:Pigeon = new Pigeon();
+		public static const FIGEON:int = 1;
+		public static const SIGEON:int = 2;
+		public static const FIGEAN:int = 3;
+		
+		public var pigeon:Pigeon;
+		
+		protected var pigeonType:int;
 		
 		public var scenarioSpeed:int=2;
 		public function Scenario()
 		{
 			super();
+			
+			
+			
+			
+		}
+		
+		public override function begin():void{
+			switch (pigeonType) {
+				case FIGEON:
+					pigeon = new Figeon();
+					break;
+				case SIGEON:
+					pigeon = new Sigeon();
+					break;
+				case FIGEAN:
+					pigeon = new Figean();
+					break;
+			}
 		}
 		
 		public function get enemyMaxCount():int{

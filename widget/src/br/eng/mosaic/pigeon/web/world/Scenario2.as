@@ -48,9 +48,8 @@ package br.eng.mosaic.pigeon.web.world
 		private const BG_LAYER4:Class;
 		
 
-		var typePigeon:int;
 		
-		private function createBackground(){
+		private function createBackground():void{
 			
 			
 			var backDropLayer1:Backdrop=new Backdrop(BG_LAYER1, true, false);
@@ -89,14 +88,9 @@ package br.eng.mosaic.pigeon.web.world
 		public function Scenario2(typePigeon:int) {	
 			//add(new Background);
 			//addGraphic(new Background);
+			super();
+			this.pigeonType = typePigeon;
 			
-			this.typePigeon = typePigeon;
-			
-			createBackground();
-			
-			add(pigeon);
-			
-			add(cursor);
 			
 			
 		}
@@ -105,6 +99,14 @@ package br.eng.mosaic.pigeon.web.world
 		
 		override public function begin():void 
 		{
+			super.begin();
+			
+			createBackground();
+			
+			add(pigeon);
+			
+			add(cursor);
+			
 			initPositions();
 			// COlocar a musica de novo
 			if (!bkg_music.playing){
@@ -143,12 +145,12 @@ package br.eng.mosaic.pigeon.web.world
 			// go to transition screen
 			if (pigeon.dead){
 				if (this.classCount(Pigeon)==0 && this.classCount(Cloud)==0)
-					FP.world = new TransitionScreen(2);
+					FP.world = new TransitionScreen(2, pigeonType);
 			}
 			
 			// go to transition screen
 			if (pigeon.finished){
-				FP.world = new TransitionScreen(3);
+				FP.world = new TransitionScreen(3, pigeonType);
 			}
 			
 			cursor.x+=2;

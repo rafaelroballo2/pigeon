@@ -16,6 +16,7 @@ package br.eng.mosaic.pigeon.web.entities
 			graphic=new Image(sprite);
 			this.width=16;
 			this.height=16;
+			this.setHitboxTo(graphic);
 			type = "shot";
 		}
 		

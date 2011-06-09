@@ -51,7 +51,8 @@ package br.eng.mosaic.pigeon.web.entities
 
 			//O tamanho acertável é 10x10 menor, e o centro fica 5x5 desclocado, para 
 			//o hitbox continuar central
-			setHitbox(100, 100, 5, 5);
+			//setHitbox(100, 100, 5, 5);
+			setHitboxTo(this.graphic);
 			
 			type = "enemy"; //usado para tratar a colisÃ£o
 		}
