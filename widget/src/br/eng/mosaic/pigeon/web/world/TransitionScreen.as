@@ -4,9 +4,11 @@ package br.eng.mosaic.pigeon.web.world
 	import br.eng.mosaic.pigeon.web.entities.background.Avatar;
 	import br.eng.mosaic.pigeon.web.entities.background.Bg;
 	import br.eng.mosaic.pigeon.web.entities.background.FacebookButton;
+	import br.eng.mosaic.pigeon.web.entities.background.Figean;
 	import br.eng.mosaic.pigeon.web.entities.background.Figeon;
 	import br.eng.mosaic.pigeon.web.entities.background.Help;
 	import br.eng.mosaic.pigeon.web.entities.background.Pause;
+	import br.eng.mosaic.pigeon.web.entities.background.Sigeon;
 	import br.eng.mosaic.pigeon.web.entities.background.Twitter;
 	import br.eng.mosaic.pigeon.web.entities.background.UserMessage;
 	import br.eng.mosaic.pigeon.web.entities.background.transition.Back;
@@ -66,7 +68,7 @@ package br.eng.mosaic.pigeon.web.world
 			add(obj);
 			
 			add (new Points(250,30));
-			add (new Figeon(250, 120));
+			add (getPigeon(250,19));
 			
 			//TODO ajeitar para aparecer bonitinho
 			back = new Back(272, 380); 
@@ -105,6 +107,19 @@ package br.eng.mosaic.pigeon.web.world
 					break;
 			}
 			
+		}
+
+		private function getPigeon(x:int, y:int):Entity
+		{
+			switch (pigeonType){
+				case Scenario.FIGEON:
+					return new Figeon(x, y);
+				case Scenario.FIGEAN:
+					return new Figean(x,y);
+				case Scenario.SIGEON:
+					return new Sigeon(x, y);
+			}
+			return null;
 		}
 		
 		override public function begin():void 
