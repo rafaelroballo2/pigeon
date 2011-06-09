@@ -16,10 +16,12 @@ package br.eng.mosaic.pigeon.web.entities
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/sight.png')] 
 		private const sprite:Class;
 		
+		
 		public function Cursor(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null)
 		{
 			super(x, y, graphic, mask);
 			this.graphic=new Image(sprite);
+			
 			width=87;
 			height=87;
 		}

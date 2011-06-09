@@ -40,9 +40,12 @@ package br.eng.mosaic.pigeon.web.world
 		
 		//public static var cursor:Cursor=new Cursor;
 		
-		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/smb2-title.mp3')]
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/mosaic_pigeon_snd_menu5.mp3')]
 		private static const BKG_MUSIC:Class;
-		public static var bkg_music = new Sfx(BKG_MUSIC);
+		
+		
+		public static var bkg_music:Sfx= null;
+		
 		
 		var go:Go;
 		
@@ -92,7 +95,6 @@ package br.eng.mosaic.pigeon.web.world
 			add (new FigeonSelection(290, 300));
 			add (new FigeanSelection(500, 200));
 			
-			add(new PlayButton);
 			
 		}
 		
@@ -101,19 +103,26 @@ package br.eng.mosaic.pigeon.web.world
 			createBackground();
 			
 			textArea = new PunkTextArea("<Put Message Here>", FP.width/2 - 150, FP.height - 65, 300, 65, new WhiteAfterlife);
-			//textArea = new PunkTextArea("Cade a merda do texto, kct!?!?!?", 0, FP.height - 100, 300, 100);
 			
 			add(textArea); 
 			
-			// COlocar a musica de novo
-			/*if (!bkg_music.playing){
-			bkg_music.play(0.5, 1);
-			}*/
+			
+			
+			if(!bkg_music){
+				bkg_music=new Sfx(BKG_MUSIC);
+			}
+			if (!bkg_music.playing){
+				bkg_music.loop(0.5, 1);
+			}
 			
 			add(cursor);
 			
 			
 			super.begin();
+		}
+		
+		public override function end():void{
+			bkg_music.stop();
 		}
 		
 		public function PigeonSelection() {
@@ -135,7 +144,6 @@ package br.eng.mosaic.pigeon.web.world
 			
 			this.bringForward(cursor);
 			
-			super.update();
 			
 		}
 		

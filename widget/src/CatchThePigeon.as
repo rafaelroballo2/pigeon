@@ -21,6 +21,7 @@ package
 	import net.flashpunk.Engine;
 	import net.flashpunk.FP;
 	import net.flashpunk.World;
+	import net.flashpunk.utils.Input;
 	
 	public class CatchThePigeon extends Engine
 	{
@@ -32,6 +33,10 @@ package
 		
 		
 		public static var engine:CatchThePigeon;
+		
+		public var soundVolume:Number;
+		
+		public var soundEnabled:Boolean=true;
 		
 		public function CatchThePigeon()
 		{
@@ -82,8 +87,16 @@ package
 			var object:Object=JSON.decode(data);
 			userinfo =new UserInfo(object);
 			
-					
 			
+			
+		}
+		
+		public override function update():void{
+			if(Input.mouseFlashX>0 && Input.mouseFlashX<FP.width &&
+				Input.mouseFlashY>0 && Input.mouseFlashY<FP.height){
+				Mouse.hide();
+			}
+			super.update();
 		}
 		
 	}

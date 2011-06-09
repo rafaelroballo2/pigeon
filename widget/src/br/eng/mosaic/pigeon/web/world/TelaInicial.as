@@ -5,8 +5,6 @@ package br.eng.mosaic.pigeon.web.world
 	import br.eng.mosaic.pigeon.web.entities.PlayButton;
 	import br.eng.mosaic.pigeon.web.entities.background.*;
 	
-	import punk.ui.skins.*;
-	
 	import com.facebook.graph.Facebook;
 	
 	import flash.text.TextField;
@@ -20,6 +18,7 @@ package br.eng.mosaic.pigeon.web.world
 	import net.flashpunk.utils.Key;
 	
 	import punk.ui.*;
+	import punk.ui.skins.*;
 	
 	/**
 	 * ...
@@ -40,6 +39,11 @@ package br.eng.mosaic.pigeon.web.world
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/mosaic_pigeon_snd_menu5.mp3')]
 		private static const BKG_MUSIC:Class;
 		public static var bkg_music : Sfx = new Sfx(BKG_MUSIC);
+		
+		{
+			PigeonSelection.bkg_music = bkg_music;
+			TransitionScreen.bkg_music = bkg_music;
+		}
 		
 		private function createBackground(){
 			var obj:Entity;
@@ -88,9 +92,7 @@ package br.eng.mosaic.pigeon.web.world
 			
 			super.begin();
 		}
-		override public function end():void{
-			bkg_music.stop();
-		}
+	
 		
 		public function TelaInicial() {
 			

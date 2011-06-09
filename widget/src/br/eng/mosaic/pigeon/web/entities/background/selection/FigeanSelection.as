@@ -28,8 +28,7 @@ package br.eng.mosaic.pigeon.web.entities.background.selection
 		
 		public override function update():void{
 			if(Input.mousePressed&&this.collidePoint(x, y, Input.mouseX, Input.mouseY)){
-				//Deveria passar o pombo como parametro
-				FP.world = new TransitionScreen(1, Scenario.FIGEAN);
+				FP.world = new Scenario1( Scenario.FIGEAN);
 			}
 		}
 		

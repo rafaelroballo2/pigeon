@@ -49,9 +49,11 @@ package br.eng.mosaic.pigeon.web.world
 		
 		//public static var cursor:Cursor=new Cursor;
 		
-		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/smb2-title.mp3')]
+		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/mosaic_pigeon_snd_menu5.mp3')]
 		private static const BKG_MUSIC:Class;
-		public static var bkg_music = new Sfx(BKG_MUSIC);
+		
+		
+		public static var bkg_music:Sfx= null;
 		
 		var go:Go;
 		var back:Back;
@@ -134,6 +136,13 @@ package br.eng.mosaic.pigeon.web.world
 			/*if (!bkg_music.playing){
 			bkg_music.play(0.5, 1);
 			}*/
+			
+			if(!bkg_music){
+				bkg_music=new Sfx(BKG_MUSIC);
+			}
+			if( !bkg_music.playing){
+				bkg_music.loop(0.5, 1);
+			}
 			
 			add(cursor);
 			
