@@ -3,6 +3,10 @@ package br.eng.mosaic.pigeon.web.world
 	import br.eng.mosaic.pigeon.web.entities.*;
 	import br.eng.mosaic.pigeon.web.entities.background.*;
 	import br.eng.mosaic.pigeon.web.entities.background.scenario1.*;
+	import br.eng.mosaic.pigeon.web.entities.background.transition.*;
+	import br.eng.mosaic.pigeon.web.ui.*;
+	
+	import br.eng.mosaic.pigeon.web.ScoreManager;
 	
 	import flash.geom.Point;
 	
@@ -17,16 +21,17 @@ package br.eng.mosaic.pigeon.web.world
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.utils.Input;
 	
+	import punk.ui.*;
+	import punk.ui.skins.*;
+	
 	public class Scenario1 extends Scenario
 	{
 		
+		private var scoreLabel:PigeonLabel;
 		
 		public static var playing:Boolean = false;
-		
 		public static var userX:int = 0;
 		public static var userY:int = 0;
-		
-		
 		
 		//public static var cursor:Cursor=new Cursor;
 		public var cursor:Cursor=new Cursor;
@@ -37,8 +42,6 @@ package br.eng.mosaic.pigeon.web.world
 		
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/layer_01.png')] 
 		private const BG_LAYER1:Class;	
-
-		
 		
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/layer_02.png')] 
 		private const BG_LAYER2:Class;
@@ -70,9 +73,10 @@ package br.eng.mosaic.pigeon.web.world
 			backDropLayer4.y=577;
 			addGraphic(backDropLayer4);
 			
-			add(new HudFigeon(10,10));
-			
-			
+			super.createHud();
+			super.createLives();
+			add(new LevelLabelScenario(1, 620,5));
+			super.createScore();
 			
 		}
 		
@@ -87,29 +91,9 @@ package br.eng.mosaic.pigeon.web.world
 		{
 			super.begin();
 			
-			//add(new Background);
-			//addGraphic(new Background);
-			
-			
-			
 			createBackground();
 			
-			//Criar uma interface pra permitir fazer isso
-			/*switch (typePigeon) {
-			case 1:
-			pigeon = new Pigeon();
-			break;
-			case 2:
-			pigeon = new Pigeon();
-			break;
-			case 3:
-			pigeon = new Figean();
-			break;
-			}*/
-			
-			
 			add(pigeon);
-			
 			add(cursor);
 			
 			initPositions();
@@ -153,19 +137,12 @@ package br.eng.mosaic.pigeon.web.world
 			}
 			// go to transition screen
 			if (pigeon.finished){
+				ScoreManager.getInstance().updateScore(ScoreManager.LEVELCLEAR, 1);
 				FP.world = new TransitionScreen(2, pigeonType);
 			}
 			
-				cursor.x+=scenarioSpeed;
+			cursor.x+=scenarioSpeed;
 		}
-		
-	
-		
-		
-		
-		
-		
-		
 		
 		private function initPositions():void{
 			positions=new ArrayList();

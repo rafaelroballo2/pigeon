@@ -3,6 +3,8 @@ package br.eng.mosaic.pigeon.web.entities
 	import br.eng.mosaic.pigeon.web.world.MyWorld;
 	import br.eng.mosaic.pigeon.web.world.TelaInicial;
 	
+	import br.eng.mosaic.pigeon.web.ScoreManager;
+	
 	import net.flashpunk.Entity;
 	import net.flashpunk.Graphic;
 	import net.flashpunk.Mask;
@@ -58,6 +60,8 @@ package br.eng.mosaic.pigeon.web.entities
 		}
 		
 		public function die():void{
+			
+			ScoreManager.getInstance().updateScore(ScoreManager.ENEMYDOWN);
 			
 			//O pombo vira uma nuvem explodida
 			var cloud:Cloud = new Cloud();

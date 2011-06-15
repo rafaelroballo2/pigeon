@@ -34,7 +34,9 @@ package br.eng.mosaic.pigeon.web.world
 		
 		private var textArea:PunkTextArea;
 		
-		//public static var cursor:Cursor=new Cursor;
+		private var textLength:int = 140; //#CTP
+		private var hashtagLength:int = 4; //#CTP
+		private var highScoreLength:int = 4; //#top5
 		
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/mosaic_pigeon_snd_menu5.mp3')]
 		private static const BKG_MUSIC:Class;
@@ -50,10 +52,10 @@ package br.eng.mosaic.pigeon.web.world
 			
 			add(new Bg());
 			add(new OpeningScreen());
-			add(new PlayButton(FP.width/2, FP.height*2/3));
+			add(new PlayButton(FP.width/2 -33, FP.height*2/3 -18));
 			
 			obj = new UserMessage();
-			obj.x = FP.width/2 - 130;// - obj.width/2;
+			obj.x = FP.width/2 - 165;// - obj.width/2;
 			obj.y = FP.height - 100; //obj.height;
 			add(obj);
 			
@@ -69,7 +71,7 @@ package br.eng.mosaic.pigeon.web.world
 			
 			add (new Twitter(20, FP.height * 1/2));
 			add (new FacebookButton(20, FP.height * 1/2 + 70));
-			add (new Pause(100, FP.height*1/2 + 240));
+			//add (new Pause(100, FP.height*1/2 + 240));
 			
 		}
 		
@@ -77,7 +79,7 @@ package br.eng.mosaic.pigeon.web.world
 		{
 			createBackground();
 			
-			textArea = new PunkTextArea("<Put Message Here>", FP.width/2 - 115, FP.height - 65, 300, 65, new WhiteAfterlife);
+			textArea = new PunkTextArea("<Put Message Here>", FP.width/2 - 160, FP.height - 65, 300, 65, new WhiteAfterlife);
 			//textArea = new PunkTextArea("Cade a merda do texto, kct!?!?!?", 0, FP.height - 100, 300, 100);
 			
 			add(textArea); 
@@ -111,15 +113,9 @@ package br.eng.mosaic.pigeon.web.world
 			
 			mensagem = Input.keyString;
 			
-			/*if (userTextEntity!=null){
-				remove(userTextEntity);
+			if (textArea.text.length > (textLength - hashtagLength)){
+				textArea.text = textArea.text.substr(0, textLength - hashtagLength);
 			}
-			
-			textoDoUsuario = new Text(mensagem);
-			userTextEntity = new Entity(0, 0, textoDoUsuario);
-			userTextEntity.x = (FP.width / 2) - (textoDoUsuario.width / 2);
-			userTextEntity.y = (100);
-			add(userTextEntity);*/
 			
 			this.bringForward(cursor);
 			

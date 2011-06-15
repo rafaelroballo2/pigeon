@@ -119,6 +119,7 @@ package br.eng.mosaic.pigeon.web.entities
 				if (enemy) {
 					--lives;
 					enemy.die();
+					(FP.world as Scenario).decreaseLife(lives);
 					if(lives == 0){
 						die();	
 					}

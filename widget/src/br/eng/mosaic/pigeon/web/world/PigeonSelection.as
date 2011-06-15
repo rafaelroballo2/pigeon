@@ -34,6 +34,8 @@ package br.eng.mosaic.pigeon.web.world
 		var userTextEntity:Entity ;
 		public var cursor:Cursor=new Cursor;
 		
+		private var backButton:BackToStart;
+		
 		private var level:int;
 		
 		private var textArea:PunkTextArea;
@@ -86,8 +88,10 @@ package br.eng.mosaic.pigeon.web.world
 			
 			add (new FacebookButton(20, FP.height * 1.8/3));
 			add (new Twitter(20, FP.height * 1.8/3 + 70));
-			add (new Pause(100, FP.height*1/2 + 240));
+			//add (new Pause(100, FP.height*1/2 + 240));
 			
+			backButton = new BackToStart(20, FP.height*1/2 + 240);
+			add (backButton);
 			
 			sigeon = new SigeonSelection(100, 200);
 			add(sigeon);
@@ -136,14 +140,11 @@ package br.eng.mosaic.pigeon.web.world
 		override public function update():void {
 			super.update();
 			
-			if(Input.mousePressed && sigeon.collidePoint(sigeon.x, sigeon.y, Input.mouseX, Input.mouseY)){
-				//TelaInicial(FP.world).startGame();
-				// 1 é o Figeon, 2 é o Sigeon e 3 é o Figean 
-				//FP.world = new Scenario1(1);
+			if(Input.mousePressed&&backButton.collidePoint(backButton.x, backButton.y, Input.mouseX+44, Input.mouseY+44)){
+				FP.world = new TelaInicial();
 			}
 			
 			this.bringForward(cursor);
-			
 			
 		}
 		

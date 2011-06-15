@@ -4,6 +4,9 @@ package br.eng.mosaic.pigeon.web.world
 	import br.eng.mosaic.pigeon.web.entities.background.*;
 	import br.eng.mosaic.pigeon.web.entities.background.scenario1.*;
 	import br.eng.mosaic.pigeon.web.entities.background.scenario2.*;
+	import br.eng.mosaic.pigeon.web.entities.background.transition.*;
+	
+	import br.eng.mosaic.pigeon.web.ScoreManager;
 	
 	import flash.geom.Point;
 	
@@ -75,13 +78,13 @@ package br.eng.mosaic.pigeon.web.world
 //			add(new Layer23(0, 463));
 //			add(new Layer24(0, 470));
 			
-			var a:HudFigeon = new HudFigeon(10,10);
-			add(a);
+			//var a:HudFigeon = new HudFigeon(10,10);
+			//add(a);
 			
-			add (new Life(112, 40));
-			add (new Life(158, 40));
-			add (new Life(204, 40));
-			
+			super.createHud();
+			super.createLives();
+			add(new LevelLabelScenario(2, 620,5));
+			super.createScore();
 			
 		}
 		
@@ -150,6 +153,7 @@ package br.eng.mosaic.pigeon.web.world
 			
 			// go to transition screen
 			if (pigeon.finished){
+				ScoreManager.getInstance().updateScore(ScoreManager.LEVELCLEAR, 2);
 				FP.world = new TransitionScreen(3, pigeonType);
 			}
 			

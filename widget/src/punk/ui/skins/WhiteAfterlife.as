@@ -49,7 +49,7 @@ package punk.ui.skins
 			punkToggleButton = new PunkSkinToggleButtonElement(gn(0, 64), gn(16, 64), gn(32, 64), gn(16, 64), gn(0, 80), gn(16, 80), gn(32, 80), gn(16, 80), {color: 0xFF3366, size: 16, x: 16});
 			punkRadioButton = new PunkSkinToggleButtonElement(gn(0, 96), gn(16, 96), gn(32, 96), gn(16, 96), gn(0, 112), gn(16, 112), gn(32, 112), gn(16, 112), {color: 0xFF3366, size: 16, x: 16});
 			
-			punkLabel = new PunkSkinHasLabelElement({color: 0xFF3366, size: 16});
+			punkLabel = new PunkSkinHasLabelElement({color: 0x000000, size: 26});
 			punkTextArea = new PunkSkinLabelElement({color: 0x31ACD8, size: 16}, gy(64 + (16 * textArea), 0));
 			punkTextField = new PunkSkinLabelElement({color: 0xFF3366, size: 16}, gy(64 + (16 * textField), 16));
 			punkPasswordField = new PunkSkinLabelElement({color: 0xFF3366, size: 16}, gy(16 * passwordField, 48));

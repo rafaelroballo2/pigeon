@@ -11,12 +11,9 @@ package br.eng.mosaic.pigeon.web.world
 	import br.eng.mosaic.pigeon.web.entities.background.Sigeon;
 	import br.eng.mosaic.pigeon.web.entities.background.Twitter;
 	import br.eng.mosaic.pigeon.web.entities.background.UserMessage;
-	import br.eng.mosaic.pigeon.web.entities.background.transition.Back;
-	import br.eng.mosaic.pigeon.web.entities.background.transition.BgScreenTransition;
-	import br.eng.mosaic.pigeon.web.entities.background.transition.Go;
-	import br.eng.mosaic.pigeon.web.entities.background.transition.LevelLabel;
-	import br.eng.mosaic.pigeon.web.entities.background.transition.Points;
-	import br.eng.mosaic.pigeon.web.entities.background.transition.Separator;
+	import br.eng.mosaic.pigeon.web.entities.background.transition.*;
+	
+	import br.eng.mosaic.pigeon.web.entities.background.selection.*;
 	
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
@@ -40,6 +37,7 @@ package br.eng.mosaic.pigeon.web.world
 		var userTextEntity:Entity ;
 		public var cursor:Cursor=new Cursor;
 		
+		private var backButton:BackToStart;
 		
 		private var pigeonType:int;
 		
@@ -72,7 +70,6 @@ package br.eng.mosaic.pigeon.web.world
 			add (new Points(250,30));
 			add (getPigeon(250,19));
 			
-			//TODO ajeitar para aparecer bonitinho
 			back = new Back(272, 380); 
 			add (back);
 			add (new Separator(280 + 67, 380));
@@ -93,21 +90,26 @@ package br.eng.mosaic.pigeon.web.world
 			
 			add (new FacebookButton(20, FP.height * 1.8/3));
 			add (new Twitter(20, FP.height * 1.8/3 + 70));
-			add (new Pause(100, FP.height*1/2 + 240));
+			//add (new Pause(100, FP.height*1/2 + 240));
+			
+			add (new BackToStart(20, FP.height*1/2 + 240));
 			
 			switch (level) {
 				case 1:
-					add(new LevelLabel(1, 250, 270));
+					add(new LevelLabel(1, 250, 170));
 					break;
 				case 2:
-					add(new LevelLabel(2, 250, 270));
+					add(new LevelLabel(2, 250, 170));
 					//carrega imagem do level 2
 					break;
 				case 3:
-					add(new LevelLabel(3, 250, 270));
+					add(new LevelLabel(3, 250, 170));
 					//carrega imagem do level 3
 					break;
 			}
+			
+			backButton = new BackToStart(20, FP.height*1/2 + 240);
+			add (backButton);
 			
 		}
 
@@ -153,17 +155,6 @@ package br.eng.mosaic.pigeon.web.world
 		public function TransitionScreen(level:int, pigeonType:int) {
 			this.level = level;
 			this.pigeonType = pigeonType;
-			switch (level) {
-				case 1:
-					//carrega imagem do level 1
-					break;
-				case 2:
-					//carrega imagem do level 2
-					break;
-				case 3:
-					//carrega imagem do level 3
-					break;
-			}
 		}
 		
 		public function startGame():void{
@@ -187,7 +178,7 @@ package br.eng.mosaic.pigeon.web.world
 				}
 			}
 			
-			if(Input.mousePressed && go.collidePoint(back.x, go.y, Input.mouseX, Input.mouseY)){
+			if(Input.mousePressed && back.collidePoint(back.x, back.y, Input.mouseX+44, Input.mouseY+44)){
 				switch (level) {
 					case 1:
 						FP.world = new TelaInicial;
@@ -199,6 +190,10 @@ package br.eng.mosaic.pigeon.web.world
 						FP.world = new Scenario2(1);
 						break;
 				}
+			}
+			
+			if(Input.mousePressed&&backButton.collidePoint(backButton.x, backButton.y, Input.mouseX+44, Input.mouseY+44)){
+				FP.world = new PigeonSelection();
 			}
 			
 			this.bringForward(cursor);

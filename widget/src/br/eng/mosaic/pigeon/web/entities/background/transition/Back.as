@@ -11,11 +11,12 @@ package br.eng.mosaic.pigeon.web.entities.background.transition
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/back.png')] private const IMAGE:Class;
 		
 		public function Back(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null){
-			//super(x, y, graphic, mask);
-			
+
 			graphic = new Image(IMAGE);
 			
 			super(x, y, graphic, mask);
+			
+			this.setHitboxTo(this.graphic);
 			
 		}
 	}
