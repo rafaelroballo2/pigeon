@@ -8,7 +8,7 @@
 	
 
 
-================================================================================================
+=======================================================================
 
 YourKit is kindly supporting Pigeon open source project with its full-featured Java Profiler. 
 YourKit, LLC is the creator of innovative and intelligent tools for profiling Java and .NET applications. 
